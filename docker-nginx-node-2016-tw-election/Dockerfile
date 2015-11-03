@@ -13,11 +13,17 @@ RUN		 apt-get update
 RUN		 apt-get clean
 RUN		 npm install forever -g
 
-# App
-ADD . /web
+# add files to working dir
+COPY my_dicts/ /web/my_dicts
+COPY public/ /web/public
+COPY routes/ /web/routes
+COPY tw_topo/ /web/tw_topo
+COPY views/ /web/views
+COPY bower.json main.js package.json /web/
+
 # Install app dependencies
 RUN cd /web && npm install && npm install -g bower
 RUN cd /web && bower install --allow-root
 
 EXPOSE  8080
-CMD ["node", "/web/index.js"]
+CMD ["node", "/web/main.js"]
