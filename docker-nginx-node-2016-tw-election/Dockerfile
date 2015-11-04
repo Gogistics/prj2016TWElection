@@ -8,7 +8,8 @@ RUN      apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq cu
 RUN		 DEBIAN_FRONTEND=noninteractive apt-get install -yq apt-utils
 RUN      curl -sL https://deb.nodesource.com/setup | bash -
 RUN      DEBIAN_FRONTEND=noninteractive apt-get install -yq nodejs
-RUN		 apt-get install -yq git
+RUN		 DEBIAN_FRONTEND=noninteractive apt-get install -yq git
+RUN		 DEBIAN_FRONTEND=noninteractive apt-get install -yq build-essential
 RUN		 apt-get update
 RUN		 apt-get clean
 RUN		 npm install forever -g
@@ -25,5 +26,8 @@ COPY bower.json main.js package.json /web/
 RUN cd /web && npm install && npm install -g bower
 RUN cd /web && bower install --allow-root
 
+# working dir
+WORKDIR /web
+
 EXPOSE  8080
-CMD ["node", "/web/main.js"]
+CMD ["node", "./main.js"]

@@ -14,9 +14,6 @@ var PORT = process.env.PORT || DEFAULT_PORT;
 // App
 var app = express();
 
-// dispatcher
-var index_dispatcher = require('./routes/index');
-app.use('/', index_dispatcher);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,6 +27,10 @@ app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))); // set bootstrap path
 app.use('/jq', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // set jquery path
+
+// dispatcher
+var index_dispatcher = require('./routes/index');
+app.use('/', index_dispatcher);
 
 /* error handler */
 // catch 404 and forward to error handler

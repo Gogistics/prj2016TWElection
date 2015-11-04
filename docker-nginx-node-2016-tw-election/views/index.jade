@@ -1,4 +1,26 @@
 extends base_layout
 
 block content
-  h2 Real-Time Tracking of 2016 Taiwan Election
+  div(id="preloader")
+  div(id="load")
+
+  // navbars
+  include ./sub_views/nav_top.jade
+
+  // section ; intro
+  include ./sub_views/section_intro.jade
+
+  // section ; services
+  include ./sub_views/section_services.jade
+
+  // section ; about
+  include ./sub_views/section_about.jade
+
+  // section ; partners
+  include ./sub_views/section_partners.jade
+
+  // section ; contact
+  include ./sub_views/section_contact.jade
+
+  // footer
+  include ./sub_views/footer.jade

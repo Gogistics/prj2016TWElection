@@ -1,0 +1,79 @@
+// section contact
+section(id="contact" class="home-section text-center")
+  div(class="heading-contact")
+    div(class="container")
+      div(class="row")
+       div(class="col-lg-8 col-lg-offset-2")
+        div(class="wow bounceInDown" data-wow-delay="0.4s")
+          div(class="section-heading")
+            h2 Get in touch
+            i(class="fa fa-2x fa-angle-down")
+
+  div(class="container")
+    div(class="row")
+      div(class="col-lg-2 col-lg-offset-5")
+        hr(class="marginbot-50")
+
+    div(class="row")
+      div(class="col-lg-9")
+        div(class="boxed-grey")
+          form(id="contact_form" action="/services/send_email" method="post")
+            div(class="row")
+              div(class="col-md-6")
+                div(class="form-group")
+                  label(for="name") Name
+                  input(type="text" class="form-control" id="sender_name" name="sender_name" placeholder="Enter Name" required="required")
+
+                div(class="form-group")
+                  label(for="email") Email Address
+                div(class="input-group")
+                  span(class="input-group-addon")
+                    span(class="glyphicon glyphicon-envelope")
+                  input(type="email" class="form-control" id="sender_email" name="sender_email" placeholder="Enter Email" required="required")
+
+
+                div(class="form-group")
+                  label(for="subject") Subject
+                  select(id="email_subject" name="email_subject" class="form-control" required="required")
+                    option(value="na" selected="") Choose One:
+                    option(value="general_customer_service") General Customer Service
+                    option(value="suggestions") Suggestions
+                    option(value="career_query") Career Query
+
+              div(class="col-md-6")
+                div(class="form-group")
+                  label(for="name") Message
+                  textarea(name="email_message" id="email_message" class="form-control" rows="9" cols="25" required="required" placeholder="Message")
+
+              div(class="col-md-12")
+                button(type="submit" class="btn btn-warning pull-right" id="btnContactUs") Send Message
+    
+      div(class="col-lg-3")
+        div(class="widget-contact")
+          h5 Main Offic:
+
+          address
+            strong Taiwan
+            br
+            span Sam-Min Dist. Kaohsiung 80770 Taiwan
+
+          address
+            strong US
+            br
+            abbr(title="mobile_phone") Mobile:
+              span &nbsp;(408) 565-5133
+
+          address
+            strong Email
+            br
+            a(href="mailto:#") gogistics@gogistics-tw.com
+
+          address
+            strong We're on social networks</strong><br>
+              ul(class="company-social")
+                li(class="social-facebook")
+                  a(href="#facebook" target="_blank")
+                    i(class="fa fa-facebook")
+                li(class="social-twitter")
+                  a(href="#twitter" target="_blank")
+                    i(class="fa fa-twitter")

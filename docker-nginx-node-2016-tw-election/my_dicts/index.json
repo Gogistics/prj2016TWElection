@@ -1,0 +1,41 @@
+{
+    "english": {
+        "title" : "Gogistics",
+        "nav_home": "Home",
+        "nav_services": "Services",
+        "nav_about": "About",
+        "nav_partners": "Partners",
+        "nav_contact": "Contact",
+        "nav_dropdwon_languages": "Languages",
+        "nav_dropdown_traditional_chinese": "Traditional Chinese",
+        "nav_dropdown_english": "English",
+        "intro" : "REAL-TIME-TRACKING FOR 2016 TAIWAN ELECTION",
+        "services": "Services",
+        "services_description": "Gogistics Ltd. is a business consulting company focused on development of cloud applications. Assist market development for companies which need technical advise. Partner with leading companies specializing in cloud services",
+        "services_demo_app": "Demo App",
+        "about": "About",
+        "about_description": "We are committed to assisting you grow your business through excellent marketing development. We believe that what your customers hear about your business is as important as the products you sell. We're dedicated to providing you with the highest quality customer service and your complete satisfaction",
+        "about_team" : { "alan_tai": { "name": "Alan Tai", "title": "Co-founder & CEO", "description": "From mechanical engineering to development of cloud applications, Alan Tai has diverse experience in different fields." },
+                        "jack_yeh": { "name": "Jack Yeh"}
+                    },
+        "partners": "Partners",
+        "partners_description": "Pioneers in cloud development and providing professional services",
+        "contact": "Get in touch",
+        "contact_description": "Contact us, connect the world",
+        "contact_info": { "contact_name_field": "Name", "contact_enter_name_field": "Enter Name" },
+        "footer_copyright": "&#64; Copyright 2015 - Gogistics Ltd. All rights reserved."
+    },
+    "traditional_chinese" : {
+        "title" : "資雲科技",
+        "nav_home": "首頁",
+        "nav_services": "服務",
+        "nav_about": "關於我們",
+        "nav_partners": "合作夥伴",
+        "nav_contact": "聯繫我們",
+        "nav_dropdwon_languages": "語言",
+        "nav_dropdown_traditional_chinese": "繁中",
+        "nav_dropdown_english": "英文",
+        "intro" : "我們提供雲端開發應用服務及諮詢",
+        "footer_copyright": "&#64; 2015 - 資雲科技有限公司 版權所有"
+    }
+}

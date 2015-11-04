@@ -24,8 +24,23 @@ html(lang='en')
     link(rel="icon" type="image/png" sizes="96x96" href="/public/images/icons/favicon-96x96.png")
     link(rel="icon" type="image/png" sizes="16x16" href="/public/images/icons/favicon-16x16.png")
 
+    // set required css files
+    link(rel='stylesheet', href='/public/frontend_1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/public/frontend_1/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/public/frontend_1/css/animate.css')
+    link(rel='stylesheet', href='/public/frontend_1/css/style.css')
+    link(rel='stylesheet', href='/public/frontend_1/color/default.css')
 
     title #{title}
   body(id="page-top" data-spy="scroll" data-target=".navbar-custom")
     block content
+
+    // set required js files
+    script(src='/public/frontend_1/js/jquery.min.js')
+    script(src='/public/frontend_1/js/jquery.easing.min.js')
+    script(src='/public/frontend_1/js/jquery.scrollTo.js')
+
+    script(src='/public/frontend_1/js/bootstrap.min.js')
+    script(src='/public/frontend_1/js/wow.min.js')
+    script(src='/public/frontend_1/js/custom.js')
 
