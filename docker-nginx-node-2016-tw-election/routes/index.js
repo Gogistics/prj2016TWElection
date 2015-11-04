@@ -24,9 +24,8 @@ router.get('/', function(req, res, next) {
   var page_info = {
     title : index_info[lang]['title'],
     nav_home : index_info[lang]['nav_home'],
-    nav_services : index_info[lang]['nav_services'],
+    nav_twitter : index_info[lang]['nav_twitter'],
     nav_about : index_info[lang]['nav_about'],
-    nav_partners : index_info[lang]['nav_partners'],
     nav_contact : index_info[lang]['nav_contact'],
     nav_dropdwon_languages : index_info[lang]['nav_dropdwon_languages'],
     nav_dropdown_traditional_chinese : index_info[lang]['nav_dropdown_traditional_chinese'],
