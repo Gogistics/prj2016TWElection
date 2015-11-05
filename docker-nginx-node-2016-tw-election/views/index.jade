@@ -1,6 +1,23 @@
 extends base_layout
 
 block content
+  // set required css files
+  // basic styles
+  link(rel='stylesheet', href='/public/frontend_1/css/bootstrap.min.css')
+  link(rel='stylesheet', href='/public/frontend_1/font-awesome/css/font-awesome.min.css')
+  link(rel='stylesheet', href='/public/frontend_1/css/animate.css')
+  link(rel='stylesheet', href='/public/frontend_1/css/style.css')
+  link(rel='stylesheet', href='/public/frontend_1/color/default.css')
+
+  // leaflet
+  link(rel='stylesheet', href='/public/javascripts/leaflet-0.7/leaflet.css')
+  link(rel='stylesheet', href='/public/javascripts/leaflet-0.7/marker_cluster.default.css')
+  link(rel='stylesheet', href='/public/javascripts/leaflet-0.7/marker_cluster.css')
+
+  // custom tracking
+  link(rel='stylesheet', href='/public/stylesheets/custom_tracking.css')
+
+  // cover
   div(id="preloader")
     div(id="load")
 
@@ -21,3 +38,29 @@ block content
 
   // footer
   include ./sub_views/footer.jade
+
+  // set required js files
+  script(src='/public/frontend_1/js/jquery.min.js')
+  script(src='/public/frontend_1/js/jquery.easing.min.js')
+  script(src='/public/frontend_1/js/jquery.scrollTo.js')
+  script(src='/public/frontend_1/js/bootstrap.min.js')
+  script(src='/public/frontend_1/js/wow.min.js')
+  script(src='/public/frontend_1/js/custom.js')
+
+  // leaflet
+  script(src='/public/javascripts/leaflet-0.7/leaflet.js')
+  script(src='/public/javascripts/leaflet-0.7/leaflet.markercluster-src.js')
+
+  // d3
+  script(src='/public/javascripts/d3/d3.js')
+  script(src='/public/javascripts/d3/d3_tips.js')
+  script(src='/public/javascripts/d3/box.js')
+  script(src='/public/javascripts/d3/queue.v1.min.js')
+  script(src='/public/javascripts/d3/topojson.v1.min.js')
+  script(src='/public/javascripts/d3/autocomplete.js')
+
+  // socket
+  script(src='/public/javascripts/socket.io-1.3.7.js')
+
+  // customized scripts
+  script(src='/public/javascripts/custom_tracking.js')

@@ -1,4 +1,4 @@
-// section about
+// section twitter
 section(id="twitter" class="home-section text-center")
   div(class="heading-about")
     div(class="container")
@@ -9,7 +9,24 @@ section(id="twitter" class="home-section text-center")
                   h2 Twitter
                   i(class="fa fa-2x fa-angle-down")
 
-              p Real-Time Tweets Tracking
+              // condition for switching blocks
+              if (is_mobile == true)
+                p mobile
+              else
+                p Tweets Tracking
+                p Tracking Keywords: taiwan election, Tsai Ing-wen, Ma Ying-jeou, Eric Chu, 台灣選舉, 蔡英文, 馬英九, 朱立倫
+                span(id="tweets_peak")
+
+                // tweet tracking
+                div
+                  div(class="onoffswitch" style="margin:10px auto;")
+                    input(id="tracking_alert_onoffswitch" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" checked="")
+                    label(class="onoffswitch-label" for="tracking_alert_onoffswitch")
+                      span(class="onoffswitch-inner")
+                      span(class="onoffswitch-switch")
+
+                div(id="twitter_stream_chart")
+                div(id="high_peak_alert")
 
   div(class="container")
     div(class="row")
@@ -17,4 +34,6 @@ section(id="twitter" class="home-section text-center")
         hr(class="marginbot-50")
 
     div(class="row")
-      p Map Area
+      h2 Tweets Map
+      div(id="tweets_map")
+      div(id="map_tip")

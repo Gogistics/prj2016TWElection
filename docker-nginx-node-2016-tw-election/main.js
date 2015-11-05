@@ -31,6 +31,8 @@ app.use('/jq', express.static(path.join(__dirname, '/node_modules/jquery/dist'))
 // dispatcher
 var index_dispatcher = require('./routes/index');
 app.use('/', index_dispatcher);
+var services_dispatcher = require('./routes/services');
+app.use('/services', services_dispatcher);
 
 /* error handler */
 // catch 404 and forward to error handler
