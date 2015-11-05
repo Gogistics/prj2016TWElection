@@ -9,15 +9,21 @@ nginx:
 
 node_1:
     build: .
+    env_file:
+        - ./.keys.env
     ports: 
         - "8080"
 
 node_2:
     build: .
+    env_file:
+        - ./.keys.env
     ports: 
         - "8080"
 
 node_3:
     build: .
+    env_file:
+        - ./.keys.env
     ports: 
         - "8080"
