@@ -15,9 +15,6 @@ RUN		 apt-get update
 RUN		 apt-get clean
 RUN		 npm install forever -g
 
-# set env
-ENV MY_MANDRILL_API_KEY $MY_MANDRILL_API_KEY
-
 # add files to working dir
 COPY my_dicts/ /web/my_dicts
 COPY public/ /web/public

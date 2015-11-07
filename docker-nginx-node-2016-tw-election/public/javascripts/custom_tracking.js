@@ -255,7 +255,7 @@
   window.twitter_map_handler.init_map();
 
   // socket io (incomplete)
-  var socket = io.connect('http://ec2-52-32-92-0.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
+  var socket = io.connect('http://ec2-52-32-122-42.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
   socket.on('connect', function(){
       console.log('get connected...');
   });
@@ -269,17 +269,5 @@
       console.log('disconnect...');
   });
 
-  // fb
 
-  //
-  FB.ui({
-    method: 'share_open_graph',
-    action_type: 'og.likes',
-    action_properties: JSON.stringify({
-      object:'https://developers.facebook.com/docs/',
-    })
-  }, function(response){
-    // Debug response (optional)
-    console.log(response);
-  });
 })(jQuery);
