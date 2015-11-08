@@ -1,4 +1,8 @@
 // section twitter
+// custom tracking
+link(rel='stylesheet', href='/public/stylesheets/custom_tracking.css')
+
+// content
 section(id="twitter" class="home-section text-center")
   div(class="heading-about")
     div(class="container")
@@ -6,18 +10,19 @@ section(id="twitter" class="home-section text-center")
           div(class="col-lg-8 col-lg-offset-2")
             div(class="wow bounceInDown" data-wow-delay="0.2s")
               div(class="section-heading")
-                  h2 Twitter
-                  i(class="fa fa-2x fa-angle-down")
+                h2 Twitter
+                i(class="fa fa-2x fa-angle-down")
 
-              // condition for switching blocks
-              if (is_mobile == true)
-                p mobile
-              else
-                p Tweets Tracking
-                p Tracking Keywords: taiwan election, Tsai Ing-wen, Ma Ying-jeou, Eric Chu, 台灣選舉, 蔡英文, 馬英九, 朱立倫
+                h5 Tweets Tracking
+                p Tracking Keywords: taiwan election, Tsai Ing-wen, Ma Ying-jeou, Eric Chu, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
+                br
+                ul(id="tweet_list" class="list-group" style="max-height: 200px; overflow:auto;")
+
+              // condition for switching blocks & pass variables to javascript via jade
+              script.
+                window.is_mobile = #{is_mobile};
+              if (!is_mobile)
                 span(id="tweets_peak")
-
-                // tweet tracking
                 div
                   div(class="onoffswitch" style="margin:10px auto;")
                     input(id="tracking_alert_onoffswitch" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" checked="")
@@ -29,10 +34,6 @@ section(id="twitter" class="home-section text-center")
                 div(id="high_peak_alert")
 
   div(class="container")
-    div(class="row")
-      div(class="col-lg-2 col-lg-offset-5")
-        hr(class="marginbot-50")
-
     div(class="row")
       h2 Tweets Map
       div(id="tweets_map")
