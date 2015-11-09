@@ -6,8 +6,9 @@ section(id="contact" class="home-section text-center")
        div(class="col-lg-8 col-lg-offset-2")
         div(class="wow bounceInDown" data-wow-delay="0.2s")
           div(class="section-heading")
-            h2 Get in touch
+            h2 #{contact}
             i(class="fa fa-2x fa-angle-down")
+            p #{contact_description}
 
   div(class="container")
     div(class="row")
@@ -21,54 +22,59 @@ section(id="contact" class="home-section text-center")
             div(class="row")
               div(class="col-md-6")
                 div(class="form-group")
-                  label(for="name") Name
-                  input(type="text" class="form-control" id="sender_name" name="sender_name" placeholder="Enter Name" required="required")
+                  label(for="name") #{contact_info_name_title}
+                  input(type="text" class="form-control" id="sender_name" name="sender_name" placeholder="#{contact_info_name_field_placeholder}" required="required")
 
                 div(class="form-group")
-                  label(for="email") Email Address
-                div(class="input-group")
-                  span(class="input-group-addon")
-                    span(class="glyphicon glyphicon-envelope")
-                  input(type="email" class="form-control" id="sender_email" name="sender_email" placeholder="Enter Email" required="required")
+                  label(for="email") #{contact_info_email_title}
+                  div(class="input-group")
+                    span(class="input-group-addon")
+                      span(class="glyphicon glyphicon-envelope")
+                    input(type="email" class="form-control" id="sender_email" name="sender_email" placeholder="#{contact_info_email_field_placeholder}" required="required")
 
 
                 div(class="form-group")
-                  label(for="subject") Subject
+                  label(for="subject") #{contact_info_subject_title}
                   select(id="email_subject" name="email_subject" class="form-control" required="required")
-                    option(value="na" selected="") Choose One:
-                    option(value="general_customer_service") General Query
-                    option(value="suggestions") Suggestions
+                    option(value="na" selected="") #{contact_info_subject_options_title}:
+                    option(value="general_customer_service") #{contact_info_subject_options.general_question}
+                    option(value="suggestions") #{contact_info_subject_options.suggestion}
 
               div(class="col-md-6")
                 div(class="form-group")
-                  label(for="name") Message
-                  textarea(name="email_message" id="email_message" class="form-control" rows="9" cols="25" required="required" placeholder="Message")
+                  label(for="name") #{contact_message.message_title}
+                  textarea(name="email_message" id="email_message" class="form-control" rows="9" cols="25" required="required" placeholder="#{contact_message.message_placeholder}")
 
               div(class="col-md-12")
-                button(type="submit" class="btn btn-warning pull-right" id="btnContactUs") Send Message
+                button(type="submit" class="btn btn-warning pull-right" id="btnContactUs") #{contact_message.message_submit_btn}
     
       div(class="col-lg-3")
         div(class="widget-contact")
-          h5 Main Offic:
+          h5 #{contact_main_office.title}:
 
           address
-            strong Taiwan
+            strong #{contact_main_office.taiwan_title}
             br
-            span Sam-Min Dist. Kaohsiung 80770 Taiwan
+            abbress(title="address") #{contact_main_office.address_title}:
+              span &nbsp;#{contact_main_office.taiwan_address}
 
           address
-            strong US
+            strong #{contact_main_office.usa_title}
             br
-            abbr(title="mobile_phone") Mobile:
-              span &nbsp;(408) 565-5133
-
-          address
-            strong Email
+            abbress(title="address") #{contact_main_office.address_title}:
+              span &nbsp;#{contact_main_office.usa_address}
             br
-            a(href="mailto:#") gogistics@gogistics-tw.com
+            mobile(title="mobile_phone") #{contact_main_office.mobile_title}:
+              a(href="tel:1 (408) 565-5133" target="_blank") &nbsp;#{contact_main_office.usa_mobile}
 
           address
-            strong We're on social networks</strong><br>
+            strong #{contact_main_office.email_title}
+            br
+            a(href="mailto:#{contact_main_office.email_address}" target="_blank") #{contact_main_office.email_address}
+
+          address
+            strong #{contact_main_office.get_connected_on_socail_networks_title}
+              br
               ul(class="company-social")
                 li(class="social-facebook")
                   a(href="https://www.facebook.com/rainman.tai" target="_blank")

@@ -131,3 +131,60 @@ svg {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
+
+/* media */
+#tweet_list li div{
+    display: block; text-align: center;
+}
+#tweet_list li span{
+    display: block; font-size: 12px; color: #888;
+}
+#tweet_list li div img{
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(200,200,200,.3);
+}
+#tweet_list li a,
+#tweet_list li div a{
+    color: #ffc200;
+    font-size: 11px;
+}
+
+.tweet_on_map img{
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(200,200,200,.3);
+}
+.tweet_on_map div{
+    margin: 0px auto;
+}
+.tweet_on_map a,
+.tweet_on_map div a{
+    color: #ffc200;
+    font-size: 11px;
+}
+.tweet_on_map p{
+    text-align: left;
+}
+.tweet_on_map span.tweet_time_country{
+    font-size: 11px; font-weight: bold;
+}
+.tweet_on_map span.tweet_text{
+    font-size: 11px; color: #666;
+}
+@media (min-width: 767px){
+    .tweet_on_map {
+        max-width: 400px;
+        text-align: center;
+    }
+}
+@media (max-width: 768px){
+    .tweet_on_map {
+        max-width: 300px;
+        text-align: center;
+    }
+}
+@media (max-width: 480px){
+    .tweet_on_map {
+        max-width: 250px;
+        text-align: center;
+    }
+}

@@ -36,9 +36,10 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        svg.append("defs").append("clipPath")
+        svg.append("defs")
+            .append("clipPath")
             .attr("id", "clip")
-          .append("rect")
+            .append("rect")
             .attr("width", width)
             .attr("height", height);
 
@@ -49,7 +50,10 @@
             
         var y_axis = svg.append("g")
                         .attr("class", "y axis")
-                        .call(d3.svg.axis().scale(y).orient("left").ticks(5).tickFormat(d3.format("d")));
+                        .call(d3.svg.axis().scale(y)
+                        .orient("left")
+                        .ticks(5)
+                        .tickFormat(d3.format("d")));
 
         var path = svg.append("g")
                     .attr("clip-path", "url(#clip)")
@@ -177,22 +181,22 @@
         if (tweet_url !== null){
             tweet_url = tweet_url[0];
             tweet_content = '<li class="hidden_elem list-group-item" >' +
-                            '<div style="display: block; text-align: center;">' +
-                            '<img style="border-radius: 50%; display: inline-block" src="' + arg_tweet.user.profile_image_url + '"><br>' +
+                            '<div>' +
+                            '<img src="' + arg_tweet.user.profile_image_url + '"><br>' +
                             '<a href="https://twitter.com/' + arg_tweet.user.screen_name + '" target="_blank" >@' + arg_tweet.user.screen_name + '</a><br>' +
-                            '<span style="font-size: 11px;">' + tweet_time + '</span>' +
+                            '<span>' + tweet_time + '</span>' +
                             '</div>' +
-                            '<span style="display: block; font-size: 12px; color: #888">' + tweet + '&nbsp;</span>' +
-                            '<a style="font-size: 12px;" href="' + tweet_url + '" target="_blank">&nbsp;' + tweet_url + '</a>' +
+                            '<span>' + tweet + '&nbsp;</span>' +
+                            '<a href="' + tweet_url + '" target="_blank">&nbsp;' + tweet_url + '</a>' +
                             '</li>';
         }else{
             tweet_content = '<li class="hidden_elem list-group-item" >' +
-                            '<div style="display: block; text-align: center;">' +
-                            '<img style="border-radius: 50%;" src="' + arg_tweet.user.profile_image_url + '"><br>' +
+                            '<div>' +
+                            '<img src="' + arg_tweet.user.profile_image_url + '"><br>' +
                             '<a href="https://twitter.com/' + arg_tweet.user.screen_name + '" target="_blank" >@' + arg_tweet.user.screen_name + '</a><br>' +
-                            '<span style="font-size: 11px;">' + tweet_time + '</span>' +
+                            '<span>' + tweet_time + '</span>' +
                             '</div>' +
-                            '<span style="display: block; font-size: 12px; color: #888">' + tweet + '</span>' +
+                            '<span>' + tweet + '</span>' +
                             '</li>';
         }
                     
@@ -212,6 +216,9 @@
       }else{
           append_li();
       }
+    },
+    retrieve_latest_20_tweets : function(){
+      //
     }
   }
 
@@ -370,9 +377,9 @@
         d.LatLng = new L.LatLng(d[0], d[1]);
       });
 
-      //
+      // check if d3 svg exiting
       if(this.d3_svg){
-        //
+        // create new location
         var new_location = this.d3_svg
                               .append('g')
                               .selectAll('circle')
@@ -427,27 +434,28 @@
             var content = '';
             if(tweet_url !== undefined && tweet_url !== null && tweet_url !== ''){
               //
-              content = '<div style="text-align: center;">' +
-                                               '<img style="border-radius: 50%; box-shadow: 0 0 0 1px rgba(200,200,200,.3);" src="' + arg_user_img_url + '"/><br>' +
-                                               '<div style="margin: 0px auto;"><br/>' +
-                                               '<a href="https://twitter.com/' + arg_nickname + '" target="_blank" style="color: #ffc200;" >@' + arg_nickname + '</a>' +
-                                               '</div>' +
-                                               '<p style="text-align: left;">' +
-                                               '<span style="font-size: 11px; font-weight: bold;">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
-                                               '<span style="font-size: 12px; color: #666">' + tweet + '</span><br>' +
-                                               '<a style="font-size: 12px; color: #ffc200;" href="' + tweet_url[0] + '" target="_blank">' + tweet_url[0] + '</a></p>' +
-                                               '</div>';
+              content = '<div class="tweet_on_map">' +
+                       '<img src="' + arg_user_img_url + '"/><br>' +
+                       '<div><br/>' +
+                       '<a href="https://twitter.com/' + arg_nickname + '" target="_blank">@' + arg_nickname + '</a>' +
+                       '</div>' +
+                       '<p>' +
+                       '<span class="tweet_time_country">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
+                       '<span class="tweet_text">' + tweet + '</span><br>' +
+                       '<a href="' + tweet_url[0] + '" target="_blank">' + tweet_url[0] + '</a></p>' +
+                       '</div>';
             }else{
               //
-              content = '<div style="text-align: center;">' +
-                                               '<img style="border-radius: 50%; box-shadow: 0 0 0 1px rgba(200,200,200,.3);" src="' + arg_user_img_url + '"/><br>' +
-                                               '<div style="margin: 0px auto;"><br/>' +
-                                               '<a href="https://twitter.com/' + arg_nickname + '" target="_blank" style="color: #ffc200;" >@' + arg_nickname + '</a>' +
-                                               '</div>' +
-                                               '<p style="text-align: left;">' +
-                                               '<span style="font-size: 11px; font-weight: bold;">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
-                                               '<span style="font-size: 12px; color: #666">' + tweet + '</span></p>' +
-                                               '</div>';
+              content = '<div class="tweet_on_map">' +
+                       '<img src="' + arg_user_img_url + '"/><br>' +
+                       '<div><br/>' +
+                       '<a href="https://twitter.com/' + arg_nickname + '" target="_blank">@' + arg_nickname + '</a>' +
+                       '</div>' +
+                       '<p>' +
+                       '<span class="tweet_time_country">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
+                       '<span class="tweet_text">' + tweet + '</span></p>' +
+                       '<a href="' + tweet_url[0] + '" target="_blank">' + tweet_url[0] + '</a></p>' +
+                       '</div>';
             }
 
             //

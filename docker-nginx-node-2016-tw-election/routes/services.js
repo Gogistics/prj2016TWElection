@@ -22,7 +22,7 @@ var init_mandrill_service = function(){
 }
 init_mandrill_service();
 
-/* GET users listing. */
+/* POST users listing. */
 router.post('/send_email', function(req, res, next) {
   //
   if(mandrill_client === undefined){
@@ -55,6 +55,16 @@ router.post('/send_email', function(req, res, next) {
   res.send({
     email_status : 'successful',
     msg : 'Thank you for contacting us.'
+ });
+});
+
+// POST get latest 20 tweets
+router.post('/get_latest_20_tweets', function(req, res, next) {
+  // get req info
+  var user_ip = req.ip;
+  res.send({
+    request_status : 'successful',
+    latest_20_tweets : {}
  });
 });
 

@@ -10,11 +10,11 @@ section(id="twitter" class="home-section text-center")
           div(class="col-lg-8 col-lg-offset-2")
             div(class="wow bounceInDown" data-wow-delay="0.2s")
               div(class="section-heading")
-                h2 Twitter
+                h2 #{twitter_title}
                 i(class="fa fa-2x fa-angle-down")
 
-                h5 Tweets Tracking
-                p Tracking Keywords: taiwan election, Tsai Ing-wen, Ma Ying-jeou, Eric Chu, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
+                h3 #{twitter_tweets_tracking_title}
+                p #{twitter_tweets_tracking_keywords_title}: Taiwan Election, Tsai Ing-wen, Eric Chu, James Soong, Ma Ying-jeou, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
                 br
                 ul(id="tweet_list" class="list-group" style="max-height: 200px; overflow:auto;")
 
@@ -35,6 +35,6 @@ section(id="twitter" class="home-section text-center")
 
   div(class="container")
     div(class="row")
-      h2 Tweets Map
+      h2 #{twitter_twitter_map_title}
       div(id="tweets_map")
       div(id="map_tip")
