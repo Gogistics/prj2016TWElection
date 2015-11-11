@@ -35,23 +35,6 @@ html(lang='en')
 
       ga('create', 'UA-69701431-1', 'auto');
       ga('send', 'pageview');
-
-      /* fb */
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '304142056358991',
-          xfbml      : true,
-          version    : 'v2.5'
-        });
-      };
-
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
     
 
     title #{title}

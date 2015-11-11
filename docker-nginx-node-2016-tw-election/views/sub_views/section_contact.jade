@@ -22,21 +22,21 @@ section(id="contact" class="home-section text-center")
             div(class="row")
               div(class="col-md-6")
                 div(class="form-group")
-                  label(for="name") #{contact_info_name_title}
-                  input(type="text" class="form-control" id="sender_name" name="sender_name" placeholder="#{contact_info_name_field_placeholder}" required="required")
+                  label(for="name") #{contact_info_name.contact_info_name_title}
+                  input(type="text" class="form-control" id="sender_name" name="sender_name" placeholder="#{contact_info_name.contact_info_name_field_placeholder}" required="required")
 
                 div(class="form-group")
-                  label(for="email") #{contact_info_email_title}
+                  label(for="email") #{contact_info_email.contact_info_email_title}
                   div(class="input-group")
                     span(class="input-group-addon")
                       span(class="glyphicon glyphicon-envelope")
-                    input(type="email" class="form-control" id="sender_email" name="sender_email" placeholder="#{contact_info_email_field_placeholder}" required="required")
+                    input(type="email" class="form-control" id="sender_email" name="sender_email" placeholder="#{contact_info_email.contact_info_email_field_placeholder}" required="required")
 
 
                 div(class="form-group")
-                  label(for="subject") #{contact_info_subject_title}
+                  label(for="subject") #{contact_info_subject.contact_info_subject_title}
                   select(id="email_subject" name="email_subject" class="form-control" required="required")
-                    option(value="na" selected="") #{contact_info_subject_options_title}:
+                    option(value="na" selected="") #{contact_info_subject.contact_info_subject_options_title}:
                     option(value="general_customer_service") #{contact_info_subject_options.general_question}
                     option(value="suggestions") #{contact_info_subject_options.suggestion}
 

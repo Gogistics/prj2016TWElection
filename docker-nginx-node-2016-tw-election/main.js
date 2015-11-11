@@ -12,8 +12,8 @@ var DEFAULT_PORT = 8080;
 var PORT = process.env.PORT || DEFAULT_PORT;
 
 // App
-var app = express();
-
+var app = express(),
+    cache_time = 2 * 86400000;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -24,9 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // static files config.
-app.use('/public', express.static(path.join(__dirname, '/public')));
-app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))); // set bootstrap path
-app.use('/jq', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // set jquery path
+app.use('/public', express.static( path.join(__dirname, '/public'), { maxAge: cache_time}));
+app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))); // set bootstrap path ; maybe unnecessary
+app.use('/jq', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // set jquery path ; maybe unnecessary
 
 // dispatcher
 var index_dispatcher = require('./routes/index');

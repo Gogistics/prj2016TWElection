@@ -3,6 +3,8 @@
 link(rel='stylesheet', href='/public/stylesheets/custom_tracking.css')
 
 // content
+div(id="summary_tip")
+div(id="map_tip")
 section(id="twitter" class="home-section text-center")
   div(class="heading-about")
     div(class="container")
@@ -15,6 +17,17 @@ section(id="twitter" class="home-section text-center")
 
                 h3 #{twitter_tweets_tracking_title}
                 p #{twitter_tweets_tracking_keywords_title}: Taiwan Election, Tsai Ing-wen, Eric Chu, James Soong, Ma Ying-jeou, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
+                br
+                p(id="categorized_collection_period")
+                if (!is_mobile)
+                  div(class="row")
+                    ul(id="categorized_collection" class="list-group col-lg-3 col-md-3 col-xs-12" )
+                    div(id="categorized_collection_chart" class="col-lg-9 col-md-9 col-xs-12" )
+                      div(id="tweets_chart")
+                else
+                  div(class="row")
+                    ul(id="categorized_collection" class="list-group col-lg-12" )
+
                 br
                 ul(id="tweet_list" class="list-group" style="max-height: 200px; overflow:auto;")
 
@@ -37,4 +50,3 @@ section(id="twitter" class="home-section text-center")
     div(class="row")
       h2 #{twitter_twitter_map_title}
       div(id="tweets_map")
-      div(id="map_tip")

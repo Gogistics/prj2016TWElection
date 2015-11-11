@@ -2,6 +2,12 @@
 var express = require('express');
 var router = express.Router();
 
+/* mongodb */
+var monk = require('monk'),
+url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/2016_tw_election',
+db = monk(url),
+analysis_by_lang_type_collection = db.get('analysis_by_lang_type');
+
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
 var init_mandrill_service = function(){
@@ -66,6 +72,27 @@ router.post('/get_latest_20_tweets', function(req, res, next) {
     request_status : 'successful',
     latest_20_tweets : {}
  });
+});
+
+// get analysis collection
+router.post('/get_analysis_collection_by_lang_type', function(req, res, next){
+  //
+  var user_ip = req.ip;
+  analysis_by_lang_type_collection.findOne({}).on('success', function (doc) {
+    //
+    delete doc._id;
+    var count_of_total_tweets = 0;
+    for(var ith_key in doc){
+      for(var jth_key in doc[ith_key]['timestamp_set']){
+        count_of_total_tweets += doc[ith_key]['timestamp_set'][jth_key];
+      }
+    }
+    res.send({
+      request_status : 'successful',
+      collecion : doc,
+      count_of_total_tweets : count_of_total_tweets
+    });
+  });
 });
 
 module.exports = router;

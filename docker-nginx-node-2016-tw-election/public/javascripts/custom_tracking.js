@@ -300,7 +300,7 @@
                         .attr('class', 'location_circle')
                         .attr('fill', 'url(#gradient)')
                         .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-                        .on("mousemove", function(d){return tooltip.html('tweet location: ' + d).style("top", (d3.event.pageY - 700)+"px").style("left",(d3.event.pageX + 15)+"px");})
+                        .on("mousemove", function(d){return tooltip.html('tweet location: ' + d).style("top", (d3.event.pageY - 10)+"px").style("left",(d3.event.pageX + 10)+"px");})
                         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
                         
         window.twitter_map_handler.map.on("viewreset", this.update_d3_elem_on_map);
