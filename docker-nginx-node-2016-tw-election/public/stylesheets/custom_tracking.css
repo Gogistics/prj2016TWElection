@@ -31,10 +31,10 @@ div.tooltip p {
   stroke: #c79825;
   stroke-width: 1px;
 }
-#categorized_collection{
-  max-height: 250px; overflow: auto;
+#categorized_collection, #categorized_plurk_posts_collection{
+  max-height: 250px; overflow: auto; padding-right: 0;
 }
-#categorized_collection_chart{
+#categorized_collection_chart, #categorized_plurk_posts_collection_chart{
   max-height: 250px;
 }
 /**/

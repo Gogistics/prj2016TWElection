@@ -4,9 +4,10 @@ var router = express.Router();
 
 /* mongodb */
 var monk = require('monk'),
-url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/2016_tw_election',
-db = monk(url),
-analysis_by_lang_type_collection = db.get('analysis_by_lang_type');
+    url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/2016_tw_election',
+    db = monk(url),
+    analysis_by_lang_type_collection = db.get('analysis_by_lang_type'),
+    plurk_posts_analysis_by_lang_type_collection = db.get('plurk_posts_analysis_by_lang_type');
 
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
@@ -74,11 +75,34 @@ router.post('/get_latest_20_tweets', function(req, res, next) {
  });
 });
 
-// get analysis collection
-router.post('/get_analysis_collection_by_lang_type', function(req, res, next){
+// get twitter analysis collection
+router.post('/get_twitter_tweets_analysis_collection_by_lang_type', function(req, res, next){
   //
-  var user_ip = req.ip;
+  var user_ip = req.ip,
+      token = req.token;
   analysis_by_lang_type_collection.findOne({}).on('success', function (doc) {
+    //
+    delete doc._id;
+    var count_of_total_tweets = 0;
+    for(var ith_key in doc){
+      for(var jth_key in doc[ith_key]['timestamp_set']){
+        count_of_total_tweets += doc[ith_key]['timestamp_set'][jth_key];
+      }
+    }
+    res.send({
+      request_status : 'successful',
+      collecion : doc,
+      count_of_total_tweets : count_of_total_tweets
+    });
+  });
+});
+
+// get plurk analysis collection
+router.post('/get_plurk_posts_analysis_collection_by_lang_type', function(req, res, next){
+  //
+  var user_ip = req.ip,
+      token = req.token;
+  plurk_posts_analysis_by_lang_type_collection.findOne({}).on('success', function (doc) {
     //
     delete doc._id;
     var count_of_total_tweets = 0;

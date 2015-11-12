@@ -8,7 +8,7 @@
         "nav_contact": "Contact",
         "nav_plurk": "Plurk",
         "nav_twitter": "Twitter",
-        "nav_fb": "Facebook",
+        "nav_facebook": "Facebook",
         "nav_dropdwon_languages": "Languages",
         "nav_dropdown_traditional_chinese": "Traditional Chinese",
         "nav_dropdown_english": "English",
@@ -17,6 +17,7 @@
         "services_description": "Gogistics Ltd. is a business consulting company focused on development of cloud applications. Assist market development for companies which need technical advise. Partner with leading companies specializing in cloud services",
         "services_demo_app": "Demo App",
         "twitter_section" : { "title" : "Twitter", "tweets_tracking_title" : "TWEETS TRACKING", "twitter_tweets_tracking_keywords_title" : "TRACKING KEYWORDS", "twitter_map_title" : "TWEETS MAP"},
+        "plurk_section" : {"title" : "Plurk", "plurk_posts_tracking_title" : "PLURK POSTS TRACKING", "plurk_posts_tracking_keywords_title" : "TRACKING KEYWORDS" },
         "about": "About",
         "about_description": "Tech nerds who love open source and open data",
         "about_team" : { "alan_tai": { "name": "Alan Tai", "title": "Co-founder & CEO", "role": "Chief Developer", "description": "Learn technology, connect the world" }
@@ -42,7 +43,7 @@
         "nav_contact": "聯繫我們",
         "nav_plurk": "噗浪",
         "nav_twitter": "推特",
-        "nav_fb": "臉書",
+        "nav_facebook": "臉書",
         "nav_dropdwon_languages": "語言",
         "nav_dropdown_traditional_chinese": "繁中",
         "nav_dropdown_english": "英文",
@@ -51,6 +52,7 @@
         "services_description": "資雲科技有限公司致力於雲端服務應用開發",
         "services_demo_app": "應用展示",
         "twitter_section" : { "title" : "推特", "tweets_tracking_title" : "推特即時追蹤", "twitter_tweets_tracking_keywords_title" : "追蹤關鍵字", "twitter_map_title" : "推特地圖"},
+        "plurk_section" : {"title" : "噗浪", "plurk_posts_tracking_title" : "噗浪推文追蹤", "plurk_posts_tracking_keywords_title" : "追蹤關鍵字" },
         "about": "關於我們",
         "about_description": "熱愛開源技術與資料的程式漫遊者",
         "about_team" : { "alan_tai": { "name": "戴桑", "title": "Co-founder & CEO", "role": "架構設計與資料視覺化", "description": "追求新知，串聯世界" }

@@ -1,6 +1,6 @@
 /* twitter */
 (function ($) {
-  window.analysis_handler = window.analysis_handler || {
+  window.twitter_analysis_handler = window.twitter_analysis_handler || {
     get_analysis_collection : function(){
       //
       $.ajax({ // create an AJAX call...
@@ -8,13 +8,13 @@
             token: 'ZRIcsERQBbPOgerGEhRthrt',
           },
           type: 'POST', // GET or POST
-          url: '/services/get_analysis_collection_by_lang_type', // the file to call
+          url: '/services/get_twitter_tweets_analysis_collection_by_lang_type', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
                   console.log(res.collecion);
-                  // console.log(res.count_of_total_tweets);
-                  window.analysis_handler.append_categorized_data(res.collecion, res.count_of_total_tweets);
-                  window.analysis_handler.display_tweets_chart(res.collecion);
+                  console.log(res.count_of_total_tweets);
+                  window.twitter_analysis_handler.append_categorized_data(res.collecion, res.count_of_total_tweets);
+                  window.twitter_analysis_handler.display_tweets_chart(res.collecion);
               }else{
                   console.log('fail...');
               };
@@ -78,8 +78,8 @@
       console.log(rearranged_collection);
 
       //
-      var margin = {top: 30, right: 60, bottom: 30, left: 60},
-                    width = 580 - margin.left - margin.right,
+      var margin = {top: 10, right: 30, bottom: 30, left: 60},
+                    width = 480 - margin.left - margin.right,
                     height = 250 - margin.top - margin.bottom;
 
       var x = d3.time.scale().range([0, width]);
@@ -197,16 +197,19 @@
                             var x0 = x.invert(d3.mouse(this)[0]),
                                 i = bisectDate(new_collection_ary, x0, 1),
                                 d0 = new_collection_ary[i - 1],
-                                d1 = new_collection_ary[i],
-                                d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-                            div.transition()        
-                                .duration(200)
-                                .style("opacity", .9);      
-                            div.html('<div><strong>Date:&nbsp;' + d.date.toLocaleDateString() + '</strong><br/>' +
-                                    '<p><label>Tweets:&nbsp;</label>' + formatTweets(d.value) + '</p>' +
-                                    '</div>')  
-                                  .style("left", (d3.event.pageX + 10) + "px")     
-                                  .style("top", (d3.event.pageY - 10) + "px");
+                                d1 = new_collection_ary[i];
+
+                            if(d0 && d1){
+                              var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+                              div.transition()        
+                                  .duration(200)
+                                  .style("opacity", .9);      
+                              div.html('<div><strong>Date:&nbsp;' + d.date.toLocaleDateString() + '</strong><br/>' +
+                                      '<p><label>Tweets:&nbsp;</label>' + formatTweets(d.value) + '</p>' +
+                                      '</div>')  
+                                    .style("left", (d3.event.pageX + 10) + "px")     
+                                    .style("top", (d3.event.pageY - 10) + "px");
+                            }
           });
       }
 
@@ -215,7 +218,8 @@
     }
   }
 
-  //
-  window.analysis_handler.get_analysis_collection();
+  // start analysis
+  window.twitter_analysis_handler.get_analysis_collection();
+  /* end */
 
 })(jQuery);
