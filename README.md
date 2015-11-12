@@ -25,11 +25,11 @@ This project is for analyzing the trend of 2016 Taiwan Election. The application
 
 ---
 
-Set up swarm master-
+#####Set up swarm master-
 
 > **docker-machine create -d amazonec2 --swarm --swarm-master --swarm-discovery token://{YOUR_TOKEN} --amazonec2-access-key {YOUR_ACCESS_KEY} --amazonec2-secret-key {YOUR_SECRET_KEY} --amazonec2-vpc-id {YOUR_VPC} --amazonec2-region us-west-2 swarm-master**
 
-Set up swarm containers for nodes and databases-
+#####Set up swarm containers for nodes and databases-
 
 > **docker-machine create -d amazonec2 --swarm --swarm-discovery token://{YOUR_TOKEN} --amazonec2-access-key {YOUR_ACCESS_KEY} --amazonec2-secret-key {YOUR_SECRET_KEY} --amazonec2-vpc-id {YOUR_VPC} --amazonec2-region us-west-2 swarm-node-1**
 
@@ -39,13 +39,13 @@ Set up swarm containers for nodes and databases-
 
 > **docker-machine create -d amazonec2 --swarm --swarm-discovery token://{YOUR_TOKEN} --amazonec2-access-key {YOUR_ACCESS_KEY} --amazonec2-secret-key {YOUR_SECRET_KEY} --amazonec2-vpc-id {YOUR_VPC} --amazonec2-region us-west-2 swarm-db-1-1**
 
-MongoDB Configuration-
+#####MongoDB Configuration-
 
 *Create dir and key-file*
 
-> root@alantai*:/# mkdir -p /my_app/data
+> root@alantai*:/# mkdir -p /my_app/data /my_app/keyfile
 
-> root@alantai*:/# cd /my_app
+> root@alantai*:/# cd /my_app/keyfile
 
 > root@alantai*:/# openssl rand -base64 741 > mongodb-keyfile
 
@@ -55,7 +55,7 @@ MongoDB Configuration-
   
 *Create containers*
   
-> root@alantai:/# docker run --name my_mongo -v /my_app/data:/data/db -v /my_app:/opt/keyfile --hostname="{PRIMARY_DB_IP}" -p 27017:27017 -d mongo --smallfiles
+> root@alantai:/# docker run --name my_mongo -v /my_app/data:/data/db --hostname="{PRIMARY_DB_IP}" -p 27017:27017 -d mongo --smallfiles
 
 *Configure Primary DB*
 > root@alantai:/# docker exec -it mongo /bin/bash
@@ -66,6 +66,21 @@ MongoDB Configuration-
 
 > \> db.createUser( {
      user: "siteUserAdmin",
-     pwd: "YOUR_PASSWORD",
+     pwd: "{YOUR_PASSWORD}",
      roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
    });
+
+> \> db.createUser( {
+     user: "siteRootAdmin",
+     pwd: "{YOUR_PASSWORD}",
+     roles: [ { role: "root", db: "admin" } ]
+   });
+   
+> \> exit
+
+> root@alantai:/# docker stop mongo
+
+> root@alantai:/# docker rm mongo
+
+> root@alantai:/# docker run --name mongo -v /my_app/data:/data/db -v /my_app/keyfile:/opt/keyfile --hostname="{PRIMARY_DB}"
+--add-host primary_db.com:{PRIMARY_DB_IP} --add-host replica_db_1.com:{REPLICA_DB_1_IP} --add-host replica_db_1.com:{REPLICA_DB_1_IP} -p 27017:27017 -d mongo --smallfiles --keyFile /opt/keyfile --replSet "rs0"
