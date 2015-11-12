@@ -6,10 +6,10 @@ section(id="facebook" class="home-section text-center")
           div(class="col-lg-8 col-lg-offset-2")
             div(class="wow bounceInDown" data-wow-delay="0.2s")
               div(class="section-heading")
-                  h2 FACEBOOK
+                  h2 #{facebook_section.title}
                   i(class="fa fa-2x fa-angle-down")
 
-              p Candidates of 2016 Taiwan Election
+              p #{facebook_section.description}
 
   div(class="container")
     div(class="row")
@@ -22,42 +22,46 @@ section(id="facebook" class="home-section text-center")
         div(class="wow bounceInUp" data-wow-delay="0.2s")
           div(class="team boxed-grey")
             div(class="inner")
-              h3 Tsai Ing-wen
-              p(class="subtitle") DPP Candidate
+              h3 #{tw_election_info.tsaiingwen.name}
+              p(class="subtitle") #{tw_election_info.tsaiingwen.role}
               div(class="avatar text-center")
                 img(src="/public/images/tsai-ing-wen-1.png" alt="alan_tai" class="img-responsive img-circle")
-              p continue...
+              br
+              div(id="latest_post_tsaiingwen" class="fb_latest_post_info")
 
       // eric chu
       div(class="col-xs-12 col-sm-6 col-md-6 col-lg-3")
         div(class="wow bounceInUp" data-wow-delay="0.2s")
           div(class="team boxed-grey")
             div(class="inner")
-              h3 Eric Chu
-              p(class="subtitle") KMT Candidate
+              h3 #{tw_election_info.llchu.name}
+              p(class="subtitle") #{tw_election_info.llchu.role}
               div(class="avatar text-center")
                 img(src="/public/images/eric-chu-1.png" alt="alan_tai" class="img-responsive img-circle")
-              p continue...
+              br
+              div(id="latest_post_llchu" class="fb_latest_post_info")
 
       // james soong
       div(class="col-xs-12 col-sm-6 col-md-6 col-lg-3")
         div(class="wow bounceInUp" data-wow-delay="0.2s")
           div(class="team boxed-grey")
             div(class="inner")
-              h3 James Soong
-              p(class="subtitle") PFP Candidate
+              h3 #{tw_election_info.love4tw.name}
+              p(class="subtitle") #{tw_election_info.love4tw.role}
               div(class="avatar text-center")
                 img(src="/public/images/james-soong-1.png" alt="alan_tai" class="img-responsive img-circle")
-              p continue...
+              br
+              div(id="latest_post_love4tw" class="fb_latest_post_info")
 
       // Ma Ying-jeou
       div(class="col-xs-12 col-sm-6 col-md-6 col-lg-3")
         div(class="wow bounceInUp" data-wow-delay="0.2s")
           div(class="team boxed-grey")
             div(class="inner")
-              h3 Ma Ying-jeou
-              p(class="subtitle") President of Taiwan
+              h3 #{tw_election_info.MaYingjeou.name}
+              p(class="subtitle") #{tw_election_info.MaYingjeou.role}
               div(class="avatar text-center")
                 img(src="/public/images/ma-ying-jeou-1.png" alt="alan_tai" class="img-responsive img-circle")
-              p continue...
+              br
+              div(id="latest_post_MaYingjeou" class="fb_latest_post_info")
 

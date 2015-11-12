@@ -10,8 +10,8 @@
             now = new Date(Date.now() - duration),
             data = d3.range(n).map(function() { return 0; });
 
-        var margin = {top: 5, right: 0, bottom: 30, left: 50},
-            width = 750 - margin.right,
+        var margin = {top: 5, right: 0, bottom: 20, left: 50},
+            width = 680 - margin.left,
             height = 150 - margin.top - margin.bottom;
 
         var x = d3.time.scale()
@@ -28,7 +28,6 @@
             .y(function(d, i) { return y(d); });
 
         var svg = d3.select("div#twitter_stream_chart")
-            .append("p")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -90,10 +89,10 @@
         svg.append("text")
             .attr("class", "label")
             .attr("transform","rotate(-90)")
-            .attr("y", -50)
+            .attr("y", -40)
             .attr("x", 0 - ( height / 2 ) - 20 )
             .attr("dy","1em")
-            .style("font-size", "15px")
+            .style("font-size", "13px")
             .text("Tweets");
 
         (function tick() {
@@ -172,34 +171,22 @@
       var append_li = function(){
         //
         var tweet_url = arg_tweet.text.match(/(http[s]*:[^\s]+)/),
-            tweet = arg_tweet.text.replace(/(http[s]*:[^\s]+)/gi, ''),
+            tweet = arg_tweet.text.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
+                return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
+            }),
             tweet_content = '',
             time_ary = arg_tweet.created_at.split(' '),
             tweet_time = time_ary[1] + ' ' + time_ary[2] + '-' + time_ary[5] + ' ' + time_ary[3];
 
-            //
-        if (tweet_url !== null){
-            tweet_url = tweet_url[0];
-            tweet_content = '<li class="hidden_elem list-group-item" >' +
+        tweet_content = '<li class="hidden_elem list-group-item" >' +
                             '<div>' +
                             '<img src="' + arg_tweet.user.profile_image_url + '"><br>' +
                             '<a href="https://twitter.com/' + arg_tweet.user.screen_name + '" target="_blank" >@' + arg_tweet.user.screen_name + '</a><br>' +
                             '<span>' + tweet_time + '</span>' +
                             '</div>' +
                             '<span>' + tweet + '&nbsp;</span>' +
-                            '<a href="' + tweet_url + '" target="_blank">&nbsp;' + tweet_url + '</a>' +
                             '</li>';
-        }else{
-            tweet_content = '<li class="hidden_elem list-group-item" >' +
-                            '<div>' +
-                            '<img src="' + arg_tweet.user.profile_image_url + '"><br>' +
-                            '<a href="https://twitter.com/' + arg_tweet.user.screen_name + '" target="_blank" >@' + arg_tweet.user.screen_name + '</a><br>' +
-                            '<span>' + tweet_time + '</span>' +
-                            '</div>' +
-                            '<span>' + tweet + '</span>' +
-                            '</li>';
-        }
-                    
+        
         $('ul#tweet_list').prepend(tweet_content);
         $('ul#tweet_list li.hidden_elem').fadeIn(1000, function(){
             window.twitter_tweets_handler.is_appending = false;
@@ -422,42 +409,24 @@
               arg_user_img_url !== null && arg_user_img_url !== '' ){
             //
             var tweet_url = arg_tweet.match(/(http[s]*:[^\s]+)/),
-                tweet = arg_tweet.replace(/(http[s]*:[^\s]+)/gi, ''),
+                tweet = arg_tweet.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
+                  return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
+                }),
                 time_ary = arg_created_time.split(' ');
                 tweet_time = time_ary[1] + ' ' + time_ary[2] + '-' + time_ary[5] + ' ' + time_ary[3],
                 display_name = val.display_name.split(','),
                 country = display_name[display_name.length - 1].trim();
-            //
-            var split_tweet = arg_tweet.split(' ');
 
             //
-            var content = '';
-            if(tweet_url !== undefined && tweet_url !== null && tweet_url !== ''){
-              //
-              content = '<div class="tweet_on_map">' +
-                       '<img src="' + arg_user_img_url + '"/><br>' +
-                       '<div><br/>' +
-                       '<a href="https://twitter.com/' + arg_nickname + '" target="_blank">@' + arg_nickname + '</a>' +
-                       '</div>' +
-                       '<p>' +
-                       '<span class="tweet_time_country">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
-                       '<span class="tweet_text">' + tweet + '</span><br>' +
-                       '<a href="' + tweet_url[0] + '" target="_blank">' + tweet_url[0] + '</a></p>' +
-                       '</div>';
-            }else{
-              //
-              content = '<div class="tweet_on_map">' +
-                       '<img src="' + arg_user_img_url + '"/><br>' +
-                       '<div><br/>' +
-                       '<a href="https://twitter.com/' + arg_nickname + '" target="_blank">@' + arg_nickname + '</a>' +
-                       '</div>' +
-                       '<p>' +
-                       '<span class="tweet_time_country">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
-                       '<span class="tweet_text">' + tweet + '</span></p>' +
-                       '<a href="' + tweet_url[0] + '" target="_blank">' + tweet_url[0] + '</a></p>' +
-                       '</div>';
-            }
-
+            var content = '<div class="tweet_on_map">' +
+                         '<img src="' + arg_user_img_url + '"/><br>' +
+                         '<div><br/>' +
+                         '<a href="https://twitter.com/' + arg_nickname + '" target="_blank">@' + arg_nickname + '</a>' +
+                         '</div>' +
+                         '<p>' +
+                         '<span class="tweet_time_country">' + tweet_time + ',&nbsp;' + country + '</span><br>' +
+                         '<span class="tweet_text">' + tweet + '</span></p>' +
+                         '</div>';
             //
             window.twitter_map_handler.location_ary.push( { popup_content : content,
                                     lat : Number(val.lat).toFixed(5),

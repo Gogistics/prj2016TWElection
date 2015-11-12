@@ -7,7 +7,8 @@ var monk = require('monk'),
     url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/2016_tw_election',
     db = monk(url),
     analysis_by_lang_type_collection = db.get('analysis_by_lang_type'),
-    plurk_posts_analysis_by_lang_type_collection = db.get('plurk_posts_analysis_by_lang_type');
+    plurk_posts_analysis_by_lang_type_collection = db.get('plurk_posts_analysis_by_lang_type'),
+    facebook_posts_collection = db.get('facebook_politicians_posts');
 
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
@@ -65,7 +66,7 @@ router.post('/send_email', function(req, res, next) {
  });
 });
 
-// POST get latest 20 tweets
+// POST get latest 20 tweets (incomplete)
 router.post('/get_latest_20_tweets', function(req, res, next) {
   // get req info
   var user_ip = req.ip;
@@ -74,6 +75,42 @@ router.post('/get_latest_20_tweets', function(req, res, next) {
     latest_20_tweets : {}
  });
 });
+
+// facebook 
+router.post('/get_facebook_latest_posts_analysis_collection', function(req, res, next){
+  //
+  var user_ip = req.ip,
+      token = req.token;
+
+  //
+  var query_set = ['tsaiingwen', 'llchu', 'love4tw', 'MaYingjeou'], current_key = '', finial_collection = {};
+  var fetch_latest_data_set = function(arg_key){
+    //
+    facebook_posts_collection.findOne({ 'politician_key' : arg_key }).on('success', function (doc) {
+      //
+      finial_collection[arg_key] = doc;
+      if(query_set.length > 0){
+        //
+        current_key = query_set.pop();
+        finial_collection[current_key] = {};
+        fetch_latest_data_set(current_key);
+      }else{
+        //
+        res.send({
+          request_status : 'successful',
+          collecion : finial_collection
+        });
+      }
+    });
+  }
+
+  if(query_set.length > 0){
+    current_key = query_set.pop();
+    finial_collection[current_key] = {};
+    fetch_latest_data_set(current_key);
+  }
+});
+
 
 // get twitter analysis collection
 router.post('/get_twitter_tweets_analysis_collection_by_lang_type', function(req, res, next){

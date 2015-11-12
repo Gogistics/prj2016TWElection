@@ -12,8 +12,6 @@
           url: '/services/get_plurk_posts_analysis_collection_by_lang_type', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  console.log(res.collecion);
-                  console.log(res.count_of_total_tweets);
                   window.plurk_analysis_handler.append_categorized_data(res.collecion, res.count_of_total_tweets);
                   window.plurk_analysis_handler.display_plurk_posts_chart(res.collecion);
               }else{
@@ -137,7 +135,6 @@
           //
           return a.date - b.date;
         });
-        console.log(new_collection_ary);
 
         //
         x.domain(d3.extent(new_collection_ary, function(d) { return d.date; }));

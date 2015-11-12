@@ -37,15 +37,27 @@ div.tooltip p {
 #categorized_collection_chart, #categorized_plurk_posts_collection_chart{
   max-height: 250px;
 }
-/**/
+/* fb */
+.post_message{
+  height: 150px;
+  margin: 10px auto;
+  overflow: auto;
+}
+.d3_title{
+  color: #000;
+}
+/* twitter */
 #twitter_stream_chart{
-    margin: 20px auto;
+    margin: 10px 20px;
     text-align: center;
+    overflow: auto;
 }
 #tweets_list{
     text-align: left;
     height: 645px;
     overflow: auto;
+}
+#tweets_map{
 }
 .chart_block{
     text-align: center;

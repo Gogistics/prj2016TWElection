@@ -11,8 +11,6 @@
           url: '/services/get_twitter_tweets_analysis_collection_by_lang_type', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  console.log(res.collecion);
-                  console.log(res.count_of_total_tweets);
                   window.twitter_analysis_handler.append_categorized_data(res.collecion, res.count_of_total_tweets);
                   window.twitter_analysis_handler.display_tweets_chart(res.collecion);
               }else{
@@ -53,10 +51,10 @@
       }
       var min_date = new Date(min_timestamp),
           max_date = new Date(max_timestamp);
-      $('p#categorized_collection_period').prepend('From ' + ( min_date.getMonth() + 1) + '-' +
+      $('p#categorized_collection_period').prepend('From&nbsp;' + ( min_date.getMonth() + 1) + '-' +
                                                               min_date.getDate() + '-' +
                                                               min_date.getFullYear() +
-                                                  ' To ' + ( max_date.getMonth() + 1) + '-' +
+                                                  ' To&nbsp;' + ( max_date.getMonth() + 1) + '-' +
                                                             max_date.getDate() + '-' +
                                                             max_date.getFullYear() );
     },
@@ -75,7 +73,6 @@
           }
         }
       }
-      console.log(rearranged_collection);
 
       //
       var margin = {top: 10, right: 30, bottom: 30, left: 60},
@@ -136,7 +133,6 @@
           //
           return a.date - b.date;
         });
-        console.log(new_collection_ary);
 
         //
         x.domain(d3.extent(new_collection_ary, function(d) { return d.date; }));

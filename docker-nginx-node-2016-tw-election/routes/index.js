@@ -41,6 +41,8 @@ router.get('/', function(req, res, next) {
     nav_dropdown_traditional_chinese : index_info[lang]['nav_dropdown_traditional_chinese'],
     nav_dropdown_english : index_info[lang]['nav_dropdown_english'],
     intro : index_info[lang]['intro'],
+    facebook_section : index_info[lang]['facebook_section'],
+    tw_election_info : index_info[lang]['tw_election_info'],
     twitter_section : index_info[lang]['twitter_section'],
     plurk_section : index_info[lang]['plurk_section'],
     about : index_info[lang]['about'],
