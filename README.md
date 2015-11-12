@@ -1,27 +1,27 @@
 # Project for 2016 TW Election
 
 ### Deployment of Virtual Machines on EC2 with Docker Swarm
-This project is for analyzing the trend of 2016 Taiwan Election. The applications will be developed with the follwoing tools, libs, and so on:
+This project is for analyzing the trend of 2016 Taiwan Election. The applications will be developed with the follwoing frameworks, libs, and so on:
 
-**AWS EC2**
+**AWS EC2** for hosting the virtual machines
 
-**Docker Swarm**
+**Docker Swarm** for deploying container swarm to handle web services and databases
 
-**MongoDB**
+**MongoDB** for storing data
 
-**Nginx**
+**Nginx** working as the proxy server
 
-**Node.js**
+**Node.js** for developing the web app
 
-**Express**
+**Express** Node.js web app framework
 
-**Jade**
+**Jade** template engine for Node.js
 
-**Bootstrap**
+**Bootstrap** a sleek, intuitive, and powerful mobile first front-end framework
 
-**D3**
+**D3** a JavaScript library for visualizing data
 
-**Leaflet**
+**Leaflet** a a JavaScript library for visualizing data
 
 ---
 
