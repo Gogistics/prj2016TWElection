@@ -27,11 +27,13 @@ This project is for analyzing the trend of 2016 Taiwan Election. The application
 
 ---
 
-#####Set up swarm master-
+#####Instances Deployment
+
+*Set up swarm master-*
 
 > **docker-machine create -d amazonec2 --swarm --swarm-master --swarm-discovery token://{YOUR_TOKEN} --amazonec2-access-key {YOUR_ACCESS_KEY} --amazonec2-secret-key {YOUR_SECRET_KEY} --amazonec2-vpc-id {YOUR_VPC} --amazonec2-region us-west-2 swarm-master**
 
-#####Set up swarm containers for nodes and databases-
+*Set up swarm containers for nodes and databases-*
 
 > **docker-machine create -d amazonec2 --swarm --swarm-discovery token://{YOUR_TOKEN} --amazonec2-access-key {YOUR_ACCESS_KEY} --amazonec2-secret-key {YOUR_SECRET_KEY} --amazonec2-vpc-id {YOUR_VPC} --amazonec2-region us-west-2 swarm-node-1**
 
@@ -86,3 +88,17 @@ This project is for analyzing the trend of 2016 Taiwan Election. The application
 
 > root@alantai:/# docker run --name mongo -v /my_app/data:/data/db -v /my_app/keyfile:/opt/keyfile --hostname="{PRIMARY_DB}"
 --add-host primary_db.com:{PRIMARY_DB_IP} --add-host replica_db_1.com:{REPLICA_DB_1_IP} --add-host replica_db_1.com:{REPLICA_DB_1_IP} -p 27017:27017 -d mongo --smallfiles --keyFile /opt/keyfile --replSet "rs0"
+
+#####Deploy App
+
+*Clone project and run locally for testing*
+
+> git clone git@github.com:Gogistics/prj2016TWElection.git
+
+> cd prj2016TWElection/docker-nginx-node-2016-tw-election
+
+Before running the command below, you need to set the environment variables to make email mechanism work and build connection between you app and MongoDB
+
+> sh .local_start.sh
+
+*Build Nginx Container*
