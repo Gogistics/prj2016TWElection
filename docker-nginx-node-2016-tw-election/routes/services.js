@@ -86,7 +86,7 @@ router.post('/get_facebook_latest_posts_analysis_collection', function(req, res,
   var query_set = ['tsaiingwen', 'llchu', 'love4tw', 'MaYingjeou'], current_key = '', finial_collection = {};
   var fetch_latest_data_set = function(arg_key){
     //
-    facebook_posts_collection.findOne({ 'politician_key' : arg_key }).on('success', function (doc) {
+    facebook_posts_collection.findOne({ 'politician_key' : arg_key }, {sort:{$natural:-1}} ).on('success', function (doc) {
       //
       finial_collection[arg_key] = doc;
       if(query_set.length > 0){

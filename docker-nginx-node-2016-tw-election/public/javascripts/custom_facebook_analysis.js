@@ -78,7 +78,7 @@
       shares_info_ary.reverse();
 
       /* d3 */
-      var margin = {top: 25, right: 30, bottom: 30, left: 30},
+      var margin = {top: 30, right: 30, bottom: 30, left: 30},
                     width = 200 - margin.left - margin.right,
                     height = 100 - margin.top - margin.bottom;
 
