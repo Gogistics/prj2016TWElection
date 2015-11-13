@@ -5,6 +5,10 @@
     count : 0,
     is_ringtone_alert_on : true,
     init_stream_chart : function(){
+      //
+      var _this = this;
+
+      // d3 configuration
         var n = 245,
             duration = 750,
             now = new Date(Date.now() - duration),
@@ -104,13 +108,13 @@
             y.domain([0, 5]);
 
             // alert ringtone
-            if(window.twitter_tracking_handler.is_ringtone_alert_on && window.twitter_tracking_handler.count > 4){
-              window.twitter_tracking_handler.play_alert_ringtone('/public/sounds/ringtone_1.wav');
+            if(_this.is_ringtone_alert_on && _this.count > 4){
+              _this.play_alert_ringtone('/public/sounds/ringtone_1.wav');
             }
 
             // push the accumulated count onto the back, and reset the count
-            data.push(window.twitter_tracking_handler.count);
-            window.twitter_tracking_handler.count = 0;
+            data.push(_this.count);
+            _this.count = 0;
 
             // redraw the line
             svg.select(".line")
@@ -141,7 +145,7 @@
   if(!window.is_mobile){
     window.twitter_tracking_handler.init_stream_chart();
   }
-  // end
+  // end of stream chart
 
   /* tracking alert */
   $( 'input#tracking_alert_onoffswitch' ).change(function() {
@@ -159,15 +163,17 @@
     is_appending : false,
     trigger_append_event : function(){
       //
-      if(window.twitter_tweets_handler.tweets_list.length > 0 && !window.twitter_tweets_handler.is_appending){
+      var _this = this;
+      if(_this.tweets_list.length > 0 && !_this.is_appending){
         //
-        window.twitter_tweets_handler.is_appending = true;
-        window.twitter_tweets_handler.append_tweet(window.twitter_tweets_handler.tweets_list.pop());
+        _this.is_appending = true;
+        _this.append_tweet(_this.tweets_list.pop());
       }
-      setTimeout(window.twitter_tweets_handler.trigger_append_event, 6000);
+      setTimeout( _this.trigger_append_event.bind(_this), 6000);
     },
     append_tweet : function(arg_tweet){
       //
+      var _this = this;
       var append_li = function(){
         //
         var tweet_url = arg_tweet.text.match(/(http[s]*:[^\s]+)/),
@@ -189,7 +195,7 @@
         
         $('ul#tweet_list').prepend(tweet_content);
         $('ul#tweet_list li.hidden_elem').fadeIn(1000, function(){
-            window.twitter_tweets_handler.is_appending = false;
+          _this.is_appending = false;
         });
       }
 
@@ -226,48 +232,52 @@
     is_appending : false,
     init_map : function(){
       // init map
-      if(this.map === undefined){
+      var _this = this;
+      if(_this.map === undefined){
         // init map
-        this.map = new L.map(tweets_map).setView( this.default_location, 8);
+        _this.map = new L.map(tweets_map)
+                        .setView( _this.default_location, 8);
 
         // set map tiles
         L.tileLayer(
           'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '© + Openstreetmap Contributors',
           maxZoom: 18,
-        }).addTo(this.map);
-        this.map._initPathRoot();
+        }).addTo(_this.map);
+
+        //
+        _this.map._initPathRoot();
 
         // set d3
         if(this.d3_svg === undefined){
-          this.d3_svg = d3.select("#tweets_map").select("svg");
+          this.d3_svg = d3.select("div#tweets_map").select("svg");
         }
 
         // define the gradient
-        this.d3_gradient = this.d3_svg.append("svg:defs")
-                                .append("svg:radialGradient")
-                                .attr("id", "gradient")
-                                .attr("x1", "0%")
-                                .attr("y1", "0%")
-                                .attr("x2", "100%")
-                                .attr("y2", "100%")
-                                .attr("spreadMethod", "pad");
+        _this.d3_gradient = this.d3_svg.append("svg:defs")
+                                      .append("svg:radialGradient")
+                                      .attr("id", "gradient")
+                                      .attr("x1", "0%")
+                                      .attr("y1", "0%")
+                                      .attr("x2", "100%")
+                                      .attr("y2", "100%")
+                                      .attr("spreadMethod", "pad");
 
         // Define the gradient colors
-        this.d3_gradient.append("svg:stop")
+        _this.d3_gradient.append("svg:stop")
                         .attr("offset", "0%")
                         .attr("stop-color", "#00f")
                         .attr("stop-opacity", 1);
 
-        this.d3_gradient.append("svg:stop")
+        _this.d3_gradient.append("svg:stop")
                         .attr("offset", "100%")
                         .attr("stop-color", "#fff")
                         .attr("stop-opacity", 0);
 
         //
-        this.d3_data = this.defualt_circles;
+        _this.d3_data = _this.defualt_circles;
         // set lat_lng for Leaflet
-        this.d3_data.forEach(function(d) {
+        _this.d3_data.forEach(function(d) {
             d.LatLng = new L.LatLng(d[0], d[1]);
         });
                         
@@ -278,20 +288,22 @@
                         .style("z-index", "10000")
                         .style("visibility", "hidden");
 
-        var g = this.d3_svg.append("g");
-        this.d3_circles = g.selectAll("circle")
-                        .data(this.d3_data)
-                        .enter()
-                        .append("circle")
-                        .attr('r', 0)
-                        .attr('class', 'location_circle')
-                        .attr('fill', 'url(#gradient)')
-                        .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-                        .on("mousemove", function(d){return tooltip.html('tweet location: ' + d).style("top", (d3.event.pageY - 10)+"px").style("left",(d3.event.pageX + 10)+"px");})
-                        .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+        var g = _this.d3_svg.append("g");
+        _this.d3_circles = g.selectAll("circle")
+                          .data(_this.d3_data)
+                          .enter()
+                          .append("circle")
+                          .attr('r', 0)
+                          .attr('class', 'location_circle')
+                          .attr('fill', 'url(#gradient)')
+                          .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+                          .on("mousemove", function(d){return tooltip.html('tweet location: ' + d).style("top", (d3.event.pageY - 10)+"px").style("left",(d3.event.pageX + 10)+"px");})
+                          .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
                         
-        window.twitter_map_handler.map.on("viewreset", this.update_d3_elem_on_map);
-        this.update_d3_elem_on_map();
+        _this.map.on( "viewreset", _this.update_d3_elem_on_map.bind(_this) );
+
+        //
+        setTimeout( _this.update_d3_elem_on_map.bind(_this), 500 );
 
         //
         var map_popup = L.popup();
@@ -300,86 +312,87 @@
                                      '<p>Track 2016 TW Election on Twitter</p>' +
                                      '<img style="width: 80px;" src="/public/javascripts/leaflet-0.7/images/twitter-1.png"><br>' +
                                      '</div>')
-                        .openOn(this.map);
+                        .openOn(_this.map);
       }
     },
     update_d3_elem_on_map : function(){
-        window.twitter_map_handler.d3_circles.attr("transform", 
-            function(d) { 
-                return "translate("+ 
-                window.twitter_map_handler.map.latLngToLayerPoint(d.LatLng).x +","+ 
-                window.twitter_map_handler.map.latLngToLayerPoint(d.LatLng).y +")";
-            }
-        ).transition()
-        .duration(900)
-        .delay(800)
-        .attr('r', 100)
-        .style("opacity",0)
-        .each("end", function(){
-            d3.select(this)
-              .transition()
-              .duration(700)
-              .style("r", 20)
-              .style("opacity",0.8);
-        });
+      var _this = this;
+      _this.d3_circles.attr("transform", 
+          function(d) { 
+              return "translate("+ 
+              _this.map.latLngToLayerPoint(d.LatLng).x +","+ 
+              _this.map.latLngToLayerPoint(d.LatLng).y +")";
+          }
+      ).transition()
+      .duration(900)
+      .delay(800)
+      .attr('r', 100)
+      .style("opacity",0)
+      .each("end", function(){
+          d3.select(this)
+            .transition()
+            .duration(700)
+            .style("r", 20)
+            .style("opacity",0.8);
+      });
     },
     move_map : function(arg_tweet_text, arg_geo_info){
-        var avg_latlng_popup = L.popup();
-        
-        // set map center if true
-        if(this.is_set_map_center_on === true){
-            // set map center to the target location
-            this.map.setView({
-                lat : arg_geo_info.lat,
-                lng : arg_geo_info.lng
-            }, 8);
-            
-            // append popup view
-            avg_latlng_popup.setLatLng( [ arg_geo_info.lat, arg_geo_info.lng] )
-                            .setContent( arg_tweet_text )
-                            .openOn(this.map);
-        }
+      //
+      var _this = this;
+      var avg_latlng_popup = L.popup();
+      
+      // set map center if true
+      if(_this.is_set_map_center_on === true){
+          // set map center to the target location
+          _this.map.setView({
+              lat : arg_geo_info.lat,
+              lng : arg_geo_info.lng
+          }, 8);
+          
+          // append popup view
+          avg_latlng_popup.setLatLng( [ arg_geo_info.lat, arg_geo_info.lng] )
+                          .setContent( arg_tweet_text )
+                          .openOn(this.map);
+      }
     },
     animate_tweet_map : function(){
       //
-      if(window.twitter_map_handler.location_ary.length > 0){
-        var current_location = window.twitter_map_handler.location_ary.pop();
+      var _this = this;
+      if(_this.location_ary.length > 0){
+        var current_location = _this.location_ary.pop();
 
         if(current_location !== undefined){
           //
-          window.twitter_map_handler.move_map(current_location.popup_content, { lat : current_location.lat, lng : current_location.lng });
-
-          //
-          window.twitter_map_handler.add_new_location([[ current_location.lat, current_location.lng ]]);
+          _this.move_map(current_location.popup_content, { lat : current_location.lat, lng : current_location.lng });
+          _this.add_new_location([[ current_location.lat, current_location.lng ]]);
         }
       }
 
       //
-      setTimeout(window.twitter_map_handler.animate_tweet_map, 6000);
+      setTimeout( _this.animate_tweet_map.bind(_this), 5000);
     },
     add_new_location : function(arg_location_ary){
+      var _this = this;
       //
-      arg_location_ary.forEach(function(d){
-        //
-        d.LatLng = new L.LatLng(d[0], d[1]);
-      });
+      arg_location_ary.forEach(function(d){ d.LatLng = new L.LatLng(d[0], d[1]); });
 
       // check if d3 svg exiting
-      if(this.d3_svg){
+      if(_this.d3_svg){
         // create new location
-        var new_location = this.d3_svg
-                              .append('g')
-                              .selectAll('circle')
-                              .data(arg_location_ary)
-                              .enter()
-                              .append('circle')
-                              .attr('r', 0)
-                              .attr('class', 'location_circle')
-                              .attr('fill', 'url(#gradient');
+        var new_location = _this.d3_svg
+                                .append('g')
+                                .selectAll('circle')
+                                .data(arg_location_ary)
+                                .enter()
+                                .append('circle')
+                                .attr('r', 0)
+                                .attr('class', 'location_circle')
+                                .attr('fill', 'url(#gradient');
+
         new_location.attr('transform', function(d){
           //
-          return 'translate(' + window.twitter_map_handler.map.latLngToLayerPoint(d.LatLng).x + ',' +
-                                window.twitter_map_handler.map.latLngToLayerPoint(d.LatLng).y + ')';
+          return 'translate(' + _this.map.latLngToLayerPoint(d.LatLng).x + ',' +
+                                _this.map.latLngToLayerPoint(d.LatLng).y + ')';
         }).transition()
           .duration(1000)
           .delay(600)
@@ -395,10 +408,11 @@
           });
 
           //
-          this.d3_circles.push(new_location.pop());
+          _this.d3_circles.push(new_location.pop());
       }
     },
     find_geo_info : function(arg_location, arg_created_time, arg_user_img_url, arg_nickname, arg_tweet){
+      var _this = this;
       //
       $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + arg_location, function(data){
         //
@@ -428,7 +442,7 @@
                          '<span class="tweet_text">' + tweet + '</span></p>' +
                          '</div>';
             //
-            window.twitter_map_handler.location_ary.push( { popup_content : content,
+            _this.location_ary.push( { popup_content : content,
                                     lat : Number(val.lat).toFixed(5),
                                     lng : Number(val.lon).toFixed(5) });
           }
@@ -437,36 +451,40 @@
     },
     start_map_animation : function(){
       //
-      setTimeout( window.twitter_map_handler.animate_tweet_map, 3000 );
+      var _this = this;
+      setTimeout( _this.animate_tweet_map.bind(_this), 3000 );
     }
   }
   // end
 
   // init map
-  window.twitter_map_handler.init_map();
+  setTimeout( window.twitter_map_handler.init_map.bind(window.twitter_map_handler), 1000);
 
   // start map animation
-  window.twitter_map_handler.start_map_animation();
+  setTimeout( window.twitter_map_handler.start_map_animation.bind(window.twitter_map_handler), 1500);
 
   // socket io (incomplete)
   var socket = io.connect('http://ec2-52-32-122-42.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
   socket.on('connect', function(){
       console.log('get connected...');
-      setTimeout(window.twitter_tweets_handler.trigger_append_event, 2000);
+      var _this = window.twitter_tweets_handler;
+      setTimeout( _this.trigger_append_event.bind(_this), 2000);
   });
   socket.on( 'tweet', function(message) {
-      window.twitter_tracking_handler.count++;
+      var _this = window.twitter_map_handler;
+      window.twitter_tweets_handler.count++;
       window.twitter_tweets_handler.tweets_list.push(message);
 
       //
       var geo_location_alternative = message.geo || message.user.location || message.user.time_zone;
       if(geo_location_alternative !== null){
         //
-        setTimeout(window.twitter_map_handler.find_geo_info(message.user.location,
-                                                            message.created_at,
-                                                            message.user.profile_image_url,
-                                                            message.user.screen_name,
-                                                            message.text), 2000);
+        console.log(_this);
+        setTimeout( _this.find_geo_info.bind(_this, message.user.location,
+                                                    message.created_at,
+                                                    message.user.profile_image_url,
+                                                    message.user.screen_name,
+                                                    message.text), 2000 );
       }
   });
   socket.on('event', function(data){
@@ -475,6 +493,5 @@
   socket.on('disconnect', function(){
       console.log('disconnect...');
   });
-
 
 })(jQuery);

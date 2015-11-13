@@ -3,6 +3,7 @@
   /* Plurk Handler */
   window.plurk_analysis_handler = window.plurk_analysis_handler || {
     get_analysis_collection : function(){
+      var _this = this;
       //
       $.ajax({ // create an AJAX call...
           data: {
@@ -12,8 +13,8 @@
           url: '/services/get_plurk_posts_analysis_collection_by_lang_type', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  window.plurk_analysis_handler.append_categorized_data(res.collecion, res.count_of_total_tweets);
-                  window.plurk_analysis_handler.display_plurk_posts_chart(res.collecion);
+                  _this.append_categorized_data(res.collecion, res.count_of_total_tweets);
+                  _this.display_plurk_posts_chart(res.collecion);
               }else{
                   console.log('fail...');
               };
@@ -102,16 +103,8 @@
               .attr("transform", 
                     "translate(" + margin.left + "," + margin.top + ")");
 
-      //
-      /* make grid */
-      function make_x_axis() {        
-          return d3.svg.axis()
-              .scale(x)
-               .orient("bottom")
-               .ticks(5)
-      }
-
-      function make_y_axis() {        
+      // make grid
+      var make_y_axis = function() {        
           return d3.svg.axis()
               .scale(y0)
               .orient("left")

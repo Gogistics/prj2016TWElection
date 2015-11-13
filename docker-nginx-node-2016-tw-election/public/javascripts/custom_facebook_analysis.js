@@ -12,7 +12,7 @@
           url: '/services/get_facebook_latest_posts_analysis_collection', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  console.log(res.collecion);
+                  // console.log(res.collecion);
                   window.facebook_analysis_handler.append_latest_post(res.collecion);
               }else{
                   console.log('fail...');
@@ -34,9 +34,9 @@
 
         /* display summary info */
         var truncated_length = 100,
-            my_truncated_string = arg_collection[ith_key]['data'][0]['message'];
+            new_replaced_str = arg_collection[ith_key]['data'][0]['message'];
 
-        my_truncated_string = my_truncated_string.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
+        new_replaced_str = new_replaced_str.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
             return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
         });
 
@@ -52,9 +52,9 @@
         _elem = $('#' + politicians_dict[ith_key]);
         _elem.append( '<div class="post_message">' +
                       '<strong style="font-size: 10px; font-weight: bold;">Latest Post</strong>' + '<br/>' +
-                      '<strong style="font-size: 10px;">Shares Count:&nbsp;' + shares_count + '</strong>' + '<br/>' +
+                      '<strong style="font-size: 10px;">Shares:&nbsp;' + shares_count + '</strong>' + '<br/>' +
                       '<strong style="font-size: 10px;">' + ( new Date(arg_collection[ith_key]['data'][0]['created_time']) ) + '</strong>' +
-                      '<p style="font-size: 12px; margin-top: 10px;">' + my_truncated_string + '</p>' +
+                      '<p style="font-size: 12px; margin-top: 10px;">' + new_replaced_str + '</p>' +
                       '</div>' +
                       '<a href="' + arg_collection[ith_key]['data'][0]['link'] + '" target="_blank">Post Link</a>');
       }
@@ -198,14 +198,11 @@
       var _elem = $('#' + arg_elem_id);
       _elem.append( '<div class="post_message">' +
                     '<strong style="font-size: 10px; font-weight: bold;">Post with Heighest Shares</strong>' + '<br/>' +
-                    '<strong style="font-size: 10px;">Shares Count:&nbsp;' + post_info_with_heighest_shares.count + '</strong>' + '<br/>' +
+                    '<strong style="font-size: 10px;">Shares:&nbsp;' + post_info_with_heighest_shares.count + '</strong>' + '<br/>' +
                     '<strong style="font-size: 10px;">' + ( new Date(post_info_with_heighest_shares.date) ) + '</strong>' +
                     '<p style="font-size: 12px; margin-top: 10px;">' + replaced_string + '</p>' +
                     '</div>' +
                     '<a href="' + post_info_with_heighest_shares.link + '" target="_blank">Post Link</a><hr/>');
-    },
-    count_likes : function(arg_likes){
-      //
     }
   }
 
