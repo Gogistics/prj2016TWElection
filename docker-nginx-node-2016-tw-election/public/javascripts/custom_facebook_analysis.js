@@ -12,7 +12,7 @@
           url: '/services/get_facebook_latest_posts_analysis_collection', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  // console.log(res.collecion);
+                  console.log(res.collecion);
                   window.facebook_analysis_handler.append_latest_post(res.collecion);
               }else{
                   console.log('fail...');
@@ -34,7 +34,11 @@
 
         /* display summary info */
         var truncated_length = 100,
-            new_replaced_str = arg_collection[ith_key]['data'][0]['message'];
+            new_replaced_str = '...';
+
+        if(arg_collection[ith_key]['data'][0]['message']){
+          new_replaced_str = arg_collection[ith_key]['data'][0]['message'];
+        }
 
         new_replaced_str = new_replaced_str.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
             return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';

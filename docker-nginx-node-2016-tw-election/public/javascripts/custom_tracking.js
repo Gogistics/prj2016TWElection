@@ -479,7 +479,6 @@
       var geo_location_alternative = message.geo || message.user.location || message.user.time_zone;
       if(geo_location_alternative !== null){
         //
-        console.log(_this);
         setTimeout( _this.find_geo_info.bind(_this, message.user.location,
                                                     message.created_at,
                                                     message.user.profile_image_url,
