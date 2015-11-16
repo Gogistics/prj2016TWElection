@@ -86,8 +86,38 @@ This project is for analyzing the trend of 2016 Taiwan Election. The application
 
 > root@alantai:/# docker rm mongo
 
-> root@alantai:/# docker run --name mongo -v /my_app/data:/data/db -v /my_app/keyfile:/opt/keyfile --hostname="{PRIMARY_DB}"
+> root@alantai:/# docker run --name mongo -v /my_app/data:/data/db -v /my_app/keyfile:/opt/keyfile --hostname="{PRIMARY_DB.com}"
 --add-host primary_db.com:{PRIMARY_DB_IP} --add-host replica_db_1.com:{REPLICA_DB_1_IP} --add-host replica_db_1.com:{REPLICA_DB_1_IP} -p 27017:27017 -d mongo --smallfiles --keyFile /opt/keyfile --replSet "rs0"
+
+> root@alantai:/# docker exec -it mongo /bin/bash
+
+> root@alantai:/# mongo
+
+> \> use admin
+
+> \> db.auth("siteRootAdmin", "{YOUR_PASSWORD}");
+
+> \> use {CUSTOM_DB}
+
+> \> db.createUser( {
+      user: "{CUSTOM_DB_USER}",
+      pwd: "{CUSTOM_USER_PASSWORD}",
+      roles: [ { role: "readWrite", db: "{CUSTOM_DB}" } ]
+      } )
+      
+> \> rs.initiate()
+
+> \>
+
+> \> rs.conf()
+
+*Start other secondary MongoDB instances*
+
+> root@alantai:/# docker run --name mongo -v /my_app/data:/data/db -v /my_app/keyfile:/opt/keyfile --hostname="{SECONDARY_DB.com}" --add-host replica_db_1.com:{REPLICA_DB_1_IP} --add-host replica_db_1_1.com:{REPLICA_DB_1_1_IP} -p 27017:27017 -d mongo --smallfiles --keyFile /opt/keyfile --replSet "rs0"
+
+*Once secondary MongoDB instances are configured successfully, go back to primary MongoDB instance to add secondary instances*
+
+> \> rs.add("{REPLICA_DB_1_1_IP}")
 
 #####Deploy App
 
@@ -101,4 +131,6 @@ Before running the command below, you need to set the environment variables to m
 
 > sh .local_start.sh
 
-*Build Nginx Container*
+*Build Containers*
+
+> docker-compose up -d
