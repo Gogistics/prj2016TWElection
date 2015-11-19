@@ -33,6 +33,8 @@ var index_dispatcher = require('./routes/index');
 app.use('/', index_dispatcher);
 var services_dispatcher = require('./routes/services');
 app.use('/services', services_dispatcher);
+var analysis_dispatcher = require('./routes/analysis');
+app.use('/analysis', analysis_dispatcher);
 
 /* error handler */
 // catch 404 and forward to error handler

@@ -114,6 +114,7 @@
 
             // push the accumulated count onto the back, and reset the count
             data.push(_this.count);
+            console.log(_this.count);
             _this.count = 0;
 
             // redraw the line
@@ -472,7 +473,7 @@
   });
   socket.on( 'tweet', function(message) {
       var _this = window.twitter_map_handler;
-      window.twitter_tweets_handler.count++;
+      window.twitter_tracking_handler.count++;
       window.twitter_tweets_handler.tweets_list.push(message);
 
       //
