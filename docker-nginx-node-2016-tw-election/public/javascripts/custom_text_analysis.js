@@ -64,9 +64,9 @@
 
   // --------
 
+  /* Trie D3 */
   // TrieD3 extends Trie with a "children" property for each node,
   // which d3 uses to build a diagram.
-
   function TrieD3(parent) {
       if (parent) {
           if (parent.children)
@@ -96,7 +96,6 @@
   dict.put("halt", "hold it");
 
   // d3 stuff
-
   var width = 800,
       height = 800;
 

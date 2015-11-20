@@ -13,7 +13,6 @@ RUN		 DEBIAN_FRONTEND=noninteractive apt-get install -yq git
 RUN		 DEBIAN_FRONTEND=noninteractive apt-get install -yq build-essential
 RUN		 apt-get update
 RUN		 apt-get clean
-RUN		 npm install forever -g
 
 # add files to working dir
 COPY my_dicts/ /web/my_dicts
