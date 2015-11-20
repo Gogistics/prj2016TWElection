@@ -58,6 +58,7 @@
                       '<strong style="font-size: 10px; font-weight: bold;">Latest Post</strong>' + '<br/>' +
                       '<strong style="font-size: 10px;">Shares:&nbsp;' + shares_count + '</strong>' + '<br/>' +
                       '<strong style="font-size: 10px;">' + ( new Date(arg_collection[ith_key]['data'][0]['created_time']) ) + '</strong>' +
+                      '<img src="' + arg_collection[ith_key]['data'][0]['picture'] + '" class="img-responsive"/>' +
                       '<p style="font-size: 12px; margin-top: 10px;">' + new_replaced_str + '</p>' +
                       '</div>' +
                       '<a href="' + arg_collection[ith_key]['data'][0]['link'] + '" target="_blank">Post Link</a>');
@@ -67,6 +68,11 @@
       //
       var shares_info_ary = [], post_info_with_heighest_shares = { count : 0, date : '', message : '', link : '' };
       for(var ith_key in arg_data){
+        //
+        if((new Date(arg_data[ith_key]['created_time']).getTime()) < (new Date('10-31-2015').getTime())){
+          //
+          continue;
+        }
         //
         var shares_count = arg_data[ith_key].hasOwnProperty('shares') ? arg_data[ith_key]['shares']['count'] : 0;
         shares_info_ary.push({ date : ( new Date(arg_data[ith_key]['created_time']) ), value: shares_count});

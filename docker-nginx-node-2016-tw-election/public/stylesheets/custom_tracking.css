@@ -39,9 +39,14 @@ div.tooltip p {
 }
 /* fb */
 .post_message{
-  height: 150px;
+  height: 250px;
   margin: 10px auto;
   overflow: auto;
+  text-align: center;
+}
+.post_message>img{
+  margin: 10px auto;
+  border-radius: 5px;
 }
 .d3_title{
   color: #000;
