@@ -131,6 +131,6 @@ Before running the command below, you need to set the environment variables to m
 
 > sh .local_start.sh
 
-*Build Containers*
+#####Build Containers
 
 > docker-compose up -d
