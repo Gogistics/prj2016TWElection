@@ -1,5 +1,6 @@
 /* twitter */
-(function ($) {
+'use strict';
+(function($) {
   window.twitter_analysis_handler = window.twitter_analysis_handler || {
     get_analysis_collection : function(){
       //

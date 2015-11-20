@@ -1,5 +1,6 @@
 /* twitter */
-(function ($) {
+'use strict';
+(function($) {
   /* Plurk Handler */
   window.plurk_analysis_handler = window.plurk_analysis_handler || {
     get_analysis_collection : function(){

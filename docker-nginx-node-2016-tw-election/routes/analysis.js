@@ -13,7 +13,7 @@ var monk = require('monk'),
 
 // routers
 router.get('/text_analysis', function(req, res, next) {
-  res.render('text_analysis', {});
+  res.render('my_ng_index', {});
 });
 
 module.exports = router;

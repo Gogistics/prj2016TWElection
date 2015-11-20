@@ -1,1 +1,2 @@
 /* calendar */
+'use strict';
