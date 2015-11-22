@@ -2,11 +2,11 @@
 'use strict';
 (function($) {
   window.twitter_tracking_handler = window.twitter_tracking_handler || {
-    default_location : [[23.893589, 121.083589]],
-    count : 0,
+    default_location : [[23.893589, 121.083589]], // default location; here location is set at taiwan
+    count : 0, // count of incoming tweets
     is_ringtone_alert_on : true,
     is_mobile : function(){
-      //
+      // check if user device
       var is_mobile = false; //initiate as false
         // device detection
         if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
@@ -16,19 +16,21 @@
         return is_mobile;
     },
     init_stream_chart : function(){
-      //
+      // set "this" obj
       var _this = this;
 
       // d3 configuration
         var n = 245,
             duration = 750,
             now = new Date(Date.now() - duration),
-            data = d3.range(n).map(function() { return 0; });
+            data = d3.range(n).map(function() { return 0; }); // default values; here all are set to zero
 
+        // basic layout setting of the chart
         var margin = {top: 5, right: 0, bottom: 20, left: 50},
             width = 680 - margin.left,
             height = 150 - margin.top - margin.bottom;
 
+        // x and y axis
         var x = d3.time.scale()
             .domain([now - (n - 2) * duration, now - duration])
             .range([0, width]);
@@ -36,12 +38,14 @@
         var y = d3.scale.linear()
             .domain([0, 5])
             .range([height, 0]);
+        // end of x and y axis
 
         var line = d3.svg.line()
             .interpolate("basis")
             .x(function(d, i) { return x(now - (n - 1 - i) * duration); })
             .y(function(d, i) { return y(d); });
 
+        // configure svg element
         var svg = d3.select("div#twitter_stream_chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -56,7 +60,9 @@
             .append("rect")
             .attr("width", width)
             .attr("height", height);
+        // end of svg configuration
 
+        //
         var x_axis = svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -75,18 +81,12 @@
                     .datum(data)
                     .attr("class", "line");
 
-        var transition = d3.select({}).transition()
-            .duration(750)
-            .ease("linear");
+        var transition = d3.select({})
+                          .transition()
+                          .duration(750)
+                          .ease("linear");
             
         /* make grid */
-        function make_x_axis() {        
-            return d3.svg.axis()
-                .scale(x)
-                 .orient("bottom")
-                 .ticks(5)
-        }
-
         function make_y_axis() {        
             return d3.svg.axis()
                 .scale(y)
@@ -101,6 +101,7 @@
         .tickFormat( "" ));
         /* end of make grid */
 
+        // append axis label
         svg.append("text")
             .attr("class", "label")
             .attr("transform","rotate(-90)")
@@ -110,6 +111,7 @@
             .style("font-size", "13px")
             .text("Tweets");
 
+        // start ticking
         (function tick() {
           transition = transition.each(function() {
 
@@ -166,7 +168,7 @@
           window.twitter_tracking_handler.is_ringtone_alert_on = false;
       }
   });
-  // end
+  // end of tracking alert
 
   /* twitter list handler */
   window.twitter_tweets_handler = window.twitter_tweets_handler || {
@@ -285,7 +287,7 @@
                         .attr("stop-color", "#fff")
                         .attr("stop-opacity", 0);
 
-        //
+        // set default data
         _this.d3_data = _this.defualt_circles;
         // set lat_lng for Leaflet
         _this.d3_data.forEach(function(d) {
@@ -316,14 +318,14 @@
         //
         setTimeout( _this.update_d3_elem_on_map.bind(_this), 500 );
 
-        //
+        // set map popup
         var map_popup = L.popup();
         map_popup.setLatLng( [ 23.893589, 121.083589] )
-                        .setContent( '<div style="text-align: center;">' +
-                                     '<p>Track 2016 TW Election on Twitter</p>' +
-                                     '<img style="width: 80px;" src="/public/javascripts/leaflet-0.7/images/twitter-1.png"><br>' +
-                                     '</div>')
-                        .openOn(_this.map);
+                .setContent( '<div style="text-align: center;">' +
+                             '<p>Track 2016 TW Election on Twitter</p>' +
+                             '<img style="width: 80px;" src="/public/javascripts/leaflet-0.7/images/twitter-1.png"><br>' +
+                             '</div>')
+                .openOn(_this.map);
       }
     },
     update_d3_elem_on_map : function(){

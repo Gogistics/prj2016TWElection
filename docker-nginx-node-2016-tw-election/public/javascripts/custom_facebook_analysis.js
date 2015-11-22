@@ -1,11 +1,11 @@
 /* twitter */
 'use strict';
 (function($) {
-  /* Plurk Handler */
+  /* facebook handler */
   window.facebook_analysis_handler = window.facebook_analysis_handler || {
     get_analysis_collection : function(){
-      //
-      $.ajax({ // create an AJAX call...
+      // create an AJAX call to get data
+      $.ajax({
           data: {
             token: 'OCweKSaVwPOgerGEhRAEBvsRNdqWEdjA',
           },
@@ -16,7 +16,7 @@
                   console.log(res.collecion);
                   window.facebook_analysis_handler.append_latest_post(res.collecion);
               }else{
-                  console.log('fail...');
+                  console.log('fail and no data come in...');
               };
           }
       });
@@ -54,7 +54,7 @@
         }
         
         //
-        _elem = $('#' + politicians_dict[ith_key]);
+        var _elem = $('#' + politicians_dict[ith_key]);
         _elem.append( '<div class="post_message">' +
                       '<strong style="font-size: 10px; font-weight: bold;">Latest Post</strong>' + '<br/>' +
                       '<strong style="font-size: 10px;">Shares:&nbsp;' + shares_count + '</strong>' + '<br/>' +

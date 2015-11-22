@@ -5,8 +5,8 @@
   window.plurk_analysis_handler = window.plurk_analysis_handler || {
     get_analysis_collection : function(){
       var _this = this;
-      //
-      $.ajax({ // create an AJAX call...
+      // create an AJAX call to get data
+      $.ajax({
           data: {
             token: 'IcsEegBbPOgerGEhRAEBYLRsSLtAA',
           },

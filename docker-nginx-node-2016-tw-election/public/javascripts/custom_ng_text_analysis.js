@@ -1,4 +1,4 @@
-/**/
+/* angularjs handler */
 'use strict';
 (function($){
   //
@@ -11,7 +11,7 @@
 
   // ng-router ; all url start with predefined url in main.js and orginal route ; in this case / point to /analysis/text_analysis
   app.config(['$routeProvider', function($routeProvider){
-    //
+    // route provider
     $routeProvider.when('/',{
       //
       templateUrl: '/public/my_ng_html_templates/text_analysis.html',
@@ -21,14 +21,14 @@
     });
   }]);
 
-  // ng-controller
+  // ng-value
   app.value('DICT',{
     MY_EMAIL : 'gogistics@gogistics-tw.com'
   })
   .service('AppService', AppService)
   .controller('IndexCtrl', IndexController);
 
-  /* controllers and services */
+  /* ng-controllers and ng-services */
   // services
   AppService.$injector = ['$http', 'DICT'];
   function AppService($http, DICT){
