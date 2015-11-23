@@ -90,7 +90,7 @@
           .orient("bottom").ticks(5);
 
       var yAxisLeft = d3.svg.axis().scale(y0)
-          .orient("left").ticks(5);
+          .orient("left").ticks(5,"s");
 
       var valueline = d3.svg.line()
           .x(function(d) { return x(d.date); })
@@ -106,10 +106,11 @@
 
       // make grid
       var make_y_axis = function() {        
-          return d3.svg.axis()
-              .scale(y0)
-              .orient("left")
-              .ticks(5)
+          return d3.svg
+                  .axis()
+                  .scale(y0)
+                  .orient("left")
+                  .ticks(5)
       }
 
       svg.append("svg:g")         

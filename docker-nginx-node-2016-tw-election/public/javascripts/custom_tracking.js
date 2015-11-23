@@ -439,7 +439,7 @@
                 tweet = arg_tweet.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
                   return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
                 }),
-                time_ary = arg_created_time.split(' ');
+                time_ary = arg_created_time.split(' '),
                 tweet_time = time_ary[1] + ' ' + time_ary[2] + '-' + time_ary[5] + ' ' + time_ary[3],
                 display_name = val.display_name.split(','),
                 country = display_name[display_name.length - 1].trim();
@@ -478,7 +478,7 @@
 
   /* socket io handler */
   // socket io (incomplete)
-  var socket = io.connect('ec2-52-34-22-148.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
+  var socket = io.connect('ec2-52-26-126-191.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
   socket.on('connect', function(){
       console.log('get connected...');
       var _this = window.twitter_tweets_handler;
