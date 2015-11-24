@@ -7,11 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // end of add modules
 
-// port config.
+// port setting
 var DEFAULT_PORT = 8080;
 var PORT = process.env.PORT || DEFAULT_PORT;
 
-// App
+// App setting
 var app = express(),
     cache_time = 2 * 86400000;
 

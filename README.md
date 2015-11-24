@@ -2,10 +2,12 @@
 
 http://2016-tw-election.gogistics-tw.com/
 
-### Deployment of Virtual Machines on EC2 with Docker Swarm
+### Development of Web Application of Tracking 2016 Taiwan Election
 This project is for analyzing the trend of 2016 Taiwan Election. The applications will be developed with the follwoing frameworks, libs, and so on:
 
 **AWS EC2** is for hosting the virtual machines
+
+**Virtualbox** is for running docker locally
 
 **Docker Swarm** is for deploying container swarm to handle web services and databases
 
@@ -21,12 +23,13 @@ This project is for analyzing the trend of 2016 Taiwan Election. The application
 
 **Bootstrap** is a mobile first front-end framework
 
-**D3** a JavaScript library for visualizing data
+**D3** is a JavaScript library for visualizing data
 
-**Leaflet** a JavaScript library for visualizing data
+**Leaflet** is a JavaScript library for visualizing geo-data
 
 ---
 
+### Deployment of Virtual Machines on EC2 with Docker Swarm
 #####Instances Deployment
 
 *Set up swarm master-*
@@ -131,7 +134,11 @@ Before running the command below, you need to set the environment variables to m
 
 > sh .local_start.sh
 
+Open your browser and you're able to access your website at http://localhost:8080/
+
 #####Build Containers
+
+To deploy the docker containers to the instance, go to the dir which contains the docker-compose.yml file and execute the following command
 
 > docker-compose up -d
 
