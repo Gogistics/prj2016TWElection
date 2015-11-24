@@ -1,5 +1,6 @@
-/**/
-'use strict';
+/*
+*  do not use 'use strict'
+*/
 (function($){
   //
   new WOW().init();

@@ -35,11 +35,8 @@
 
         /* display summary info */
         var truncated_length = 100,
-            new_replaced_str = '...';
-
-        if(arg_collection[ith_key]['data'][0]['message']){
-          new_replaced_str = arg_collection[ith_key]['data'][0]['message'];
-        }
+            new_replaced_str = arg_collection[ith_key]['data'][0]['message'] || '...',
+            post_picture = arg_collection[ith_key]['data'][0]['picture'] || '/public/frontend_1/img/team/alan_tai.png';
 
         new_replaced_str = new_replaced_str.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
             return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
@@ -59,7 +56,7 @@
                       '<strong style="font-size: 10px; font-weight: bold;">Latest Post</strong>' + '<br/>' +
                       '<strong style="font-size: 10px;">Shares:&nbsp;' + shares_count + '</strong>' + '<br/>' +
                       '<strong style="font-size: 10px;">' + ( new Date(arg_collection[ith_key]['data'][0]['created_time']) ) + '</strong>' +
-                      '<img src="' + arg_collection[ith_key]['data'][0]['picture'] + '" class="img-responsive"/>' +
+                      '<img src="' + post_picture + '" class="img-responsive"/>' +
                       '<p style="font-size: 12px; margin-top: 10px;">' + new_replaced_str + '</p>' +
                       '</div>' +
                       '<a href="' + arg_collection[ith_key]['data'][0]['link'] + '" target="_blank">Post Link</a>');

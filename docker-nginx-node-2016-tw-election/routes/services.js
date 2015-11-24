@@ -111,7 +111,6 @@ router.post('/get_facebook_latest_posts_analysis_collection', function(req, res,
   }
 });
 
-
 // get twitter analysis collection
 router.post('/get_twitter_tweets_analysis_collection_by_lang_type', function(req, res, next){
   //
@@ -154,6 +153,17 @@ router.post('/get_plurk_posts_analysis_collection_by_lang_type', function(req, r
       count_of_total_tweets : count_of_total_tweets
     });
   });
+});
+
+
+// POST get tweets summary
+router.post('/get_tweets_summary', function(req, res, next) {
+  // get req info
+  var user_ip = req.ip;
+  res.send({
+    request_status : 'successful',
+    latest_20_tweets : {}
+ });
 });
 
 module.exports = router;

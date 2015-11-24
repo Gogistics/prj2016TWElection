@@ -35,10 +35,13 @@ module.exports = function(grunt){
   uglify:{
       options: {
           banner: '\/\*\! \<\%\= pkg.name \%\> \<\%\= grunt.template.today\(\"dd-mm-yyyy\"\) \%\> \*\/',
+          report: 'min',
+          mangle: false
       },
             combine: {
                 files: {
                     'public/frontend_1/js/jquery.scrollTo.min.js': ['public/frontend_1/js/jquery.scrollTo.js'],
+                    'public/javascripts/custom_append_scripts.min.js': ['public/javascripts/custom_append_scripts.js'],
                     'public/frontend_1/js/custom.min.js': ['public/frontend_1/js/custom.js'],
                     'public/javascripts/leaflet-0.7/leaflet.min.js': ['public/javascripts/leaflet-0.7/leaflet.js'],
                     'public/javascripts/leaflet-0.7/leaflet.markercluster-src.min.js': ['public/javascripts/leaflet-0.7/leaflet.markercluster-src.js'],
@@ -50,6 +53,8 @@ module.exports = function(grunt){
                     'public/javascripts/custom_twitter_analysis.min.js': ['public/javascripts/custom_twitter_analysis.js'],
                     'public/javascripts/custom_plurk_analysis.min.js': ['public/javascripts/custom_plurk_analysis.js'],
                     'public/javascripts/custom_tracking.min.js': ['public/javascripts/custom_tracking.js'],
+                    'public/javascripts/custom_ng/custom_ng_calendar_analysis.min.js': ['public/javascripts/custom_ng/custom_ng_calendar_analysis.js'],
+                    'public/javascripts/custom_ng/custom_ng_text_analysis.min.js': ['public/javascripts/custom_ng/custom_ng_text_analysis.js']
                 },
             },
         },

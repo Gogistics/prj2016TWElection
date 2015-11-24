@@ -16,4 +16,8 @@ router.get('/text_analysis', function(req, res, next) {
   res.render('my_ng_index', {});
 });
 
+router.get('/calendar', function(req, res, next) {
+  res.render('my_ng_calendar', {});
+});
+
 module.exports = router;
