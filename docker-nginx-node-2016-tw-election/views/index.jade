@@ -1,7 +1,17 @@
 extends base_layout
 
-block content
+block css_block
+  //
+  link(href='/public/frontend_1/css/bootstrap.min.css' type='text/css' rel='stylesheet')
+  link(href='/public/frontend_1/font-awesome/css/font-awesome.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/frontend_1/css/animate.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/frontend_1/css/style.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/frontend_1/color/default.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/leaflet.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/marker_cluster.default.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/marker_cluster.min.css' type='text/css'  rel='stylesheet')
 
+block content
   // cover
   div(id="preloader")
     div(id="load")
@@ -36,9 +46,6 @@ block content
   script(src='/public/frontend_1/js/jquery.scrollTo.min.js')
   script(src='/public/frontend_1/js/bootstrap.min.js')
   script(src='/public/frontend_1/js/wow.min.js')
-
-  // styles
-  script(src='/public/javascripts/custom_append_scripts.min.js')
 
   // leaflet
   script(src='/public/javascripts/leaflet-0.7/leaflet.min.js')
