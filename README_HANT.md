@@ -60,7 +60,7 @@ This project is for analyzing the trend of 2016 Taiwan Election. The application
 
 > root@alantai:/# sudo chown 999 mongodb-keyfile
   
-*Create containers*
+*Create MongoDB Container*
   
 > root@alantai:/# docker run --name my_mongo -v /my_app/data:/data/db --hostname="{PRIMARY_DB_IP}" -p 27017:27017 -d mongo --smallfiles
 
