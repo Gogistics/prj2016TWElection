@@ -5,27 +5,27 @@ http://2016-tw-election.gogistics-tw.com/
 ### Development of Web Application of Tracking 2016 Taiwan Election
 This project is for analyzing the trend of 2016 Taiwan Election. The applications will be developed with the follwoing frameworks, libs, and so on:
 
-**AWS EC2** is for hosting the virtual machines
+**AWS EC2** 雲端平台，用於佈署虛擬主機
 
-**Virtualbox** is for running docker locally
+**Virtualbox** 用於建立虛擬環境執行docker
 
 **Docker Swarm** is for deploying container swarm to handle web services and databases
 
-**MongoDB** is a cross-platform document-oriented database
+**MongoDB** 跨執行環境的NoSQL資料庫
 
-**Nginx** is working as the proxy server
+**Nginx** 高性能的多用途伺服器，在此專案中用作proxy server
 
-**Node.js** is for developing the web app
+**Node.js** 基於Chrome V8引擎的JavaScript運行環境
 
-**Express** is a Node.js web app framework
+**Express** 用於Node.js的應用框架
 
-**Jade** is the template engine for Node.js
+**Jade** Express的模板引擎
 
-**Bootstrap** is a mobile first front-end framework
+**Bootstrap** Twitter開發的前端開源套件，用於開發使用者介面
 
-**D3** is a JavaScript library for visualizing data
+**D3** JavaScript的開源套件，用於視覺化資料
 
-**Leaflet** is a JavaScript library for visualizing geo-data
+**Leaflet** JavaScript的開源套件，用於視覺化地理資訊
 
 ---
 
