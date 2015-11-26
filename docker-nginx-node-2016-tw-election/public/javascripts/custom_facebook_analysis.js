@@ -205,7 +205,7 @@
       });
       var _elem = $('#' + arg_elem_id);
       _elem.append( '<div class="post_message">' +
-                    '<strong style="font-size: 10px; font-weight: bold;">Post with Heighest Shares</strong>' + '<br/>' +
+                    '<strong style="font-size: 10px; font-weight: bold;">Post with highest shares</strong>' + '<br/>' +
                     '<strong style="font-size: 10px;">Shares:&nbsp;' + post_info_with_heighest_shares.count + '</strong>' + '<br/>' +
                     '<strong style="font-size: 10px;">' + ( new Date(post_info_with_heighest_shares.date) ) + '</strong>' +
                     '<p style="font-size: 12px; margin-top: 10px;">' + replaced_string + '</p>' +

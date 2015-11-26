@@ -14,7 +14,7 @@ module.exports = function(grunt){
       },
   },
         
-        // name of plugin
+  // minify css files
   cssmin:{
       combine: {
           files: {

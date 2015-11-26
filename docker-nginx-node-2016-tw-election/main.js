@@ -1,17 +1,17 @@
 /* required modules */
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser');
 // end of add modules
 
-// port setting
-var DEFAULT_PORT = 8080;
-var PORT = process.env.PORT || DEFAULT_PORT;
+/* port setting */
+var DEFAULT_PORT = 8080,
+    PORT = process.env.PORT || DEFAULT_PORT;
 
-// App setting
+/* App setting */
 var app = express(),
     cache_time = 2 * 86400000;
 
@@ -28,7 +28,7 @@ app.use('/public', express.static( path.join(__dirname, '/public'), { maxAge: ca
 app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))); // set bootstrap path ; maybe unnecessary
 app.use('/jq', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // set jquery path ; maybe unnecessary
 
-// dispatcher
+/* routers setting */
 var index_dispatcher = require('./routes/index');
 app.use('/', index_dispatcher);
 var services_dispatcher = require('./routes/services');
