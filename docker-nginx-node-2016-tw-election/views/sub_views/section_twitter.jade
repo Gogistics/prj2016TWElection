@@ -28,8 +28,14 @@ section(id="twitter" class="home-section text-center")
                     else
                       ul(id="categorized_collection" class="list-group col-lg-12" )
 
+                h3 Top Five Tweet with Highest Retweet Count
+                ul(id="top_five_tweets_with_highest_retweet_count" class="list-group")
+                  li(class="list-group-item")
+                    div(class="loader")
+
                 br
-                ul(id="tweet_list" class="list-group" style="max-height: 200px; overflow:auto;")
+                h3 REAL-TIME TWEET
+                ul(id="tweet_list" class="list-group")
 
               // condition for switching blocks & pass variables to javascript via jade
               script.
@@ -37,7 +43,7 @@ section(id="twitter" class="home-section text-center")
               if (!is_mobile)
                 span(id="tweets_peak")
                 div
-                  div(class="onoffswitch" style="margin:10px auto;")
+                  div(class="onoffswitch")
                     input(id="tracking_alert_onoffswitch" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" checked="")
                     label(class="onoffswitch-label" for="tracking_alert_onoffswitch")
                       span(class="onoffswitch-inner")

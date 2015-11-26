@@ -51,7 +51,26 @@ div.tooltip p {
 .d3_title{
   color: #000;
 }
+.loader{
+  background:#ffffff url(../images/loader.gif) center center no-repeat;
+  height: 60px;
+  width: 60px;
+  margin: 5px auto;
+}
 /* twitter */
+#top_five_tweets_with_highest_retweet_count{
+    font-size: 12px;
+}
+#top_five_tweets_with_highest_retweet_count{
+    font-size: 12px;
+}
+#top_five_tweets_with_highest_retweet_count>li>img{
+    border-radius: 50%;
+}
+#top_five_tweets_with_highest_retweet_count>li>p{
+    margin: 10px auto;
+    font-size: 13px;
+}
 #twitter_stream_chart{
     margin: 10px 20px;
     text-align: center;
@@ -94,11 +113,20 @@ div.tooltip p {
 }
 #tweet_list{
     border-bottom: 1px solid #ccc;
+    max-height: 200px;
+    overflow:auto;
+}
+#tweets_peak{
+    color: #f00;
+    font-size: 12px;
+    font-style: italic;
+}
+#high_peak_alert{
+    height: 0px;
 }
 .hidden_elem{
     display: none;
 }
-
 /* d3 */
 svg {
   font: 10px sans-serif;
@@ -130,18 +158,11 @@ svg {
   stroke: #000;
   shape-rendering: crispEdges;
 }
-
-/**/
-#tweets_peak{
-    color: #f00;
-    font-size: 12px;
-    font-style: italic;
-}
-#high_peak_alert{
-    height: 0px;
-}
+/* switcher */
 .onoffswitch {
-    position: relative; width: 80px;
+    position: relative;
+    width: 80px;
+    margin:10px auto;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 .onoffswitch-checkbox {
@@ -187,7 +208,14 @@ svg {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
-
+/* plurk */
+#top_five_posts_with_highest_replurkers_count>p{
+  font-size: 12px;
+}
+#top_five_posts_with_highest_replurkers_count>li>p>img, #top_five_posts_with_highest_replurkers_count>li>p>a>img{
+  border-radius: 2px;
+  margin: 5px 5px;
+}
 /* media */
 #tweet_list li div{
     display: block; text-align: center;

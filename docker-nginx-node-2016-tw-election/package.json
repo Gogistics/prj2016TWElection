@@ -17,6 +17,7 @@
     "jquery": "*",
     "jsonfile": "*",
     "mandrill-api": "*",
+    "hanzi": "*",
     "mongodb":"1.4.x",
     "monk": "*",
     "ejs": "*",

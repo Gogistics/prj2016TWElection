@@ -205,11 +205,61 @@
 
       build_chart(rearranged_collection);
       // end of build_chart
+    },
+    get_twitter_tweets : function(){
+      //
+      var _this = this;
+      // create an AJAX call to get data
+      $.ajax({
+          data: {
+            token: 'IDQWpckbiKLZUotOgerGEhRAEBwxYA',
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_twitter_tweets', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                  _this.append_twitter_tweets(res.tweets);
+              }else{
+                  console.log('fail...');
+              };
+          }
+      });
+    },
+    append_twitter_tweets : function(arg_tweets){
+      //
+      arg_tweets.sort(function(elem_1, elem_2){
+        //
+        return ( elem_2['tweet']['retweet_count'] - elem_1['tweet']['retweet_count'] ) || ( (new Date(elem_2['tweet']['created_at']).getTime()) - (new Date(elem_1['tweet']['created_at']).getTime()) );
+      });
+      var top_five_tweets = arg_tweets.slice(0,5);
+      console.log(top_five_tweets);
+
+      //
+      var top_five_tweets_list = $('ul#top_five_tweets_with_highest_retweet_count');
+      top_five_tweets_list.empty();
+      for( var jth in top_five_tweets){
+        //
+        top_five_tweets_list.append('<li class="list-group-item">' +
+                                    '<img src="' + top_five_tweets[jth]['tweet']['user']['profile_image_url'] + '"><br/>' +
+                                    '<a href="https://twitter.com/' + top_five_tweets[jth]['tweet']['user']['screen_name'] + '" target="_blank" >@' + top_five_tweets[jth]['tweet']['user']['screen_name'] + '</a><br>' +
+                                    '<span>Retweet&nbsp;Counts:&nbsp;' + top_five_tweets[jth]['tweet']['retweet_count'] + '</span><br/>' +
+                                    '<span>Created at:&nbsp;' + (new Date(top_five_tweets[jth]['tweet']['created_at'])) + '</span><br/>' +
+                                    '<p>' + top_five_tweets[jth]['tweet']['text'] + '</p>' +
+                                    '</li>');
+      }
+    },
+    prepend_elem_to_ary : function(arg_val, arg_ary){
+      //
+      var new_ary = arg_ary.slice(0);
+      new_ary.unshift(arg_val);
+      return new_ary;
     }
   }
 
   // start analysis
   window.twitter_analysis_handler.get_analysis_collection();
+
+  window.twitter_analysis_handler.get_twitter_tweets();
   /* end */
 
 })(jQuery);

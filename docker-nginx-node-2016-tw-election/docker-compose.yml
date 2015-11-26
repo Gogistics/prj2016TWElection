@@ -3,7 +3,6 @@ nginx:
     links:
         - node_1:node_1
         - node_2:node_2
-        - node_3:node_3
     ports:
         - "80:80"
 
@@ -15,13 +14,6 @@ node_1:
         - "8080"
 
 node_2:
-    build: .
-    env_file:
-        - ./.keys.env
-    ports: 
-        - "8080"
-
-node_3:
     build: .
     env_file:
         - ./.keys.env

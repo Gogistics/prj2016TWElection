@@ -3,7 +3,7 @@
 (function($) {
   /* Plurk Handler */
   window.plurk_analysis_handler = window.plurk_analysis_handler || {
-    get_analysis_collection : function(){
+    get_analysis_collection_by_lang_type : function(){
       var _this = this;
       // create an AJAX call to get data
       $.ajax({
@@ -208,11 +208,79 @@
 
       build_chart(rearranged_collection);
       // end of build_chart
+    },
+    get_plurk_posts : function(){
+      //
+      var _this = this;
+      // create an AJAX call to get data
+      $.ajax({
+          data: {
+            token: 'IDQWpckbiKLZUotOgerGEhRAEBwxYA',
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_plurk_posts', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                  _this.append_plurk_posts(res.posts);
+              }else{
+                  console.log('fail...');
+              };
+          }
+      });
+    },
+    append_plurk_posts : function(arg_posts){
+      //
+      var _this = this;
+      arg_posts.sort(function(elem_1, elem_2){
+        //
+        return ( elem_2['post']['replurkers_count'] - elem_1['post']['replurkers_count'] ) || ( (new Date(elem_2['posted']).getTime()) - (new Date(elem_1['posted']).getTime()) );
+      });
+      var top_five_posts = arg_posts.slice(0,5);
+      console.log(top_five_posts);
+      //
+      var top_five_posts_elem = $('ul#top_five_posts_with_highest_replurkers_count');
+      top_five_posts_elem.empty();
+      for( var jth in top_five_posts){
+        //
+        top_five_posts_elem.append('<li class="list-group-item">' +
+                                    '<span>Replurk&nbsp;Counts:&nbsp;' + top_five_posts[jth]['post']['replurkers_count'] + '</span><br/>' +
+                                    '<span>' + (new Date(top_five_posts[jth]['posted'])) + '</span><br/>' +
+                                    '<p>' + top_five_posts[jth]['post']['content'] + '</p>' +
+                                    '</li>');
+      }
+    },
+    prepend_elem_to_ary : function(arg_val, arg_ary){
+      //
+      var new_ary = arg_ary.slice(0);
+      new_ary.unshift(arg_val);
+      return new_ary;
+    },
+    analyze_text_hant : function(arg_text){
+      //
+      var _this = this;
+      // create an AJAX call to get data
+      $.ajax({
+          data: {
+            token: 'IDQWpckbiKLZUotOgerGEhRAEBwxYA',
+            text: arg_text
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_segments_hant', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                  console.log(res.segments);
+              }else{
+                  console.log('fail...');
+              };
+          }
+      });
     }
   }
 
   // start analysis
-  window.plurk_analysis_handler.get_analysis_collection();
+  window.plurk_analysis_handler.get_analysis_collection_by_lang_type();
+
+  window.plurk_analysis_handler.get_plurk_posts();
   /* end */
 
 })(jQuery);

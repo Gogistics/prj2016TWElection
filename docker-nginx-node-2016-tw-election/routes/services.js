@@ -1,13 +1,16 @@
 /* services */
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+    router = express.Router(),
+    hanzi = require('hanzi');
 
 /* mongodb */
 var monk = require('monk'),
     url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/2016_tw_election',
     db = monk(url),
     analysis_by_lang_type_collection = db.get('analysis_by_lang_type'),
+    twitter_tweets = db.get('twitter_tweets'),
     plurk_posts_analysis_by_lang_type_collection = db.get('plurk_posts_analysis_by_lang_type'),
+    plurk_posts = db.get('plurk_posts');
     facebook_posts_collection = db.get('facebook_politicians_posts');
 
 // mandrill email service
@@ -155,15 +158,64 @@ router.post('/get_plurk_posts_analysis_collection_by_lang_type', function(req, r
   });
 });
 
-
 // POST get tweets summary
-router.post('/get_tweets_summary', function(req, res, next) {
+router.post('/get_twitter_tweets', function(req, res, next) {
   // get req info
   var user_ip = req.ip;
+  var tweets = [];
+
+  //
+  twitter_tweets.find({}, { stream: true })
+            .each(function(doc){
+              //
+              tweets.push(doc);
+            })
+            .error(function(err){ if(err) throw err; })
+            .success(function(){
+              //
+              res.send({
+                request_status : 'successful',
+                tweets : tweets
+              });
+            });
+});
+
+// 
+router.post('/get_plurk_posts', function(req, res, next) {
+  // get req info
+  var user_ip = req.ip;
+  var posts = [];
+
+  //
+  plurk_posts.find({}, { stream: true })
+            .each(function(doc){
+              //
+              posts.push(doc);
+            })
+            .error(function(err){ if(err) throw err; })
+            .success(function(){
+              //
+              res.send({
+                request_status : 'successful',
+                posts : posts
+              });
+            });
+});
+
+/* hant analyzer */
+// incomplete
+router.post('/get_segments_hant', function(req, res, next){
+  //
+  var text = req.body.text, request_status = 'failed';
+  var segments = text ? hanzi.segment(text) : null;
+
+  if(segments){
+    request_status = 'successful';
+  }
   res.send({
-    request_status : 'successful',
-    latest_20_tweets : {}
- });
+    request_status: request_status,
+    segments: segments
+  });
 });
 
 module.exports = router;
