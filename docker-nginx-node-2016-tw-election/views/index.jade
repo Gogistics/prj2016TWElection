@@ -9,7 +9,8 @@ block css_block
   link(href='/public/frontend_1/color/default.min.css' type='text/css'  rel='stylesheet')
   link(href='/public/javascripts/leaflet-0.7/leaflet.min.css' type='text/css'  rel='stylesheet')
   link(href='/public/javascripts/leaflet-0.7/marker_cluster.default.min.css' type='text/css'  rel='stylesheet')
-  link(href='/public/javascripts/leaflet-0.7/marker_cluster.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/marker_cluster.min.css' type='text/css' rel='stylesheet')
+  link(href='/public/stylesheets/custom_tracking.min.css' rel='stylesheet' type='text/css')
 
 block content
   // cover
@@ -19,6 +20,10 @@ block content
   // navbars
   include ./sub_views/nav_top.jade
 
+  // popup tip block
+  div(id="summary_tip")
+  div(id="map_tip")
+  
   // section ; intro
   include ./sub_views/section_intro.jade
 

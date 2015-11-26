@@ -207,7 +207,7 @@ router.post('/get_plurk_posts', function(req, res, next) {
 router.post('/get_segments_hant', function(req, res, next){
   //
   var text = req.body.text, request_status = 'failed';
-  var segments = text ? hanzi.segment(text) : null;
+  var segments = text ? hanzi.segment('維持臺海和平的現狀') : null;
 
   if(segments){
     request_status = 'successful';

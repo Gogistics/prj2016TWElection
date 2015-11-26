@@ -60,9 +60,9 @@ div.tooltip p {
 /* twitter */
 #top_five_tweets_with_highest_retweet_count{
     font-size: 12px;
-}
-#top_five_tweets_with_highest_retweet_count{
-    font-size: 12px;
+    height: 200px;
+    overflow: auto;
+    border-bottom: 1px solid #aaa;
 }
 #top_five_tweets_with_highest_retweet_count>li>img{
     border-radius: 50%;
@@ -209,6 +209,12 @@ svg {
     right: 0px; 
 }
 /* plurk */
+#top_five_posts_with_highest_replurkers_count{
+    font-size: 12px;
+    height:200px;
+    overflow: auto;
+    border-bottom: 1px solid #aaa;
+}
 #top_five_posts_with_highest_replurkers_count>p{
   font-size: 12px;
 }

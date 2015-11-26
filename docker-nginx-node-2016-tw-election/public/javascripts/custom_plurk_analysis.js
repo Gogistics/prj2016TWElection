@@ -248,6 +248,8 @@
                                     '<p>' + top_five_posts[jth]['post']['content'] + '</p>' +
                                     '</li>');
       }
+
+      _this.analyze_text_hant('我們都是陌生人');
     },
     prepend_elem_to_ary : function(arg_val, arg_ary){
       //
