@@ -25,8 +25,8 @@ app.use(cookieParser());
 
 // static files config.
 app.use('/public', express.static( path.join(__dirname, '/public'), { maxAge: cache_time}));
-app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))); // set bootstrap path ; maybe unnecessary
-app.use('/jq', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // set jquery path ; maybe unnecessary
+app.use('/es5-shim', express.static(path.join(__dirname, '/bower_components/es5-shim')));
+app.use('/json3', express.static(path.join(__dirname, '/bower_components/json3/lib')));
 
 /* routers setting */
 var index_dispatcher = require('./routes/index');

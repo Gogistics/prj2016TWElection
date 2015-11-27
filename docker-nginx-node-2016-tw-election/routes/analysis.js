@@ -1,6 +1,6 @@
 /* services */
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+    router = express.Router();
 
 /* mongodb */
 var monk = require('monk'),
@@ -9,7 +9,6 @@ var monk = require('monk'),
     analysis_by_lang_type_collection = db.get('analysis_by_lang_type'),
     plurk_posts_analysis_by_lang_type_collection = db.get('plurk_posts_analysis_by_lang_type'),
     facebook_posts_collection = db.get('facebook_politicians_posts');
-
 
 // routers
 router.get('/text_analysis', function(req, res, next) {

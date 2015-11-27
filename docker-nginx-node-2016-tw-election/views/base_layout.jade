@@ -1,5 +1,11 @@
 doctype html
-html(lang='en')
+<!--[if lt IE 7]><html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html lang="en" class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js lt-ie9"><![endif]-->
+<!--[if IE 9]><html lang="en" class="no-js ie9"><![endif]-->
+<!--[if !IE]><!-->
+html(lang="en" class="no-js")
+  <!--<![endif]-->
   head
     meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome")
@@ -41,4 +47,7 @@ html(lang='en')
     
     title #{title}
   body(id="page-top" data-spy="scroll" data-target=".navbar-custom")
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
     block content

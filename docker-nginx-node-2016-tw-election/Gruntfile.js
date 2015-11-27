@@ -60,11 +60,11 @@ module.exports = function(grunt){
         },
     });
 
-
     // load the plugin
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
+    // register tasks
     grunt.registerTask('default', ['jshint', 'cssmin', 'uglify']);
 };
