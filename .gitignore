@@ -1,3 +1,3 @@
 docker-nginx-node-2016-tw-election/node_modules/
 docker-nginx-node-2016-tw-election/bower_components/
-.keys.env
+docker-nginx-node-2016-tw-election/.keys.env
