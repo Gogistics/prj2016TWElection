@@ -478,7 +478,7 @@
 
   /* socket io handler */
   // socket io (incomplete)
-  var socket = io.connect('ec2-52-26-126-191.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
+  var socket = io.connect('ec2-52-32-189-2.us-west-2.compute.amazonaws.com:8000'); // temp. ip & port for data stream
   socket.on('connect', function(){
       console.log('get connected...');
       var _this = window.twitter_tweets_handler;
