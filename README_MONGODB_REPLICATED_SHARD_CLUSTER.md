@@ -2,48 +2,77 @@
 
 ### Configure Replica Set 0
 ##### Create Instances
-cd myMongoShard/myReplicaSet0
+switch to directory of replica set 0
+> cd myMongoShard/myReplicaSet0
 
-docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-0 --amazonec2-region us-west-2 swarm-shard-replica-set-0
+create instance on EC2
+> docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-0 --amazonec2-region us-west-2 swarm-shard-replica-set-0
 
-docker-machine ls
-docker-machine env swarm-shard-replica-set-0
-eval "$(docker-machine env swarm-shard-replica-set-0)"
+take a look at the swarm
+> docker-machine ls
 
-docker build -t mongo_replica_set_0 .
+switch to swarm-shard-replica-set-0
+> docker-machine env swarm-shard-replica-set-0
+> eval "$(docker-machine env swarm-shard-replica-set-0)"
 
-docker run --name replica_set_0_primary -p 27017:27017 -d mongo_replica_set_0
-docker run --name replica_set_0_seconadry_1 -p 27018:27017 -d mongo_replica_set_0
-docker run --name replica_set_0_seconadry_2 -p 27019:27017 -d mongo_replica_set_0
-docker run --name replica_set_0_arb -p 27020:27017 -d mongo_replica_set_0
+build image
+> docker build -t mongo_replica_set_0 .
 
-docker ps
-docker exec -it replica_set_0_primary bash
-> mongo
-> rs.initiate() # hit enter
-rs0:OTHER> # hit enter again
-rs0:PRIMARY> use admin
-rs0:PRIMARY> db.createUser({user:"siteUserAdmin",pwd:"pwd_shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
-rs0:PRIMARY> db.auth('siteUserAdmin', 'pwd_shardingexample')
-rs0:PRIMARY> db.createUser({user:"siteRootAdmin",pwd:"pwd_shardingexample",roles:[{role:"root",db:"admin"}]})
-rs0:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
-rs0:PRIMARY> use test
-rs0:PRIMARY> db.createUser({user:"test_user",pwd:"pwd_shardingexample",roles:[{role:"readWrite",db:"test"}]})
-rs0:PRIMARY> db.auth('test_user', 'pwd_shardingexample')
-rs0:PRIMARY> use admin
-rs0:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
-rs0:PRIMARY> rs.status()
-rs0:PRIMARY> rs.conf()
-rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONDARY_1_IP:PORT')
-rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONADRY_2_IP:PORT')
-rs0:PRIMARY> rs.add('REPLICA_SET_0_ARBITER_IP:PORT')
+run conatiner
+> \> docker run --name replica_set_0_primary -p 27017:27017 -d mongo_replica_set_0
+> \> docker run --name replica_set_0_seconadry_1 -p 27018:27017 -d mongo_replica_set_0
+> \> docker run --name replica_set_0_seconadry_2 -p 27019:27017 -d mongo_replica_set_0
+> \> docker run --name replica_set_0_arb -p 27020:27017 -d mongo_replica_set_0
 
-rs0:PRIMARY> rs.status()
-rs0:PRIMARY> rs.conf()
+check if containers running properly
+> \> docker ps
 
-rs0:PRIMARY> cfg = rs.conf()
-rs0:PRIMARY> cfg.members[0].host = "REPLICA_SET_0_PRIMARY_IP:27017"
-rs0:PRIMARY> rs.reconfig(cfg)
+access container of primary set
+> \> docker exec -it replica_set_0_primary bash
+> \> mongo
+> \> rs.initiate() # hit enter
+
+> rs0:OTHER>
+
+> rs0:PRIMARY> use admin
+
+> rs0:PRIMARY> db.createUser({user:"siteUserAdmin",pwd:"pwd_shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+
+> rs0:PRIMARY> db.auth('siteUserAdmin', 'pwd_shardingexample')
+
+> rs0:PRIMARY> db.createUser({user:"siteRootAdmin",pwd:"pwd_shardingexample",roles:[{role:"root",db:"admin"}]})
+
+> rs0:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
+
+> rs0:PRIMARY> use test
+
+> rs0:PRIMARY> db.createUser({user:"test_user",pwd:"pwd_shardingexample",roles:[{role:"readWrite",db:"test"}]})
+
+> rs0:PRIMARY> db.auth('test_user', 'pwd_shardingexample')
+
+> rs0:PRIMARY> use admin
+
+> rs0:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
+
+> rs0:PRIMARY> rs.status()
+
+> rs0:PRIMARY> rs.conf()
+
+> rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONDARY_1_IP:PORT')
+
+> rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONADRY_2_IP:PORT')
+
+> rs0:PRIMARY> rs.add('REPLICA_SET_0_ARBITER_IP:PORT')
+
+> rs0:PRIMARY> rs.status()
+
+> rs0:PRIMARY> rs.conf()
+
+> rs0:PRIMARY> cfg = rs.conf()
+
+> rs0:PRIMARY> cfg.members[0].host = "REPLICA_SET_0_PRIMARY_IP:27017"
+
+> rs0:PRIMARY> rs.reconfig(cfg)
 
 
 ### Configure Replica Set 1
