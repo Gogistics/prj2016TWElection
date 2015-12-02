@@ -1,7 +1,11 @@
 # MongoDB Replicated Shard Cluster
 
+Three instances are created for demo. For production, the mongos, the config servers, and the replica sets are better to separate!
+
+One instance is hosting replica_set_0, another instance is hosting replica_set_1, and the other instance is hosting mongos and config servers
+
 ### Configure Replica Set 0
-##### Create Instances
+##### Create Instance
 switch to directory of replica set 0
 > cd myMongoShard/myReplicaSet0
 
@@ -82,7 +86,7 @@ access container of primary set
 
 
 ### Configure Replica Set 1
-##### Create Instances
+##### Create Instance
 cd myMongoShard/myReplicaSet1
 
 > docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-replica-set-1
@@ -154,7 +158,7 @@ cd myMongoShard/myReplicaSet1
 > rs1:PRIMARY> rs.reconfig(cfg)
 
 ### Configure Config-Server and Mongos (Router)
-##### Create Instances
+##### Create Instance
 
 > cd myMongoShard/myConfigsvrMongos/
 
