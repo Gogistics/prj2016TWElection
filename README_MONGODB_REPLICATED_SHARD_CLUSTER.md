@@ -11,26 +11,32 @@ create instance on EC2
 take a look at the swarm
 > docker-machine ls
 
-switch to swarm-shard-replica-set-0
+switch to swarm-shard-replica-set-0 environment
 > docker-machine env swarm-shard-replica-set-0
+
 > eval "$(docker-machine env swarm-shard-replica-set-0)"
 
-build image
+build the image
 > docker build -t mongo_replica_set_0 .
 
-run conatiner
-> \> docker run --name replica_set_0_primary -p 27017:27017 -d mongo_replica_set_0
-> \> docker run --name replica_set_0_seconadry_1 -p 27018:27017 -d mongo_replica_set_0
-> \> docker run --name replica_set_0_seconadry_2 -p 27019:27017 -d mongo_replica_set_0
-> \> docker run --name replica_set_0_arb -p 27020:27017 -d mongo_replica_set_0
+create conatiners
+> docker run --name replica_set_0_primary -p 27017:27017 -d mongo_replica_set_0
+
+> docker run --name replica_set_0_seconadry_1 -p 27018:27017 -d mongo_replica_set_0
+
+> docker run --name replica_set_0_seconadry_2 -p 27019:27017 -d mongo_replica_set_0
+
+> docker run --name replica_set_0_arb -p 27020:27017 -d mongo_replica_set_0
 
 check if containers running properly
-> \> docker ps
+> docker ps
 
 access container of primary set
-> \> docker exec -it replica_set_0_primary bash
-> \> mongo
-> \> rs.initiate() # hit enter
+> docker exec -it replica_set_0_primary bash
+
+> mongo
+
+> rs.initiate() # hit enter
 
 > rs0:OTHER>
 
@@ -79,46 +85,73 @@ access container of primary set
 ##### Create Instances
 cd myMongoShard/myReplicaSet1
 
-docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-replica-set-1
+> docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-replica-set-1
 
-docker-machine ls
-docker-machine env swarm-shard-replica-set-1
-eval "$(docker-machine env swarm-shard-replica-set-1)"
+> docker-machine ls
 
-docker build -t mongo_replica_set_1 .
+> docker-machine env swarm-shard-replica-set-1
 
-docker run --name replica_set_1_primary -p 27017:27017 -d mongo_replica_set_1
-docker run --name replica_set_1_seconadry_1 -p 27018:27017 -d mongo_replica_set_1
-docker run --name replica_set_1_seconadry_2 -p 27019:27017 -d mongo_replica_set_1
-docker run --name replica_set_1_arb -p 27020:27017 -d mongo_replica_set_1
+> eval "$(docker-machine env swarm-shard-replica-set-1)"
 
-docker ps
-docker exec -it replica_set_1_primary bash
-> mongo
+> docker build -t mongo_replica_set_1 .
+
+> docker run --name replica_set_1_primary -p 27017:27017 -d mongo_replica_set_1
+
+> docker run --name replica_set_1_seconadry_1 -p 27018:27017 -d mongo_replica_set_1
+
+> docker run --name replica_set_1_seconadry_2 -p 27019:27017 -d mongo_replica_set_1
+
+> docker run --name replica_set_1_arb -p 27020:27017 -d mongo_replica_set_1
+
+> docker ps
+
+> docker exec -it replica_set_1_primary bash
+
+> \> mongo
+
 > rs.initiate() # hit enter
-rs1:OTHER> # hit enter again
-rs1:PRIMARY> use admin
-rs1:PRIMARY> db.createUser({user:"siteUserAdmin",pwd:"pwd_shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
-rs1:PRIMARY> db.auth('siteUserAdmin', 'pwd_shardingexample')
-rs1:PRIMARY> db.createUser({user:"siteRootAdmin",pwd:"pwd_shardingexample",roles:[{role:"root",db:"admin"}]})
-rs1:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
-rs1:PRIMARY> use test
-rs1:PRIMARY> db.createUser({user:"test_user",pwd:"pwd_shardingexample",roles:[{role:"readWrite",db:"test"}]})
-rs1:PRIMARY> db.auth('test_user', 'pwd_shardingexample')
-rs1:PRIMARY> use admin
-rs1:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
-rs1:PRIMARY> rs.status()
-rs1:PRIMARY> rs.conf()
-rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONDARY_1_IP:PORT')
-rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONADRY_2_IP:PORT')
-rs1:PRIMARY> rs.add('REPLICA_SET_1_ARBITER_IP:PORT')
 
-rs1:PRIMARY> rs.status()
-rs1:PRIMARY> rs.conf()
+> rs1:OTHER> # hit enter again
 
-rs1:PRIMARY> cfg = rs.conf()
-rs1:PRIMARY> cfg.members[0].host = "REPLICA_SET_1_PRIMARY_IP:27017"
-rs1:PRIMARY> rs.reconfig(cfg)
+> rs1:PRIMARY> use admin
+
+> rs1:PRIMARY> db.createUser({user:"siteUserAdmin",pwd:"pwd_shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+
+> rs1:PRIMARY> db.auth('siteUserAdmin', 'pwd_shardingexample')
+
+> rs1:PRIMARY> db.createUser({user:"siteRootAdmin",pwd:"pwd_shardingexample",roles:[{role:"root",db:"admin"}]})
+
+> rs1:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
+
+> rs1:PRIMARY> use test
+
+> rs1:PRIMARY> db.createUser({user:"test_user",pwd:"pwd_shardingexample",roles:[{role:"readWrite",db:"test"}]})
+
+> rs1:PRIMARY> db.auth('test_user', 'pwd_shardingexample')
+
+> rs1:PRIMARY> use admin
+
+> rs1:PRIMARY> db.auth('siteRootAdmin', 'pwd_shardingexample')
+
+> rs1:PRIMARY> rs.status()
+
+> rs1:PRIMARY> rs.conf()
+
+> rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONDARY_1_IP:PORT')
+
+> rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONADRY_2_IP:PORT')
+
+> rs1:PRIMARY> rs.add('REPLICA_SET_1_ARBITER_IP:PORT')
+
+> rs1:PRIMARY> rs.status()
+
+> rs1:PRIMARY> rs.conf()
+
+> rs1:PRIMARY> cfg = rs.conf()
+
+> rs1:PRIMARY> cfg.members[0].host = "REPLICA_SET_1_PRIMARY_IP:27017"
+
+> rs1:PRIMARY> rs.reconfig(cfg)
 
 ### Configure Config-Server and Mongos (Router)
 ##### Create Instances
