@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# incomplete
 RET=1
 while [[ RET -ne 0 ]]; do
     echo "=> Waiting for confirmation of MongoDB service startup"
@@ -17,7 +18,6 @@ mongod --smallfiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
 cfg = { "_id" : "rs0", "version" : 1, "members" : [{ "_id" : 0, "host" : "52.24.228.20:27017"}]}
 
 # build image and run container; then go into mongo shell
-# mongos> # hit enter again
 # mongos> use admin
 # mongos> db.createUser({user:"siteUserAdmin",pwd:"shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
 # mongos> db.auth('siteUserAdmin', 'shardingexample')

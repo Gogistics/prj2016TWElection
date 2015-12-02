@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# incomplete
 RET=1
 while [[ RET -ne 0 ]]; do
     echo "=> Waiting for confirmation of MongoDB service startup"

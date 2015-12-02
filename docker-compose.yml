@@ -1,0 +1,24 @@
+nginx:
+    restart: always
+    build: ./myNginx
+    links:
+        - node_1:node_1
+        - node_2:node_2
+    ports:
+        - "80:80"
+
+node_1:
+    restart: always
+    build: ./myNodejsApp
+    env_file:
+        - ./myNodejsApp/.keys.env
+    ports: 
+        - "8080"
+
+node_2:
+    restart: always
+    build: ./myNodejsApp
+    env_file:
+        - ./myNodejsApp/.keys.env
+    ports: 
+        - "8080"

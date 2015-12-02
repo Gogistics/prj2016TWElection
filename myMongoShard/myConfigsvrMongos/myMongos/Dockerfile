@@ -20,5 +20,5 @@ RUN    cd /opt/keyfile && chmod 600 mongodb-keyfile && chown 999 mongodb-keyfile
 
 EXPOSE  27017
 
-#
-CMD mongos --keyFile /opt/keyfile/mongodb-keyfile --configdb 52.34.42.178:27018,52.34.42.178:27019,52.34.42.178:27020 --chunkSize 100
+# CMD mongos --keyFile /opt/keyfile/mongodb-keyfile --configdb 52.34.42.178:27018,52.34.42.178:27019,52.34.42.178:27020 --chunkSize 100
+CMD mongos --keyFile /opt/keyfile/mongodb-keyfile --configdb YOUR_CONFIGSVR_1_IP:YOUR_CONFIGSVR_1_PORT,YOUR_CONFIGSVR_2_IP:YOUR_CONFIGSVR_2_PORT,YOUR_CONFIGSVR_3_IP:YOUR_CONFIGSVR_3_PORT --chunkSize 100

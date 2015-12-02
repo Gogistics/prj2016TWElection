@@ -1,3 +1,6 @@
-docker-nginx-node-2016-tw-election/node_modules/
-docker-nginx-node-2016-tw-election/bower_components/
-docker-nginx-node-2016-tw-election/.keys.env
+myNodejsApp/node_modules/
+myNodejsApp/bower_components/
+myNodejsApp/.keys.env
+
+myWebRTCApp/ProjectRTC
+myWebRTCApp/AndroidRTC
