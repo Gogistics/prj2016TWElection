@@ -156,44 +156,59 @@ cd myMongoShard/myReplicaSet1
 ### Configure Config-Server and Mongos (Router)
 ##### Create Instances
 
-cd myMongoShard/myConfigsvrMongos/
+> cd myMongoShard/myConfigsvrMongos/
 
-docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-configsvr-mongos
+> docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-configsvr-mongos
 
-cd myMongoShard/myConfigsvrMongos/myConfig
+> cd myMongoShard/myConfigsvrMongos/myConfig
 
-docker build -t mongo_configsvr .
-docker run --name mongo_configsvr_0 -p 27018:27019 -d mongo_configsvr
-docker run --name mongo_configsvr_1 -p 27019:27019 -d mongo_configsvr
-docker run --name mongo_configsvr_2 -p 27020:27019 -d mongo_configsvr
+> docker build -t mongo_configsvr .
 
-cd myMongoShard/myConfigsvrMongos/myMongos
+> docker run --name mongo_configsvr_0 -p 27018:27019 -d mongo_configsvr
 
-docker build -t mongo_mongos .
-docker run --name mongos_1 -p 27017:27017 -d mongo_mongos
+> docker run --name mongo_configsvr_1 -p 27019:27019 -d mongo_configsvr
 
-docker ps
-docker exec -it mongos_1 bash
+> docker run --name mongo_configsvr_2 -p 27020:27019 -d mongo_configsvr
 
-mongo
-mongos> use admin
-mongos> db.createUser({user:"siteUserAdmin",pwd:"shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
-mongos> db.auth('siteUserAdmin', 'shardingexample')
-mongos> db.createUser({user:"siteRootAdmin",pwd:"shardingexample",roles:[{role:"root",db:"admin"}]})
-mongos> db.auth('siteRootAdmin', 'shardingexample')
+> cd myMongoShard/myConfigsvrMongos/myMongos
 
-# mongos> sh.addShard('rs0/52.24.228.20:27017,52.24.228.20:27018,52.24.228.20:27019,52.24.228.20:27020')
-# mongos> sh.addShard('rs1/52.34.228.30:27017,52.34.228.30:27018,52.34.228.30:27019,52.34.228.30:27020')
-mongos> sh.addShard('rs0/YOUR_REPLICA_SET_0_PRIMARY_IP:YOUR_REPLICA_SET_0_PRIMARY_PORT,YOUR_REPLICA_SET_0_SECONDARY_1_IP:YOUR_REPLICA_SET_0_SECONDARY_1_PORT,YOUR_REPLICA_SET_0_SECONDARY_2_IP:YOUR_REPLICA_SET_0_SECONDARY_2_PORT,YOUR_REPLICA_SET_0_ARBITER_IP:YOUR_REPLICA_SET_0_ARBITER_PORT')
-mongos> sh.addShard('rs1/YOUR_REPLICA_SET_1_PRIMARY_IP:YOUR_REPLICA_SET_1_PRIMARY_PORT,YOUR_REPLICA_SET_1_SECONDARY_1_IP:YOUR_REPLICA_SET_1_SECONDARY_1_PORT,YOUR_REPLICA_SET_1_SECONDARY_2_IP:YOUR_REPLICA_SET_1_SECONDARY_2_PORT,YOUR_REPLICA_SET_1_ARBITER_IP:YOUR_REPLICA_SET_1_ARBITER_PORT')
+> docker build -t mongo_mongos .
 
-mongos> db.runCommand({enablesharding: 'test'}) # or sh.enableSharding('test')
-mongos> db.runCommand({shardcollection: 'test.test_collection', key: {_id: 1}})
+> docker run --name mongos_1 -p 27017:27017 -d mongo_mongos
 
-mongos> db.stats()
-mongos> db.printShardingStatus()
+> docker ps
 
-mongos> use test
-mongos> db.stats()
-mongos> db.printShardingStatus()
+> docker exec -it mongos_1 bash
 
+> mongo
+
+> mongos> use admin
+
+> mongos> db.createUser({user:"siteUserAdmin",pwd:"shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+
+> mongos> db.auth('siteUserAdmin', 'shardingexample')
+
+> mongos> db.createUser({user:"siteRootAdmin",pwd:"shardingexample",roles:[{role:"root",db:"admin"}]})
+
+> mongos> db.auth('siteRootAdmin', 'shardingexample')
+
+####### EX: mongos> sh.addShard('rs0/52.24.228.20:27017,52.24.228.20:27018,52.24.228.20:27019,52.24.228.20:27020')
+####### EX: mongos> sh.addShard('rs1/52.34.228.30:27017,52.34.228.30:27018,52.34.228.30:27019,52.34.228.30:27020')
+
+> mongos> sh.addShard('rs0/YOUR_REPLICA_SET_0_PRIMARY_IP:YOUR_REPLICA_SET_0_PRIMARY_PORT,YOUR_REPLICA_SET_0_SECONDARY_1_IP:YOUR_REPLICA_SET_0_SECONDARY_1_PORT,YOUR_REPLICA_SET_0_SECONDARY_2_IP:YOUR_REPLICA_SET_0_SECONDARY_2_PORT,YOUR_REPLICA_SET_0_ARBITER_IP:YOUR_REPLICA_SET_0_ARBITER_PORT')
+
+> mongos> sh.addShard('rs1/YOUR_REPLICA_SET_1_PRIMARY_IP:YOUR_REPLICA_SET_1_PRIMARY_PORT,YOUR_REPLICA_SET_1_SECONDARY_1_IP:YOUR_REPLICA_SET_1_SECONDARY_1_PORT,YOUR_REPLICA_SET_1_SECONDARY_2_IP:YOUR_REPLICA_SET_1_SECONDARY_2_PORT,YOUR_REPLICA_SET_1_ARBITER_IP:YOUR_REPLICA_SET_1_ARBITER_PORT')
+
+> mongos> db.runCommand({enablesharding: 'test'}) # or sh.enableSharding('test')
+
+> mongos> db.runCommand({shardcollection: 'test.test_collection', key: {_id: 1}})
+
+> mongos> db.stats()
+
+> mongos> db.printShardingStatus()
+
+> mongos> use test
+
+> mongos> db.stats()
+
+> mongos> db.printShardingStatus()
