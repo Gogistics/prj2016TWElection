@@ -32,11 +32,13 @@ create conatiners
 
 > docker run --name replica_set_0_arb -p 27020:27017 -d mongo_replica_set_0
 
-check if containers running properly
+check if the containers running properly
 > docker ps
 
-access container of primary set
+access container of the primary set
 > docker exec -it replica_set_0_primary bash
+
+configure replica set
 
 > mongo
 
@@ -107,7 +109,7 @@ build the image
 
 > docker build -t mongo_replica_set_1 .
 
-create containers
+create the containers
 
 > docker run --name replica_set_1_primary -p 27017:27017 -d mongo_replica_set_1
 
@@ -120,6 +122,8 @@ create containers
 check if containers running properly
 
 > docker ps
+
+access the conatiner
 
 > docker exec -it replica_set_1_primary bash
 
@@ -180,7 +184,11 @@ configure replica set
 
 > cd myMongoShard/myConfigsvrMongos/myConfig
 
+build the image
+
 > docker build -t mongo_configsvr .
+
+create the conatiners
 
 > docker run --name mongo_configsvr_0 -p 27018:27019 -d mongo_configsvr
 
@@ -188,30 +196,39 @@ configure replica set
 
 > docker run --name mongo_configsvr_2 -p 27020:27019 -d mongo_configsvr
 
+switch to the directory of myMongos
+
 > cd myMongoShard/myConfigsvrMongos/myMongos
+
+build the image
 
 > docker build -t mongo_mongos .
 
+create container of mongos
+
 > docker run --name mongos_1 -p 27017:27017 -d mongo_mongos
+
+check if containers running properly
 
 > docker ps
 
+access the conatiner
+
 > docker exec -it mongos_1 bash
+
+configure mongos
 
 > mongo
 
 > mongos> use admin
 
-> mongos> db.createUser({user:"siteUserAdmin",pwd:"shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+> mongos> db.createUser({user:"siteUserAdmin",pwd:"pwd_shardingexample",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
 
-> mongos> db.auth('siteUserAdmin', 'shardingexample')
+> mongos> db.auth('siteUserAdmin', 'pwd_shardingexample')
 
-> mongos> db.createUser({user:"siteRootAdmin",pwd:"shardingexample",roles:[{role:"root",db:"admin"}]})
+> mongos> db.createUser({user:"siteRootAdmin",pwd:"pwd_shardingexample",roles:[{role:"root",db:"admin"}]})
 
-> mongos> db.auth('siteRootAdmin', 'shardingexample')
-
-####### EX: mongos> sh.addShard('rs0/52.24.228.20:27017,52.24.228.20:27018,52.24.228.20:27019,52.24.228.20:27020')
-####### EX: mongos> sh.addShard('rs1/52.34.228.30:27017,52.34.228.30:27018,52.34.228.30:27019,52.34.228.30:27020')
+> mongos> db.auth('siteRootAdmin', 'pwd_shardingexample')
 
 > mongos> sh.addShard('rs0/YOUR_REPLICA_SET_0_PRIMARY_IP:YOUR_REPLICA_SET_0_PRIMARY_PORT,YOUR_REPLICA_SET_0_SECONDARY_1_IP:YOUR_REPLICA_SET_0_SECONDARY_1_PORT,YOUR_REPLICA_SET_0_SECONDARY_2_IP:YOUR_REPLICA_SET_0_SECONDARY_2_PORT,YOUR_REPLICA_SET_0_ARBITER_IP:YOUR_REPLICA_SET_0_ARBITER_PORT')
 
