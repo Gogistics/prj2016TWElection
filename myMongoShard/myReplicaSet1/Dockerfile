@@ -9,10 +9,11 @@ RUN    DEBIAN_FRONTEND=noninteractive apt-get install -yq apt-utils git build-es
 RUN    apt-get update
 RUN    apt-get clean
 
+# create volume
+VOLUME   /data/db
+
 # add files to working dir
-COPY   data/db /data/db
 COPY   mongodb-keyfile /opt/keyfile/mongodb-keyfile
-COPY   setup_mongodb.sh /setup_mongodb.sh
 
 # Install app dependencies
 RUN    cd /opt/keyfile && chmod 600 mongodb-keyfile && chown 999 mongodb-keyfile
