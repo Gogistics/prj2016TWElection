@@ -21,4 +21,4 @@ RUN    cd /opt/keyfile && chmod 600 mongodb-keyfile && chown 999 mongodb-keyfile
 EXPOSE  27017
 
 #
-CMD mongod --smallfiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs1"
+CMD mongod --smallfiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
