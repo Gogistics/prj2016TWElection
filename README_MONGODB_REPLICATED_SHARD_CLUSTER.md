@@ -2,6 +2,11 @@
 
 Three instances are created for the demo. For production, the mongos, the config. servers, and the replica sets are better hosted by different instances. One instance is hosting replica_set_0, another instance is hosting replica_set_1, and the other instance is hosting mongos and config servers
 
+### Create Keyfile
+cd myMongoShard/
+
+openssl rand -base64 741 > mongodb-keyfile
+
 ### Configure Replica Set 0
 ##### Create Instance
 switch to the directory of the replica set 0
