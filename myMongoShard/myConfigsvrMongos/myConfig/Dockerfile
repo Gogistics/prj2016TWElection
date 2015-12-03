@@ -13,7 +13,7 @@ RUN    apt-get clean
 VOLUME   /data/configdb
 
 # add files to working dir
-COPY   mongodb-keyfile /opt/keyfile/mongodb-keyfile
+COPY   ../../mongodb-keyfile /opt/keyfile/mongodb-keyfile
 
 # Install app dependencies
 RUN    cd /opt/keyfile && chmod 600 mongodb-keyfile && chown 999 mongodb-keyfile
