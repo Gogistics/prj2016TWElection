@@ -6,10 +6,10 @@ One instance is hosting replica_set_0, another instance is hosting replica_set_1
 
 ### Configure Replica Set 0
 ##### Create Instance
-switch to directory of replica set 0
+switch to the directory of the replica set 0
 > cd myMongoShard/myReplicaSet0
 
-create instance on EC2
+create the instance on EC2
 > docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-0 --amazonec2-region us-west-2 swarm-shard-replica-set-0
 
 take a look at the swarm
@@ -23,7 +23,7 @@ switch to swarm-shard-replica-set-0 environment
 build the image
 > docker build -t mongo_replica_set_0 .
 
-create conatiners
+create the conatiners
 > docker run --name replica_set_0_primary -p 27017:27017 -d mongo_replica_set_0
 
 > docker run --name replica_set_0_seconadry_1 -p 27018:27017 -d mongo_replica_set_0
@@ -35,10 +35,10 @@ create conatiners
 check if the containers running properly
 > docker ps
 
-access container of the primary set
+access the container of the primary set
 > docker exec -it replica_set_0_primary bash
 
-configure replica set
+configure the replica set
 
 > mongo
 
@@ -95,11 +95,11 @@ create the instance
 
 > docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-replica-set-1
 
-check swarm
+check the swarm
 
 > docker-machine ls
 
-switch to swarm-shard-replica-set-1 environment
+switch to the swarm-shard-replica-set-1 environment
 
 > docker-machine env swarm-shard-replica-set-1
 
@@ -119,7 +119,7 @@ create the containers
 
 > docker run --name replica_set_1_arb -p 27020:27017 -d mongo_replica_set_1
 
-check if containers running properly
+check if the containers running properly
 
 > docker ps
 
@@ -127,7 +127,7 @@ access the conatiner
 
 > docker exec -it replica_set_1_primary bash
 
-configure replica set
+configure the replica set
 
 > \> mongo
 
@@ -175,7 +175,7 @@ configure replica set
 
 > rs1:PRIMARY> rs.reconfig(cfg)
 
-### Configure Config-Server and Mongos (Router)
+### Configure Config-Servers and Mongos (Router)
 ##### Create Instance
 
 > cd myMongoShard/myConfigsvrMongos/
@@ -204,11 +204,11 @@ build the image
 
 > docker build -t mongo_mongos .
 
-create container of mongos
+create the container of mongos
 
 > docker run --name mongos_1 -p 27017:27017 -d mongo_mongos
 
-check if containers running properly
+check if the containers running properly
 
 > docker ps
 
@@ -216,7 +216,7 @@ access the conatiner
 
 > docker exec -it mongos_1 bash
 
-configure mongos
+configure the mongos
 
 > mongo
 
