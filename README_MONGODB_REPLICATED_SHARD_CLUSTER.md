@@ -15,7 +15,7 @@ switch to the directory of the replica set 0
 create the instance on EC2
 > docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-0 --amazonec2-region us-west-2 swarm-shard-replica-set-0
 
-take a look at the swarm
+check the swarm
 > docker-machine ls
 
 switch to swarm-shard-replica-set-0 environment
