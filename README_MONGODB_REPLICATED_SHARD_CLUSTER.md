@@ -89,15 +89,25 @@ access container of primary set
 ##### Create Instance
 cd myMongoShard/myReplicaSet1
 
+create the instance
+
 > docker-machine create -d amazonec2 --swarm --swarm-discovery token://YOUR_TOKEN --amazonec2-access-key YOUR_ACCESS_KEY --amazonec2-secret-key YOUR_SECRET_KEY --amazonec2-vpc-id YOUR_VPC --amazonec2-security-group docker-swarm-mongodb-replica-set-1 --amazonec2-region us-west-2 swarm-shard-replica-set-1
 
+check swarm
+
 > docker-machine ls
+
+switch to swarm-shard-replica-set-1 environment
 
 > docker-machine env swarm-shard-replica-set-1
 
 > eval "$(docker-machine env swarm-shard-replica-set-1)"
 
+build the image
+
 > docker build -t mongo_replica_set_1 .
+
+create containers
 
 > docker run --name replica_set_1_primary -p 27017:27017 -d mongo_replica_set_1
 
@@ -107,9 +117,13 @@ cd myMongoShard/myReplicaSet1
 
 > docker run --name replica_set_1_arb -p 27020:27017 -d mongo_replica_set_1
 
+check if containers running properly
+
 > docker ps
 
 > docker exec -it replica_set_1_primary bash
+
+configure replica set
 
 > \> mongo
 
