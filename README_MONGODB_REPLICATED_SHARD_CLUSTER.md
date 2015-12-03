@@ -1,8 +1,6 @@
 # MongoDB Replicated Shard Cluster
 
-Three instances are created for demo. For production, the mongos, the config servers, and the replica sets are better to separate!
-
-One instance is hosting replica_set_0, another instance is hosting replica_set_1, and the other instance is hosting mongos and config servers
+Three instances are created for the demo. For production, the mongos, the config. servers, and the replica sets are better hosted by different instances. One instance is hosting replica_set_0, another instance is hosting replica_set_1, and the other instance is hosting mongos and config servers
 
 ### Configure Replica Set 0
 ##### Create Instance
