@@ -17,11 +17,9 @@
     "jquery": "*",
     "jsonfile": "*",
     "mandrill-api": "*",
-    "hanzi": "*",
+    "errorhandler": "*",
     "mongodb":"1.4.x",
     "monk": "*",
-    "ejs": "*",
-    "ejs-locals": "*",
 
     "grunt": "*",
     "grunt-cli": "*",

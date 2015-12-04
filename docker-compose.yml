@@ -1,5 +1,6 @@
 nginx:
     restart: always
+    container_name: my_nginx
     build: ./myNginx
     links:
         - node_1:node_1
@@ -9,6 +10,7 @@ nginx:
 
 node_1:
     restart: always
+    container_name: my_node_1
     build: ./myNodejsApp
     env_file:
         - ./myNodejsApp/.keys.env
@@ -17,6 +19,7 @@ node_1:
 
 node_2:
     restart: always
+    container_name: my_node_2
     build: ./myNodejsApp
     env_file:
         - ./myNodejsApp/.keys.env
