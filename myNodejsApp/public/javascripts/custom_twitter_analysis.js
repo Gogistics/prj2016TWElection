@@ -232,7 +232,7 @@
         return ( elem_2['tweet']['retweet_count'] - elem_1['tweet']['retweet_count'] ) || ( (new Date(elem_2['tweet']['created_at']).getTime()) - (new Date(elem_1['tweet']['created_at']).getTime()) );
       });
       var top_five_tweets = arg_tweets.slice(0,5);
-      console.log(top_five_tweets);
+      // console.log(top_five_tweets);
 
       //
       var top_five_tweets_list = $('ul#top_five_tweets_with_highest_retweet_count');

@@ -18,6 +18,7 @@
     "jsonfile": "*",
     "mandrill-api": "*",
     "errorhandler": "*",
+    "hanzi": "*",
     "mongodb":"1.4.x",
     "monk": "*",
 

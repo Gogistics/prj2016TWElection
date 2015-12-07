@@ -13,7 +13,7 @@
           url: '/services/get_facebook_latest_posts_analysis_collection', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  console.log(res.collecion);
+                  // console.log(res.collecion);
                   window.facebook_analysis_handler.append_latest_post(res.collecion);
               }else{
                   console.log('fail and no data come in...');
@@ -67,7 +67,10 @@
       var shares_info_ary = [], post_info_with_heighest_shares = { count : 0, date : '', message : '', link : '' };
       for(var ith_key in arg_data){
         //
-        if((new Date(arg_data[ith_key]['created_time']).getTime()) < (new Date('10-31-2015').getTime())){
+        if(arg_elem_id === 'latest_post_tsaiingwen'){
+          console.log(arg_data[ith_key]['created_time']);
+        }
+        if((new Date(arg_data[ith_key]['created_time']).getTime()) < (new Date('2015-10-30').getTime())){
           //
           continue;
         }

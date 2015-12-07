@@ -236,7 +236,7 @@
         return ( elem_2['post']['replurkers_count'] - elem_1['post']['replurkers_count'] ) || ( (new Date(elem_2['posted']).getTime()) - (new Date(elem_1['posted']).getTime()) );
       });
       var top_five_posts = arg_posts.slice(0,5);
-      console.log(top_five_posts);
+      // console.log(top_five_posts);
       //
       var top_five_posts_elem = $('ul#top_five_posts_with_highest_replurkers_count');
       top_five_posts_elem.empty();
@@ -270,7 +270,7 @@
           url: '/services/get_segments_hant', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  console.log(res.segments);
+                  // console.log(res.segments);
               }else{
                   console.log('fail...');
               };
