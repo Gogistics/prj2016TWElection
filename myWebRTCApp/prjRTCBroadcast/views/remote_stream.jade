@@ -1,5 +1,5 @@
 div(class="remoteStream" ng-controller="RemoteStreamsController as rtc")
-  h2 Remote Streams
+  h3 Remote Customer List
   div(id="remoteVideosContainer")
   table
     thead
@@ -11,9 +11,9 @@ div(class="remoteStream" ng-controller="RemoteStreamsController as rtc")
       tr(ng-repeat="stream in rtc.remoteStreams" ng-class="{ 'selected' : stream.isPlaying }")
         td
           a {{stream.name}}
-        td(ng-click="rtc.view(stream")
+        td(ng-click="rtc.view(stream)")
           a View
-        td(ng-click="rtc.call(stream")
+        td(ng-click="rtc.call(stream)")
           a Call
 
   li(ng-click="rtc.loadData()" style="width: 240px;")

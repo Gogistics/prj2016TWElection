@@ -32,12 +32,17 @@ li:hover {
 }
 
 .localStream video {
+    border-radius: 5px;
     border: 5px solid rgb(119, 119, 119);
     outline: 0px none;
-    height: 240px;
-    width: 320px;
+    width: 80%;
 }
 
+#remoteVideosContainer video{
+  border-radius: 5px;
+  width: 80%;
+  margin: 5px auto;
+}
 .remoteStreams{
   display: inline-block;
   top: 15px;

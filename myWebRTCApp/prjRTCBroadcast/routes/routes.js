@@ -3,10 +3,10 @@ module.exports = function(app, streams) {
   // GET home 
   var index = function(req, res) {
     res.render('index.jade', { title: 'WebRTC', 
-                          header: 'WebRTC Broadcast Streaming',
+                          header: 'Customer Service',
                           username: 'Username/Room Tag',
                           share: 'Share this link',
-                          footer: 'gogistics@gogistics-tw.com',
+                          footer: 'alan.tai@fund364.com',
                           id: req.params.id
                         });
   };
