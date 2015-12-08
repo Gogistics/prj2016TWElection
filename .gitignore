@@ -4,3 +4,7 @@ myNodejsApp/.keys.env
 
 myWebRTCApp/ProjectRTC
 myWebRTCApp/AndroidRTC
+myWebRTCApp/RTCMultiConnection
+myWebRTCApp/WebRTC-Scalable-Broadcast
+myWebRTCApp/prjRTCBroadcast/node_modules
+myWebRTCApp/.key.env
