@@ -28,7 +28,7 @@ li:hover {
   display: inline-block;
   top: 15px;
   right: 15px;
-  float: right;
+  text-align: left;
 }
 
 .localStream video {
@@ -42,8 +42,7 @@ li:hover {
   display: inline-block;
   top: 15px;
   right: 15px;
-  float: left;
-  text-align: center;
+  text-align: right;
 }
 
 .remoteStreams td:hover {
