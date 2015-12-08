@@ -3,7 +3,7 @@ div(class="localStream" ng-controller="LocalStreamController as localStream")
   br
   div(class="input-group")
     span(class="input-group-btn")
-      input(class="btn btn-secondary" type="button" value="#{username}" disabled)
+      input(class="btn btn-secondary" type="button" value="#{username}" ng-model="localStream.name" disabled)
     input(type="text" class="form-control" placeholder="Username/Room Tag")
     span(class="input-group-btn")
       input(class="btn btn-secondary" type="button" ng-click="localStream.toggleCam()" value="{{ localStream.cameraIsOn ? 'Stop' : 'Start' }}")
