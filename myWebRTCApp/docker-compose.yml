@@ -15,7 +15,7 @@ webrtc_app_1:
     env_file:
         - ./.keys.env
     ports: 
-        - "8080"
+        - "3000"
 
 webrtc_app_2:
     restart: always
@@ -24,4 +24,4 @@ webrtc_app_2:
     env_file:
         - ./.keys.env
     ports: 
-        - "8080"
+        - "3000"

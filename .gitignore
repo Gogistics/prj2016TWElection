@@ -7,4 +7,5 @@ myWebRTCApp/AndroidRTC
 myWebRTCApp/RTCMultiConnection
 myWebRTCApp/WebRTC-Scalable-Broadcast
 myWebRTCApp/prjRTCBroadcast/node_modules
+myWebRTCApp/prjRTCBroadcast/bower_components
 myWebRTCApp/.key.env

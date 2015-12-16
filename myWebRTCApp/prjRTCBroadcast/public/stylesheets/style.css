@@ -1,15 +1,22 @@
 body {
-  padding: 30px;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  background-size: cover;
+  background: url('/public/images/election-bg-1.png') no-repeat top center fixed;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
 a {
   color: #00b7ff;
   text-decoration: none;
 }
-
-table, tr, td, th {margin: 0;border: 0;padding: 5px;border-collapse: collapse;}
-
+table, tr, td, th {
+  margin: 0;
+  border: 0;
+  padding: 5px;
+  border-collapse: collapse;
+}
 li {
     list-style-type: none;
     border: 2px solid black;
@@ -18,26 +25,42 @@ li {
     box-shadow: 3px 3px 3px #888;
     padding: 5px 5px 5px 5px;
 }
-
 li:hover {
   cursor: pointer;
   background-color: #aaa;
 }
-
+#preloader {
+    background: #ffffff;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999999;
+    display: none;
+}
+#loader {
+    background:#ffffff url(/public/images/loader.gif) center center no-repeat;
+    height: 60px;
+    left: 50%;
+    margin: -50px 0 0 -50px;
+    position: absolute;
+    top: 50%;
+    width: 60px;
+}
+.main_content{
+  margin: 100px auto;
+}
 .localStream {
   display: inline-block;
-  top: 15px;
-  right: 15px;
   text-align: left;
 }
-
 .localStream video {
     border-radius: 5px;
-    border: 5px solid rgb(119, 119, 119);
     outline: 0px none;
-    width: 80%;
 }
-
 #remoteVideosContainer video{
   border-radius: 5px;
   width: 80%;
@@ -45,16 +68,12 @@ li:hover {
 }
 .remoteStreams{
   display: inline-block;
-  top: 15px;
-  right: 15px;
   text-align: right;
 }
-
 .remoteStreams td:hover {
   cursor: pointer;
   background-color: #aaa;
 }
-
 .remoteStreams .selected {
   background-color: #444 !important;
   text-shadow:none;
@@ -62,8 +81,8 @@ li:hover {
   border-left: none;
   border-radius: 3px 3px 3px 3px; 
   box-shadow:inset 1px 2px 6px #070707;
+  color: #f00;
 }
-
 .footer {
    clear: both;
 }

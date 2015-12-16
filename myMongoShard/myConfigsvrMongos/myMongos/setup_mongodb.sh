@@ -34,5 +34,6 @@ cfg = { "_id" : "rs0", "version" : 1, "members" : [{ "_id" : 0, "host" : "52.24.
 # mongos> db.printShardingStatus()
 
 # mongos> use test
+# mongos> db.createUser({user:"test_user",pwd:"shardingexample",roles:[{role:"readWrite",db:"test"}]})
 # mongos> db.stats()
 # mongos> db.printShardingStatus()

@@ -1,10 +1,22 @@
 var PeerManager = (function () {
-  var localId,
+  // init socket manager
+  var local_id,
       config = {
         peerConnectionConfig: {
           iceServers: [
-            {"url": "stun:23.21.150.121"},
-            {"url": "stun:stun.l.google.com:19302"}
+            {urls: 'stun:stun1.l.google.com:19302'},
+            {urls: 'stun:stun2.l.google.com:19302'},
+            {urls: 'stun:stun3.l.google.com:19302'},
+            {urls: 'stun:stun4.l.google.com:19302'},
+            {urls: 'stun:stun.anyfirewall.com:3478'},
+            {urls: "stun:stun.l.google.com:19302"},
+            {urls: 'turn:turn.bistri.com:80',
+              credential: 'homeo',
+              username: 'homeo'},
+            {urls: 'turn:turn.anyfirewall.com:443?transport=tcp',
+              credential: 'webrtc',
+              username: 'webrtc'},
+            {urls: 'stun:stun.services.mozilla.com'}
           ]
         },
         peerConnectionConstraints: {
@@ -13,16 +25,30 @@ var PeerManager = (function () {
           ]
         }
       },
-      peerDatabase = {},
+      peerDatabase = {}, // can be replaced with real DB
       localStream,
       remoteVideoContainer = document.getElementById('remoteVideosContainer'),
-      socket = io();
+      socket = io(), // better to be set to listen to specific IP & port
+      external_mechanism = {};
       
+  // set socket
   socket.on('message', handleMessage);
   socket.on('id', function(id) {
-    localId = id;
+    local_id = id;
   });
-      
+
+  // auto-update mechanism (beta)
+  socket.on('new_stream_notification', function(res){
+    console.log(res);
+    if(external_mechanism.hasOwnProperty('load_data')){
+      // load data
+      external_mechanism.load_data();
+      console.log('update stream list...');
+    }
+  });
+  // end of auto-update mechanism
+
+  // funstions
   function addPeer(remoteId) {
     var peer = new Peer(config.peerConnectionConfig, config.peerConnectionConstraints);
     peer.pc.onicecandidate = function(event) {
@@ -40,7 +66,10 @@ var PeerManager = (function () {
     };
     peer.pc.onremovestream = function(event) {
       peer.remoteVideoEl.src = '';
-      remoteVideosContainer.removeChild(peer.remoteVideoEl);
+      if(remoteVideosContainer.hasChildNodes()){
+        remoteVideosContainer.removeChild(peer.remoteVideoEl);
+      }
+      // remoteVideosContainer.removeChild(peer.remoteVideoEl);
     };
     peer.pc.oniceconnectionstatechange = function(event) {
       switch(
@@ -52,10 +81,25 @@ var PeerManager = (function () {
           break;
       }
     };
+    // removeStream() to support Firefox
+    peer.pc.removeStream = function(stream) {
+      peer.pc.getSenders().forEach(function(sender){
+        console.log(sender);
+        // incomplete; this mechanism will be triggered twice to remove video & audio tracks
+        peer.pc.removeTrack(sender);
+        if(remoteVideosContainer.hasChildNodes()){
+          remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        }
+      });
+    };
+    // end removeStream
+
     peerDatabase[remoteId] = peer;
-        
     return peer;
   }
+  // end of addPeer
+
+  // answer
   function answer(remoteId) {
     var pc = peerDatabase[remoteId].pc;
     pc.createAnswer(
@@ -66,6 +110,9 @@ var PeerManager = (function () {
       error
     );
   }
+  // end of answer
+
+  // offer
   function offer(remoteId) {
     var pc = peerDatabase[remoteId].pc;
     pc.createOffer(
@@ -76,13 +123,15 @@ var PeerManager = (function () {
       error
     );
   }
+  // end of offer
+
+  // handleMessage
   function handleMessage(message) {
     var type = message.type,
         from = message.from,
         pc = (peerDatabase[from] || addPeer(from)).pc;
 
     console.log('received ' + type + ' from ' + from);
-  
     switch (type) {
       case 'init':
         toggleLocalStream(pc);
@@ -106,31 +155,38 @@ var PeerManager = (function () {
         break;
     }
   }
+  // end of handleMessage
+
+  // send
   function send(type, to, payload) {
     console.log('sending ' + type + ' to ' + to);
-
     socket.emit('message', {
       to: to,
       type: type,
       payload: payload
     });
   }
+  // end of send
+
+  // toogleLocalStream
   function toggleLocalStream(pc) {
     if(localStream) {
       (!!pc.getLocalStreams().length) ? pc.removeStream(localStream) : pc.addStream(localStream);
     }
   }
+  // end of toogleLocalStream
+
+  // error logger
   function error(err){
     console.log(err);
   }
+  // end of error
 
   return {
     getId: function() {
-      return localId;
+      return local_id;
     },
-    
     setLocalStream: function(stream) {
-
       // if local cam has been stopped, remove it from all outgoing streams.
       if(!stream) {
         for(id in peerDatabase) {
@@ -144,31 +200,35 @@ var PeerManager = (function () {
 
       localStream = stream;
     }, 
-
     toggleLocalStream: function(remoteId) {
       peer = peerDatabase[remoteId] || addPeer(remoteId);
       toggleLocalStream(peer.pc);
     },
-    
     peerInit: function(remoteId) {
       peer = peerDatabase[remoteId] || addPeer(remoteId);
       send('init', remoteId, null);
     },
-
     peerRenegociate: function(remoteId) {
       offer(remoteId);
     },
-
     send: function(type, payload) {
       socket.emit(type, payload);
+    },
+
+    // load_data mechanism (temp)
+    add_external_mechanism: function(arg_mechanism_name, arg_mechanism){
+      // set external mechanism
+      external_mechanism[arg_mechanism_name] = arg_mechanism;
     }
   };
-  
 });
 
-var Peer = function (pcConfig, pcConstraints) {
+/* Peer */
+var Peer = function (pcConfig, pcConstraints){
   this.pc = new RTCPeerConnection(pcConfig, pcConstraints);
   this.remoteVideoEl = document.createElement('video');
   this.remoteVideoEl.controls = true;
   this.remoteVideoEl.autoplay = true;
+  this.remoteVideoEl.muted = true; // tmp init
+  console.log('muted video...');
 }

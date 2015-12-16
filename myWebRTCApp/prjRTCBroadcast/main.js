@@ -1,5 +1,7 @@
 /* main.js hosts the app */
 var express = require('express'),
+  session = require('express-session'),
+  cookieParser = require('cookie-parser'),
   path = require('path'),
   streams = require('./my_modules/streams.js')(),
   favicon = require('serve-favicon'),
@@ -20,6 +22,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
+
+// set session & cookie
+app.use(session({
+  secret: '14FWERF32BRB465YUM34LI75632LOL89',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge: 600000, httpOnly: true }
+}));
+app.use(cookieParser('0QWE97GE68G3RH486JT73JKY0267XBN011'));
 
 // set static paths
 app.use('/public', express.static( path.join(__dirname, '/public'), { maxAge: cache_time}));

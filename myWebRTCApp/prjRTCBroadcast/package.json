@@ -25,6 +25,7 @@
     "jsonfile": "*",
     "mandrill-api": "*",
     "socket.io": "*",
+    "crypto-js": "*",
     "multer": "^0.1.8",
     "method-override": "^2.3.2",
 
