@@ -190,6 +190,7 @@
           console.log(err);
         });
       } else {
+        // for regular user, no need to start camera
         camera.start()
         .then(function(result) {
           localStream.link = $window.location.host + '/' + client.getId();
