@@ -1,6 +1,7 @@
 myNodejsApp/node_modules/
 myNodejsApp/bower_components/
 myNodejsApp/.keys.env
+myNodejsApp/.local_start.sh
 
 myWebRTCApp/ProjectRTC
 myWebRTCApp/AndroidRTC
