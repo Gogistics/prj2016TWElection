@@ -1,0 +1,83 @@
+extends base_layout
+
+block css_block
+  // required css files
+  link(href='/public/frontend_1/css/bootstrap.min.css' type='text/css' rel='stylesheet')
+  link(href='/public/frontend_1/font-awesome/css/font-awesome.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/frontend_1/css/animate.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/frontend_1/css/style.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/frontend_1/color/default.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/leaflet.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/marker_cluster.default.min.css' type='text/css'  rel='stylesheet')
+  link(href='/public/javascripts/leaflet-0.7/marker_cluster.min.css' type='text/css' rel='stylesheet')
+  link(href='/public/stylesheets/custom_tracking.min.css' rel='stylesheet' type='text/css')
+
+block content
+  // cover
+  div(id="preloader")
+    div(id="load")
+
+  // navbars
+  include ./sub_views/nav_top.jade
+
+  // popup tip block
+  div(id="summary_tip")
+  div(id="map_tip")
+  
+  // section ; intro
+  include ./sub_views/section_intro.jade
+
+  // section ; facebook
+  include ./sub_views/section_facebook.jade
+  
+  // section ; twitter
+  include ./sub_views/section_twitter.jade
+
+  // section ; plurk
+  include ./sub_views/section_plurk.jade
+
+  // section ; about
+  include ./sub_views/section_about.jade
+
+  // section ; contact
+  include ./sub_views/section_contact.jade
+
+  // footer
+  include ./sub_views/footer.jade
+
+block js_block
+  // set required js files
+  script(src='/public/frontend_1/js/jquery.min.js')
+  script(src='/public/frontend_1/js/jquery.easing.min.js')
+  script(src='/public/frontend_1/js/jquery.scrollTo.min.js')
+  script(src='/public/frontend_1/js/bootstrap.min.js')
+  script(src='/public/frontend_1/js/wow.min.js')
+
+  // leaflet
+  script(src='/public/javascripts/leaflet-0.7/leaflet.min.js')
+  script(src='/public/javascripts/leaflet-0.7/leaflet.markercluster-src.min.js')
+
+  // d3
+  script(src='/public/javascripts/d3/d3.min.js')
+  script(src='/public/javascripts/d3/d3_tips.min.js')
+  script(src='/public/javascripts/d3/box.min.js')
+  script(src='/public/javascripts/d3/queue.v1.min.js')
+  script(src='/public/javascripts/d3/topojson.v1.min.js')
+
+  // socket
+  script(src='/public/javascripts/socket.io-1.3.7.min.js')
+
+  // customized scripts
+  script(src='/public/frontend_1/js/custom.min.js')
+  script(src='/public/javascripts/custom_facebook_analysis.min.js')
+  script(src='/public/javascripts/custom_twitter_analysis.min.js')
+  script(src='/public/javascripts/custom_plurk_analysis.min.js')
+  script(src='/public/javascripts/custom_tracking.min.js')
+
+  // for lt IE 9
+  <!--[if lt IE 9]>
+  <script src="/es5-shim/es5-shim.min.js"></script>
+  <script src="/json3/json3.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->

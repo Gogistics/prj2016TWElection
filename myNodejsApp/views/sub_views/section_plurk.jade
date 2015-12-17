@@ -1,0 +1,39 @@
+section(id="plurk" class="home-section text-center")
+  div(class="heading-about")
+    div(class="container")
+      div(class="row")
+          div(class="col-lg-8 col-lg-offset-2")
+            div(class="wow bounceInDown" data-wow-delay="0.2s")
+              div(class="section-heading")
+                h2 #{plurk_section.title}
+                i(class="fa fa-2x fa-angle-down")
+
+              h3 #{plurk_section.plurk_posts_tracking_title}
+              p #{plurk_section.plurk_posts_tracking_keywords_title}: Taiwan Election, Tsai Ing-wen, Eric Chu, James Soong, Ma Ying-jeou, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
+              br
+              div(class="row")
+                div(class="col-lg-12" style="text-align: center;")
+                  p(id="categorized_plurk_posts_collection_period")
+                  if (!is_mobile)
+                    ul(id="categorized_plurk_posts_collection" class="list-group col-lg-3 col-md-3" style="text-align: center;")
+                    div(id="categorized_plurk_posts_collection_chart" class="col-lg-9 col-md-9" )
+                      div(id="plurk_posts_chart" style="overflow: auto;")
+                  else
+                    ul(id="categorized_plurk_posts_collection" class="list-group col-lg-12" )
+
+    div(class="container")
+      div(class="row")
+        div(class="col-lg-2 col-lg-offset-5")
+          hr(class="marginbot-50")
+
+    div(class="container")
+      div(class="row")
+        div(class="col-xs-12 col-sm-3 col-md-2")
+        div(class="col-xs-12 col-sm-6 col-md-8")
+          div(class="wow bounceInUp" data-wow-delay="0.2s")
+            div(class="plurk_posts")
+              h3 Top Five Posts with Highest Replurkers Count
+              ul(id="top_five_posts_with_highest_replurkers_count" class="list-group" style="height:200px; overflow: auto; border-bottom: 1px solid #aaa;")
+                li(class="list-group-item")
+                    div(class="loader")
+        div(class="col-xs-12 col-sm-3 col-md-2")

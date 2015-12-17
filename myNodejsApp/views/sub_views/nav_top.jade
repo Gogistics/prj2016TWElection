@@ -1,0 +1,43 @@
+nav(class="navbar navbar-custom navbar-fixed-top" role="navigation")
+  div(class="container")
+
+    div(class="navbar-header page-scroll")
+      button(type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse")
+        i(class="fa fa-bars")
+      a(class="navbar-brand" href="/")
+        h1 #{title}
+
+    div(class="collapse navbar-collapse navbar-right navbar-main-collapse")
+      ul(class="nav navbar-nav")
+        li(class="active")
+          a(href="#intro" class="hidden-xs") #{nav_home}
+          a(href="#intro" class="visible-xs" data-toggle="collapse" data-target=".navbar-main-collapse") #{nav_home}
+
+        li
+          a(href="#facebook" class="hidden-xs") #{nav_facebook}
+          a(href="#facebook" class="visible-xs" data-toggle="collapse" data-target=".navbar-main-collapse") #{nav_facebook}
+
+        li
+          a(href="#twitter" class="hidden-xs") #{nav_twitter}
+          a(href="#twitter" class="visible-xs" data-toggle="collapse" data-target=".navbar-main-collapse") #{nav_twitter}
+
+        li
+          a(href="#plurk" class="hidden-xs") #{nav_plurk}
+          a(href="#plurk" class="visible-xs" data-toggle="collapse" data-target=".navbar-main-collapse") #{nav_plurk}
+
+        li
+          a(href="#about" class="hidden-xs") #{nav_about}
+          a(href="#about" class="visible-xs" data-toggle="collapse" data-target=".navbar-main-collapse") #{nav_about}
+
+        li
+          a(href="#contact" class="hidden-xs") #{nav_contact}
+          a(href="#contact" class="visible-xs" data-toggle="collapse" data-target=".navbar-main-collapse") #{nav_contact}
+
+        li
+          a(href="#" class="dropdown-toggle" data-toggle="dropdown") #{nav_dropdwon_languages}
+            b(class="caret")
+          ul(class="dropdown-menu")
+            li
+              a(href="/?lang=traditional_chinese") #{nav_dropdown_traditional_chinese}
+            li
+              a(href="/?lang=english") #{nav_dropdown_english}

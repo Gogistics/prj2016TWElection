@@ -1,0 +1,13 @@
+myNodejsApp/node_modules/
+myNodejsApp/bower_components/
+myNodejsApp/.keys.env
+myNodejsApp/.local_start.sh
+
+myWebRTCApp/ProjectRTC
+myWebRTCApp/AndroidRTC
+myWebRTCApp/RTCMultiConnection
+myWebRTCApp/WebRTC-Scalable-Broadcast
+myWebRTCApp/prjRTCBroadcast/node_modules
+myWebRTCApp/prjRTCBroadcast/bower_components
+myWebRTCApp/prjRTCBroadcast/.local_start.sh
+myWebRTCApp/.key.env
