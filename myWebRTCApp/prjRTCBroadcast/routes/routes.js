@@ -21,17 +21,21 @@ module.exports = function(app, streams) {
 
   // GET home 
   var index = function(req, res) {
-    if(!req.cookies.hasOwnProperty('user_info')){
+    var vars = { title: 'WebRTC', 
+                header: 'Customer Service',
+                username: 'Username/Room Tag',
+                share: 'Share this link',
+                footer: 'gogistics@gogistics-tw.com',
+                id: req.params.id};
+
+    var is_user_info_existing = "".hasOwnProperty.call(req.cookies, "user_info"); // temp. solution
+
+    if(!is_user_info_existing){
       res.redirect('/login');
     }else{
       //
-      res.render('index.jade', { title: 'WebRTC', 
-                            header: 'Customer Service',
-                            username: 'Username/Room Tag',
-                            share: 'Share this link',
-                            footer: 'gogistics@gogistics-tw.com',
-                            id: req.params.id
-                          });
+      vars['user_type'] = req.cookies['user_info']['user_type'];
+      res.render('index.jade', vars);
     };
   };
 

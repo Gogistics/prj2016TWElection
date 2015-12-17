@@ -1,4 +1,4 @@
-div(class="localStream" ng-controller="LocalStreamController as localStream")
+div(class="localStream" ng-controller="LocalStreamController as localStream" ng-init="localStream.init('#{user_type}')")
   div(class="col-xs-12")
     h3 User
     br

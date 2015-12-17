@@ -1,5 +1,6 @@
 /* required modules */
 var express = require('express'),
+    session = require('express-session'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
@@ -22,7 +23,15 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // set favicon
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+// set session & cookie
+app.use(session({
+  secret: 'CQEWC24VRE742374BOCQIOJWE6310CWOM',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge: 600000, httpOnly: true }
+}));
+app.use(cookieParser('FEWR13GE454WF97683E30G2NIKT670ACEBV'));
 
 // static files config.
 app.use('/public', express.static( path.join(__dirname, '/public'), { maxAge: cache_time}));

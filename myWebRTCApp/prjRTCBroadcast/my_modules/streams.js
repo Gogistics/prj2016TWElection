@@ -8,19 +8,21 @@ module.exports = function() {
   /**
    * Stream object
    */
-  var Stream = function(id, name) {
+  var Stream = function(id, name, user_type) {
     this.name = name;
     this.id = id;
-    this.user_type = '';
+    this.user_type = user_type;
     this.selected_voting_station = ''; // selected_voting_station for regular_user
   }
 
   return {
-    addStream : function(id, name) {
-      var stream = new Stream(id, name);
+    // add stream
+    addStream : function(id, name, user_type) {
+      var stream = new Stream(id, name, user_type);
       stream_list.push(stream);
     },
 
+    // remove stream
     removeStream : function(id) {
       var index = 0;
       while(index < stream_list.length && stream_list[index].id != id){
@@ -29,7 +31,7 @@ module.exports = function() {
       stream_list.splice(index, 1);
     },
 
-    // update function
+    // update name of stream
     update : function(id, name) {
       var stream = stream_list.find(function(element, i, array) {
         return element.id == id;

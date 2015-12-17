@@ -167,13 +167,19 @@
         });
     });
 
+    // init; set user_type
+    localStream.init = function(arg_user_type){
+      localStream.user_type = arg_user_type;
+    }
+
+    // toggle camera
     localStream.toggleCam = function(){
       // check if username empty
       if(localStream.name.trim() === ''){
         alert('username is empty');
         return false;
       }
-      
+
       if(localStream.cameraIsOn){
         camera.stop()
         .then(function(result){
@@ -187,7 +193,7 @@
         camera.start()
         .then(function(result) {
           localStream.link = $window.location.host + '/' + client.getId();
-          client.send('readyToStream', { name: localStream.name });
+          client.send('readyToStream', { name: localStream.name, user_type: localStream.user_type });
         })
         .catch(function(err) {
           console.log(err);
