@@ -8,4 +8,5 @@ myWebRTCApp/RTCMultiConnection
 myWebRTCApp/WebRTC-Scalable-Broadcast
 myWebRTCApp/prjRTCBroadcast/node_modules
 myWebRTCApp/prjRTCBroadcast/bower_components
+myWebRTCApp/prjRTCBroadcast/.local_start.sh
 myWebRTCApp/.key.env

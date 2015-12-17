@@ -16,7 +16,7 @@ RUN    apt-get clean
 COPY   public/ /web/public
 COPY   routes/ /web/routes
 COPY   views/ /web/views
-COPY package.json Gruntfile.js bower.json /web/
+COPY package.json Gruntfile.js bower.json main.js /web/
 
 # Install app dependencies
 RUN cd /web && npm update -g npm && npm install && npm install -g bower --save-dev && npm install -g grunt --save-dev && npm install -g grunt-cli --save-dev && bower install --allow-root && grunt --force
