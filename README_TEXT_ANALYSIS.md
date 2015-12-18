@@ -13,13 +13,16 @@
 
 ##### Analysis steps are as following:
 
+* Back-end Analysis
 1. build the global dictinary for 2016 TW Election with NLP tools listed above
 2. calculate the frequency
 2. build the tag object (in JSON format) based on the global dictionary
 3. mark the tag object with the corresponding timestamp
-4. visualize the data and the structure built previously with D3
 
-##### Advance Analysis with TensorFlow
+* Front-end Visualization
+4. visualize the data and the structure built previously with D3/Three.js
+
+##### Advanced Analysis with TensorFlow
 EX:
 
 * http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
