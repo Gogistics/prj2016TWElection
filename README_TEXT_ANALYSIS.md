@@ -9,6 +9,8 @@
 
 *Tools for working with MongoDB:* pymongo (Python), monk (npm), mongoose (npm), or mongodb (npm)
 
+*Crawler:* BeautifulSoup and Selenium
+
 ##### Analysis steps are as following:
 
 1. build the global dictinary for 2016 TW Election with NLP tools listed above
