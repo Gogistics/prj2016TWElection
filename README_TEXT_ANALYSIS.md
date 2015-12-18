@@ -3,9 +3,11 @@
 ### Text Anaylsis of Tweets, Posts, and Plurks regarding 2016 TW Election
 
 ##### Programming Languages, libraries, modules, or tools are going to use for analysis:
-Programming Languages: Python and JavaScript (Node.js)
-Libraries and Modules: jieba (Python) and hanzi (npm) for analyzing traditinal chinese, and Natural (npm) for analyzing English
-Tools for working with MongoDB: pymongo (Python), monk (npm), mongoose (npm), or mongodb (npm)
+*Programming Languages:* Python and JavaScript (Node.js)
+
+*Libraries and Modules:* jieba (Python) and hanzi (npm) for analyzing traditinal chinese, and Natural (npm) for analyzing English
+
+*Tools for working with MongoDB:* pymongo (Python), monk (npm), mongoose (npm), or mongodb (npm)
 
 ##### Analysis steps are as following:
 
