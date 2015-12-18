@@ -21,5 +21,7 @@
 
 ##### Advance Analysis with TensorFlow
 EX:
-http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
-https://github.com/dennybritz/cnn-text-classification-tf/blob/master/data_helpers.py
+
+* http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
+
+* https://github.com/dennybritz/cnn-text-classification-tf/blob/master/data_helpers.py
