@@ -38,11 +38,20 @@ var PeerManager = (function () {
   });
 
   // auto-update mechanism (beta)
-  socket.on('new_stream_notification', function(res){
+  socket.on('stream_notification', function(res){
     console.log(res);
     if(external_mechanism.hasOwnProperty('load_data')){
       // load data
       external_mechanism.load_data();
+      // if remote tream off, remove stream
+      if(res.notification_key === 'stream_off'){
+        var remote_id = res.client_id_from,
+            peer = peerDatabase[remote_id];
+
+        if(remoteVideosContainer.hasChildNodes() && peer){
+          remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        }
+      }
       console.log('update stream list...');
     }
   });

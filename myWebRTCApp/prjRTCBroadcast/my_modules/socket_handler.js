@@ -3,10 +3,8 @@ module.exports = function(io, streams) {
   io.on('connection', function(client) {
     console.log('-- ' + client.id + ' joined --');
     client.emit('id', client.id);
-
     client.on('message', function (details) {
       var otherClient = io.sockets.connected[details.to];
-
       if (!otherClient) {
         return;
       }
@@ -22,7 +20,7 @@ module.exports = function(io, streams) {
 
       // send notification to all users when new stream coming; notify user-self & need to notify other users
       // client.emit('new_stream_notification', 'stream_on')
-      notify_users_to_update_streams_info('stream_on');
+      notify_users_to_update_streams_info('stream_on', client.id);
     });
     
     // update stream info.
@@ -36,17 +34,17 @@ module.exports = function(io, streams) {
 
       // send notification to all users when stream leaves
       // client.emit('new_stream_notification', 'stream_off');
-      notify_users_to_update_streams_info('stream_off');
+      notify_users_to_update_streams_info('stream_off', client.id);
     }
 
-    function notify_users_to_update_streams_info(arg_notification_key){
+    function notify_users_to_update_streams_info(arg_notification_key, arg_client_id_from){
       var clients = io.sockets.connected;
       if(!clients || clients.length === 0){
         return false;
       }
       for(var key in clients){
         console.log('socket-key: ' + key);
-        clients[key].emit('stream_notification', arg_notification_key);
+        clients[key].emit('stream_notification', { notification_key: arg_notification_key, client_id_from: arg_client_id_from });
       }
     }
 

@@ -6,7 +6,6 @@ module.exports = function() {
       url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
       db = monk(url),
       streams_collection = db.get('streams_collection');
-
   /**
    * available streams 
    * the id value is considered unique (provided by socket.io)
