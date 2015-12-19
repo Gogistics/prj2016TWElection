@@ -3,10 +3,7 @@ extend base
 block main_content
   div
     div(class="container my_container")
-      div(class="col-lg-5 col-xs-12")
-        include ./user_local_cam.jade
-
-      div(class="col-lg-7 col-xs-12")
+      div(class="col-xs-12")
         include ./user_remote_stream.jade
     nav(class="navbar navbar-default navbar-fixed-bottom" ng-controller="IndexController as indexCtrl")
       div(class="navbar-header")

@@ -18,7 +18,6 @@ module.exports = function(io, streams) {
     // receive notification when stream is ready
     client.on('readyToStream', function(options) {
       console.log('-- ' + client.id + ' is ready to stream --');
-      
       streams.addStream(client.id, options.name, options.user_type);
 
       // send notification to all users when new stream coming; notify user-self & need to notify other users

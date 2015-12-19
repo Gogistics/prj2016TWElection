@@ -60,6 +60,9 @@ li:hover {
   -moz-border-radius: 5px;
   outline: 0px none;
 }
+#localVideo{
+  margin: 10px auto;
+}
 #remoteVideosContainer video{
   border-radius: 5px;
   -moz-border-radius: 5px;
