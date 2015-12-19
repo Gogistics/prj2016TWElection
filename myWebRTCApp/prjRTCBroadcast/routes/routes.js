@@ -9,7 +9,8 @@ module.exports = function(app, streams) {
 
   // GET login
   var login = function(req, res) {
-    if(req.cookies.hasOwnProperty('user_info')){
+    var is_user_info_existing = "".hasOwnProperty.call(req.cookies, "user_info"); // temp. solution
+    if(is_user_info_existing){
       res.redirect('/');
     }else{
       var vars = { title: 'WebRTC', 
