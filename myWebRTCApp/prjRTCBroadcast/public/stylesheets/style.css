@@ -51,19 +51,18 @@ li:hover {
     width: 60px;
 }
 .main_content{
-  margin: 100px auto;
+  margin: 60px auto;
 }
 .localStream {
-  display: inline-block;
-  text-align: left;
 }
 .localStream video {
-    border-radius: 5px;
-    outline: 0px none;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  outline: 0px none;
 }
 #remoteVideosContainer video{
   border-radius: 5px;
-  width: 80%;
+  -moz-border-radius: 5px;
   margin: 5px auto;
 }
 .remoteStreams{

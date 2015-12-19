@@ -1,16 +1,16 @@
 div(class="localStream" ng-controller="LocalStreamController as localStream" ng-init="localStream.init('#{user_type}')")
   div(class="col-xs-12")
-    h3 User Block
-    br
+    h3 User
     div(class="input-group")
       span(class="input-group-btn")
         input(class="btn btn-secondary" type="button" value="#{username}" disabled)
       input(type="text" class="form-control" placeholder="Username/Room Tag" ng-model="localStream.name")
       span(class="input-group-btn")
         input(class="btn btn-secondary" type="button" ng-click="localStream.toggleCam()" value="{{ localStream.cameraIsOn ? 'Stop' : 'Start' }}")
-  br
-  video(id="localVideo" muted="muted" autoplay="true")
 
-  div(class="my_share_link" ng-show="localStream.cameraIsOn")
-    p #{share}
-    a {{ localStream.link }}
+  br
+  div(class="col-xs-12")
+    video(id="localVideo" class="col-xs-5" muted="muted" autoplay="true")
+    div(class="col-xs-7 my_share_link" ng-show="localStream.cameraIsOn")
+      p #{share}
+      a(href="#") {{ localStream.link }}

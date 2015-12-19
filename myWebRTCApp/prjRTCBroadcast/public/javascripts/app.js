@@ -35,11 +35,19 @@
         }
         })
         .then(function(result){
-          camera.isOn = true;
+          camera.isOn = false;
           $rootScope.$broadcast('cameraIsOn',false);
         }); 
     };
     return camera;
+    }]);
+
+    app.controller('IndexController', ['$window', function($window){
+      //
+      var ctrl = this;
+      ctrl.logout = function(){
+        $window.location.href = '/logout';
+      }
     }]);
 
     app.controller('LoginController', ['$http', '$scope', function($http, $scope){
@@ -76,11 +84,6 @@
         });
       }
     }]);
-
-  // incomplete
-  app.controller('IndexController', ['$scope', function($scope){
-    //
-  }]);
 
   app.controller('RemoteStreamsController', ['camera', '$location', '$http', function(camera, $location, $http){
     var rtc = this;

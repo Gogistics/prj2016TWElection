@@ -1,13 +1,15 @@
 div(class="remoteStream" ng-controller="RemoteStreamsController as rtc")
-  h3 Remote Customer List
+  div(class="col-xs-12")
+    h3 Remote Users List
+    input(type="button" class="btn btn-default" value="Refresh" ng-click="rtc.loadData()" )
+    br
+    table
+      thead
+        tr
+          th Counts of Stream
+      tbody
+        tr(ng-repeat="stream in rtc.remoteStreams" ng-class="{ 'selected' : stream.isPlaying }")
+          td
+            span {{stream.name}}
+  br
   div(id="remoteVideosContainer")
-  table
-    thead
-      tr
-        th Counts of Stream
-    tbody
-      tr(ng-repeat="stream in rtc.remoteStreams" ng-class="{ 'selected' : stream.isPlaying }")
-        td
-          span {{stream.name}}
-
-  input(type="button" class="btn btn-warning" value="Refresh" ng-click="rtc.loadData()" )

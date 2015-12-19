@@ -1,11 +1,15 @@
 extend base
 
 block main_content
-  div(class="container my_container")
-    div(class="col-lg-8 col-xs-12")
-      include ./service_local_cam.jade
+  div
+    div(class="container my_container")
+      div(class="col-lg-8 col-xs-12")
+        include ./service_local_cam.jade
 
-    div(class="col-lg-4 col-xs-12")
-      include ./service_remote_stream.jade
-
-block js_block
+      div(class="col-lg-4 col-xs-12")
+        include ./service_remote_stream.jade
+    nav(class="navbar navbar-default navbar-fixed-bottom" ng-controller="IndexController as indexCtrl")
+      div(class="navbar-header")
+        p(class="navbar-brand") For technical support, please email me at
+          a(href="mailto:#{footer}" target="_blank") &nbsp;#{footer}
+      a(href="#" ng-click="indexCtrl.logout()" class="navbar-brand pull-right") Logout

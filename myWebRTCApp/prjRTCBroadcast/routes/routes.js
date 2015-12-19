@@ -1,7 +1,11 @@
 module.exports = function(app, streams) {
   var cryptoJS = require('crypto-js'),
       login_info_for_service = {'pwd': 'ilovetaiwan'},
-      login_info_for_user = { 'pwd': 'iamtaiwanese'};
+      login_info_for_user = { 'pwd': 'iamtaiwanese'},
+      template_dict = { voting_station: 'service_index.jade',
+                        regular_user: 'user_index.jade'},
+      title_title = { voting_station: 'Voting Station',
+                      regular_user: 'Regular User'};
 
   // GET login
   var login = function(req, res) {
@@ -35,7 +39,8 @@ module.exports = function(app, streams) {
     }else{
       //
       vars['user_type'] = req.cookies['user_info']['user_type'];
-      res.render('index.jade', vars);
+      vars['header'] = title_title[vars['user_type']];
+      res.render(template_dict[vars['user_type']], vars);
     };
   };
 
@@ -58,9 +63,6 @@ module.exports = function(app, streams) {
     token_pwd = cryptoJS.HmacSHA1(user_type, hash_key_pwd).toString(cryptoJS.enc.Hex), // 0b2dccbd5409976db1ff3c2b7ce006bc42f90f42
     user_ip = req.connection.remoteAddress;
 
-    console.log(user_pwd);
-    console.log(user_type);
-
     var vars;
     if( user_type === 'voting_station' &&
         user_pwd === 'ilovetaiwan'){
@@ -75,14 +77,20 @@ module.exports = function(app, streams) {
     }else{
       vars = { is_info_valid: false };
     }
-
     res.send(vars);
   }
+
+  app.get('/logout', function(req, res){
+    // clear cookie
+    console.log(req.cookies);
+    res.clearCookie('user_info');
+    res.redirect('/login');
+  })
 
   // get stream info. in JSON
   app.get('/streams.json', display_streams);
 
-  //
+  // login route
   app.get('/login', login);
 
   // index
