@@ -49,8 +49,8 @@ module.exports = function(app, streams) {
   var display_streams = function(req, res) {
     var stream_list = streams.getStreams();
     // JSON exploit to clone stream_list.public
-    var data = (JSON.parse(JSON.stringify(stream_list))); 
-
+    // var data = (JSON.parse(JSON.stringify(stream_list)));
+    var data = stream_list;
     res.status(200).json(data);
   };
 

@@ -3,9 +3,10 @@ module.exports = function() {
   * MongoDB Config. (testing)
   */
   var monk = require('monk'),
-      url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
+      url = 'test_user:shardingexample@52.34.42.178:27017/test',
       db = monk(url),
-      streams_collection = db.get('streams_collection');
+      streams_collection = db.get('streams_collection'),
+      stream_logs_collection = db.get('stream_logs_collection');
   /**
    * available streams 
    * the id value is considered unique (provided by socket.io)
@@ -71,7 +72,20 @@ module.exports = function() {
 
     // get streams list
     getStreams : function() {
-      return stream_list;
+      var new_streams_list = [];
+      streams_collection
+      .find({}, {stream: true})
+      .each(function(doc){
+        new_streams_list.push(doc);
+      })
+      .error(function(err){
+        if(err) console.log(err);
+      })
+      .success(function(){
+        //
+        return new_streams_list;
+      });
+      // return stream_list;
     },
 
     //  new functions for MongoDB (testing)
