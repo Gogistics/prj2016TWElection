@@ -86,9 +86,13 @@ var PeerManager = (function () {
       peer.pc.getSenders().forEach(function(sender){
         console.log(sender);
         // incomplete; this mechanism will be triggered twice to remove video & audio tracks
-        peer.pc.removeTrack(sender);
-        if(remoteVideosContainer.hasChildNodes()){
-          remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        try{
+          peer.pc.removeTrack(sender);
+          if(remoteVideosContainer.hasChildNodes() && remoteVideosContainer.contains(peer.remoteVideoEl)){
+            remoteVideosContainer.removeChild(peer.remoteVideoEl);
+          }
+        }catch(err){
+          console.log(err);
         }
       });
     };
@@ -214,7 +218,6 @@ var PeerManager = (function () {
     send: function(type, payload) {
       socket.emit(type, payload);
     },
-
     // load_data mechanism (temp)
     add_external_mechanism: function(arg_mechanism_name, arg_mechanism){
       // set external mechanism
