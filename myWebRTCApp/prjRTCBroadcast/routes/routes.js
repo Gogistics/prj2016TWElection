@@ -6,6 +6,10 @@ module.exports = function(app, streams) {
                         regular_user: 'user_index.jade'},
       title_title = { voting_station: 'Voting Station',
                       regular_user: 'Regular User'};
+  var monk = require('monk'),
+      url = 'test_user:shardingexample@52.34.42.178:27017/test',
+      db = monk(url),
+      streams_collection = db.get('streams_collection');
 
   // GET login
   var login = function(req, res) {
@@ -45,13 +49,23 @@ module.exports = function(app, streams) {
     };
   };
 
+  var recording = function(req, res){
+    //
+    res.render('recording_2.jade', {});
+  }
+  app.get('/recording', recording);
+
   // GET streams as JSON
   var display_streams = function(req, res) {
-    var stream_list = streams.getStreams();
+    // var stream_list = streams.getStreams();
+      streams_collection
+      .find({}, function(err, docs){
+        res.status(200).json(docs);
+      });
+    // console.log(stream_list);
     // JSON exploit to clone stream_list.public
     // var data = (JSON.parse(JSON.stringify(stream_list)));
-    var data = stream_list;
-    res.status(200).json(data);
+    // res.status(200).json(data);
   };
 
   /* post */

@@ -205,6 +205,11 @@
           console.log(err);
         });
       }
-    };
+    }
+
+    // incomplete
+    localStream.start_recording = function(){
+      //
+    }
   }]);
 })(jQuery);

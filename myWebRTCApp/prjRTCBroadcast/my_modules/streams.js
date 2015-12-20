@@ -74,15 +74,9 @@ module.exports = function() {
     getStreams : function() {
       var new_streams_list = [];
       streams_collection
-      .find({}, {stream: true})
-      .each(function(doc){
-        new_streams_list.push(doc);
-      })
-      .error(function(err){
-        if(err) console.log(err);
-      })
-      .success(function(){
-        //
+      .find({}, function(err, docs){
+        new_streams_list = docs;
+        console.log(new_streams_list);
         return new_streams_list;
       });
       // return stream_list;
@@ -93,15 +87,8 @@ module.exports = function() {
       // update streams list of container based on the data from MongoDB
       var new_streams_list = [];
       streams_collection
-      .find({}, {stream: true})
-      .each(function(doc){
-        new_streams_list.push(doc);
-      })
-      .error(function(err){
-        if(err) console.log(err);
-      })
-      .success(function(){
-        //
+      .find({}, function(err, docs){
+        new_streams_list = docs;
         return new_streams_list;
       });
     },

@@ -35,6 +35,7 @@ function trace(text) {
   }
 }
 
+/* incomplete; so far only consider mozGetUserMedia and webkitGetUserMedia, msGetUserMedia and getUserMedia will be taken into account */
 if (navigator.mozGetUserMedia) {
   console.log('This appears to be Firefox');
 
@@ -236,8 +237,8 @@ if (typeof module !== 'undefined') {
     attachMediaStream: attachMediaStream,
     reattachMediaStream: reattachMediaStream,
     webrtcDetectedBrowser: webrtcDetectedBrowser,
-    webrtcDetectedVersion: webrtcDetectedVersion
-    //requestUserMedia: not exposed on purpose.
-    //trace: not exposed on purpose.
+    webrtcDetectedVersion: webrtcDetectedVersion,
+    requestUserMedia: requestUserMedia,
+    trace: trace
   };
 }
