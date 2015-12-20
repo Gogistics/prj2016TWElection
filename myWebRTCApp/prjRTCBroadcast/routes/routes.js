@@ -51,7 +51,7 @@ module.exports = function(app, streams) {
 
   var recording = function(req, res){
     //
-    res.render('recording_2.jade', {});
+    res.render('recording_1.jade', {});
   }
   app.get('/recording', recording);
 

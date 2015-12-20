@@ -81,11 +81,13 @@ html(lang="en")
 
           function onStopRecording() {
               recordAudio.getDataURL(function(audioDataURL) {
-                  if (!isFirefox) {
+                  if(!isFirefox){
                       recordVideo.getDataURL(function(videoDataURL) {
                           postFiles(audioDataURL, videoDataURL);
                       });
-                  } else postFiles(audioDataURL);
+                  }else{
+                    postFiles(audioDataURL);
+                  }
               });
           }
       };
