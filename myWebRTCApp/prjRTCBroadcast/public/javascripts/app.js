@@ -42,18 +42,19 @@
     return camera;
     }]);
 
-    app.controller('IndexController', ['$window', function($window){
+    app.controller('IndexController', ['$window', '$location', function($window, $location){
       //
       var ctrl = this;
       ctrl.logout = function(){
-        $window.location.href = '/logout';
+        var logout_url = "http://" + $window.location.host + "/logout";
+        $window.location.href = logout_url;
       }
     }]);
 
-    app.controller('LoginController', ['$http', '$scope', function($http, $scope){
+    app.controller('LoginController', ['$http', '$scope', '$window', function($http, $scope, $window){
       //
       var ctrl = this;
-      ctrl['pwd'] = '';
+      ctrl['pwd'] = 'ilovetaiwan';
       ctrl['user_type'] = 'regular_user';
       ctrl.submit_login_info = function(){
         //
@@ -77,15 +78,19 @@
           //
           console.log(res);
           if(res.is_info_valid){
-            window.location = '/';
+            var index_url = "http://" + $window.location.host;
+            $window.location.href = index_url;
+            // $location.url('/');
+            // $window.location.reload();
           }else{
             $("#preloader").delay(100).fadeOut("slow");
           }
+          return false;
         });
       }
     }]);
 
-  app.controller('RemoteStreamsController', ['camera', '$location', '$http', function(camera, $location, $http){
+  app.controller('RemoteStreamsController', ['camera', '$location', '$http', '$window', function(camera, $location, $http, $window){
     var rtc = this;
     rtc.remoteStreams = [];
     function getStreamById(id) {
@@ -107,6 +112,7 @@
           }
           // save new streams
           rtc.remoteStreams = streams;
+          console.log('update stream list...');
       });
     };
     client.add_external_mechanism('load_data', rtc.loadData);
@@ -155,9 +161,9 @@
 
     //initial load
     rtc.loadData();
-      if($location.url() != '/'){
-          rtc.call($location.url().slice(1));
-      };
+    if($location.url() != '/'){
+        rtc.call($location.url().slice(1));
+    };
   }]);
 
   app.controller('LocalStreamController',['camera', '$scope', '$window', function(camera, $scope, $window){
@@ -196,6 +202,7 @@
         });
       } else {
         // for regular user, no need to start camera
+        console.log('start camera...');
         camera.start()
         .then(function(result) {
           localStream.link = $window.location.host + '/' + client.getId();
@@ -206,7 +213,6 @@
         });
       }
     }
-
     // incomplete
     localStream.start_recording = function(){
       //

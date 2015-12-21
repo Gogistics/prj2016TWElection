@@ -13,10 +13,12 @@ RUN    apt-get update
 RUN    apt-get clean
 
 # add files to working dir
+COPY   my_dicts/ /web/my_dicts
+COPY   my_modules/ /web/my_modules
 COPY   public/ /web/public
 COPY   routes/ /web/routes
 COPY   views/ /web/views
-COPY package.json Gruntfile.js bower.json main.js /web/
+COPY   package.json Gruntfile.js bower.json main.js start.sh /web/
 
 # Install app dependencies
 RUN cd /web && npm update -g npm && npm install && npm install -g bower --save-dev && npm install -g grunt --save-dev && npm install -g grunt-cli --save-dev && bower install --allow-root && grunt --force
@@ -25,4 +27,4 @@ RUN cd /web && npm update -g npm && npm install && npm install -g bower --save-d
 WORKDIR /web
 
 EXPOSE  3000
-CMD node main.js
+CMD sh main.js

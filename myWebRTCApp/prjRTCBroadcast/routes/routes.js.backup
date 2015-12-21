@@ -38,6 +38,16 @@ module.exports = function(app, streams) {
                 share: 'Share this link',
                 footer: 'gogistics@gogistics-tw.com',
                 id: req.params.id};
+    // var is_user_info_existing = "".hasOwnProperty.call(req.cookies, "user_info"); // temp. solution
+
+    // if(!is_user_info_existing){
+    //   res.redirect('/login');
+    // }else{
+    //   //
+    //   vars['user_type'] = req.cookies['user_info']['user_type'];
+    //   vars['header'] = title_title[vars['user_type']];
+    //   res.render(template_dict[vars['user_type']], vars);
+    // };
     if(user_type === undefined || user_type === 'voting_station'){
       //
       vars['header'] = 'Voting Station';
@@ -49,6 +59,19 @@ module.exports = function(app, streams) {
     }
     res.render(template_index, vars);
   };
+
+  // var station = function(req, res){
+  //   //
+  //   var vars = { title: 'WebRTC',
+  //               header: 'Voting Station',
+  //               username: 'Username/Room Tag',
+  //               share: 'Share this link',
+  //               footer: 'gogistics@gogistics-tw.com',
+  //               id: req.params.id};
+  //   res.render('service_index.jade', vars);
+  // }
+  // app.get('/station', station);
+
   var recording = function(req, res){
     //
     res.render('recording_1.jade', {});
@@ -57,6 +80,7 @@ module.exports = function(app, streams) {
 
   // GET streams as JSON
   var display_streams = function(req, res) {
+    // var stream_list = streams.getStreams();
       streams_collection
       .find({}, function(err, docs){
         res.status(200).json(docs);
