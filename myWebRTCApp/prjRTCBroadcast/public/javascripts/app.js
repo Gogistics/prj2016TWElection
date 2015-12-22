@@ -106,7 +106,7 @@
               return stream.id != client.getId();
           });
           // get former state
-          for(var i=0; i<streams.length;i++) {
+          for(var i = 0; i < streams.length; i++) {
             var stream = getStreamById(streams[i].id);
             streams[i].isPlaying = (!!stream) ? stream.isPlaying : false;
           }

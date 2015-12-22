@@ -53,6 +53,9 @@ li:hover {
 .main_content{
   margin: 60px auto;
 }
+.not_displayed{
+  display: none;
+}
 .localStream {
 }
 .localStream video {

@@ -1,7 +1,7 @@
 div(class="remoteStream" ng-controller="RemoteStreamsController as rtc")
   div(class="col-xs-12")
     h3 Remote Voting Station List
-    input(type="button" class="btn btn-default" value="Refresh" ng-click="rtc.loadData()" )
+    input(type="button" class="btn btn-default" value="Refresh" ng-click="rtc.loadData()")
     br
     table
       thead
@@ -12,7 +12,7 @@ div(class="remoteStream" ng-controller="RemoteStreamsController as rtc")
         tr(ng-repeat="stream in rtc.remoteStreams")
           td
             span {{stream.name}}
-          td(ng-click="rtc.view(stream)")
-            a(href="#" ng-class="{ 'selected' : stream.isPlaying }") {{ stream.isPlaying ? 'Cancel' : 'View' }}
+          td
+            a(href="#" ng-class="{ 'selected' : stream.isPlaying }" ng-click="rtc.view(stream)") {{ stream.isPlaying ? 'Cancel' : 'View' }}
     br
     div(id="remoteVideosContainer")

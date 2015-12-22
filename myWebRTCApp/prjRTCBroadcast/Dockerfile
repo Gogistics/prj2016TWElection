@@ -27,4 +27,4 @@ RUN cd /web && npm update -g npm && npm install && npm install -g bower --save-d
 WORKDIR /web
 
 EXPOSE  3000
-CMD sh main.js
+CMD sh start.sh

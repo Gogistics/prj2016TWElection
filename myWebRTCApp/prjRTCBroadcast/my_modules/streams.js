@@ -34,7 +34,7 @@ module.exports = function() {
       streams_collection.insert(stream, function(err, doc){
         // successfully store stream doc to MongoDB
         if(!err){
-          console.log('successfully store stream to MongoDB...');
+          console.log('successfully store stream into MongoDB...');
         }
       });
     },
@@ -70,27 +70,18 @@ module.exports = function() {
       });
     },
 
-    // get streams list
+    // get streams list; may be unnecessary for using cloud db
     getStreams : function() {
       var new_streams_list = [];
       streams_collection
       .find({}, function(err, docs){
-        new_streams_list = docs;
-        console.log(new_streams_list);
-        return new_streams_list;
+        if(!err){
+          return docs;
+        }else{
+          return {status: 'something wrong'};
+        }
       });
       // return stream_list;
-    },
-
-    //  new functions for MongoDB (testing)
-    getStreamsList: function(){
-      // update streams list of container based on the data from MongoDB
-      var new_streams_list = [];
-      streams_collection
-      .find({}, function(err, docs){
-        new_streams_list = docs;
-        return new_streams_list;
-      });
-    },
+    }
   }
 };
