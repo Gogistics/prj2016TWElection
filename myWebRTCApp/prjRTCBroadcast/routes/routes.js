@@ -6,8 +6,10 @@ module.exports = function(app, streams) {
                         regular_user: 'user_index.jade'},
       title_title = { voting_station: 'Voting Station',
                       regular_user: 'Regular User'};
+
+  /* MongoDB connection */
   var monk = require('monk'),
-      url = 'test_user:shardingexample@52.34.42.178:27017/test',
+      url = process.env.MONGODB_USER + ':' process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
       db = monk(url),
       streams_collection = db.get('streams_collection');
 

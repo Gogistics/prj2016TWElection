@@ -19,7 +19,6 @@ module.exports = function(io, streams) {
       streams.addStream(client.id, options.name, options.user_type);
 
       // send notification to all users when new stream coming; notify user-self & need to notify other users
-      // client.emit('new_stream_notification', 'stream_on')
       notify_users_to_update_streams_info('stream_on', client.id);
     });
     
@@ -33,7 +32,6 @@ module.exports = function(io, streams) {
       streams.removeStream(client.id);
 
       // send notification to all users when stream leaves
-      // client.emit('new_stream_notification', 'stream_off');
       notify_users_to_update_streams_info('stream_off', client.id);
     }
 
