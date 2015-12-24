@@ -11,19 +11,29 @@
 
     app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
       var camera = {};
+      /*
+      * var cameraPreview = document.getElementById('camera-preview');
+      * navigator.getUserMedia({audio: true, video: true}, function(stream){ ... });
+      * 
+      */
       camera.preview = $window.document.getElementById('localVideo');
       camera.isOn = false;
       camera.start = function(){
-      return requestUserMedia(mediaConfig)
-      .then(function(stream){     
-        attachMediaStream(camera.preview, stream);
-        client.setLocalStream(stream);
-        camera.stream = stream;
-        camera.isOn = true;
-        $rootScope.$broadcast('cameraIsOn',true);
-      })
-      .catch(Error('Failed to get access to local media.'));
-    };
+        return requestUserMedia(mediaConfig)
+        .then(function(stream){
+          // onSuccess    
+          attachMediaStream(camera.preview, stream);
+          client.setLocalStream(stream);
+          camera.stream = stream;
+          camera.isOn = true;
+          $rootScope.$broadcast('cameraIsOn',true);
+          console.log('OnSuccess...');
+        }, function(arg_error){
+          // onError
+          console.log('OnError...');
+        })
+        .catch(Error('Failed to get access to local media.'));
+      };
       camera.stop = function(){
         return new Promise(function(resolve, reject){     
         try {
@@ -38,8 +48,8 @@
           camera.isOn = false;
           $rootScope.$broadcast('cameraIsOn',false);
         }); 
-    };
-    return camera;
+      };
+      return camera;
     }]);
 
     app.controller('IndexController', ['$window', '$location', function($window, $location){
@@ -162,7 +172,7 @@
     //initial load
     rtc.loadData();
     if($location.url() != '/'){
-        rtc.call($location.url().slice(1));
+      rtc.call($location.url().slice(1));
     };
   }]);
 

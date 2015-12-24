@@ -217,6 +217,7 @@ function requestUserMedia(constraints) {
   return new Promise(function(resolve, reject) {
     var onSuccess = function(stream) {
       resolve(stream);
+      /* recording mechanism is created here */
     };
     var onError = function(error) {
       reject(error);
@@ -230,15 +231,15 @@ function requestUserMedia(constraints) {
   });
 }
 
-if (typeof module !== 'undefined') {
-  module.exports = {
-    RTCPeerConnection: RTCPeerConnection,
-    getUserMedia: getUserMedia,
-    attachMediaStream: attachMediaStream,
-    reattachMediaStream: reattachMediaStream,
-    webrtcDetectedBrowser: webrtcDetectedBrowser,
-    webrtcDetectedVersion: webrtcDetectedVersion,
-    requestUserMedia: requestUserMedia,
-    trace: trace
-  };
-}
+// if (typeof module !== 'undefined') {
+//   module.exports = {
+//     RTCPeerConnection: RTCPeerConnection,
+//     getUserMedia: getUserMedia,
+//     attachMediaStream: attachMediaStream,
+//     reattachMediaStream: reattachMediaStream,
+//     webrtcDetectedBrowser: webrtcDetectedBrowser,
+//     webrtcDetectedVersion: webrtcDetectedVersion,
+//     // requestUserMedia: requestUserMedia, // not exposed on purpose; currently functionality iw replaced by getUserMedia and attachMediaStream
+//     // trace: trace // not exposed on purpose.
+//   };
+// }

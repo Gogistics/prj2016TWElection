@@ -59,7 +59,7 @@ var PeerManager = (function () {
 
   // funstions
   function addPeer(remoteId) {
-    var peer = new Peer(config.peerConnectionConfig, config.peerConnectionConstraints);
+    var peer = new Peer(config.peerConnectionConfig, config.peerConnectionConstraints, remoteId);
     peer.pc.onicecandidate = function(event) {
       if (event.candidate) {
         send('candidate', remoteId, {
@@ -235,12 +235,17 @@ var PeerManager = (function () {
   };
 });
 
-/* Peer */
-var Peer = function (pcConfig, pcConstraints){
+/*
+* Peer (remote)
+* RTCPeer connection is built up here and the remote video tag is created here as well
+* Therefore, the recording mechanism can be developed here
+*/
+var Peer = function (pcConfig, pcConstraints, arg_remote_id){
   this.pc = new RTCPeerConnection(pcConfig, pcConstraints);
   this.remoteVideoEl = document.createElement('video');
   this.remoteVideoEl.controls = true;
   this.remoteVideoEl.autoplay = true;
   this.remoteVideoEl.muted = true; // tmp init
+  this.remoteVideoEl.id = arg_remote_id; // to set the remote id for future use
   console.log('muted video...');
 }
