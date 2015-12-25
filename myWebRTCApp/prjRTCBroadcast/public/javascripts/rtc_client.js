@@ -47,12 +47,17 @@ var PeerManager = (function () {
       if(res.notification_key === 'stream_off'){
         var remote_id = res.client_id_from,
             peer = peerDatabase[remote_id];
-
-        if(remoteVideosContainer.hasChildNodes() && peer){
-          remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        // remove child element
+        try{
+          if( remoteVideosContainer.hasChildNodes() &&
+              remoteVideosContainer.contains(peer.remoteVideoEl)){
+              remoteVideosContainer.removeChild(peer.remoteVideoEl);
+          }
+        }catch(err){
+          console.log(err);
         }
       }
-      console.log('update stream list...');
+      console.log('stream_notification: update stream list...');
     }
   });
   // end of auto-update mechanism
@@ -74,11 +79,15 @@ var PeerManager = (function () {
       remoteVideosContainer.appendChild(peer.remoteVideoEl);
     };
     peer.pc.onremovestream = function(event) {
-      peer.remoteVideoEl.src = '';
-      if(remoteVideosContainer.hasChildNodes()){
-        remoteVideosContainer.removeChild(peer.remoteVideoEl);
+      // remove child element
+      try{
+        if( remoteVideosContainer.hasChildNodes() &&
+            remoteVideosContainer.contains(peer.remoteVideoEl)){
+            remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        }
+      }catch(err){
+        console.log(err);
       }
-      // remoteVideosContainer.removeChild(peer.remoteVideoEl);
     };
     peer.pc.oniceconnectionstatechange = function(event) {
       switch(
@@ -86,7 +95,15 @@ var PeerManager = (function () {
       || event.target   ) // Firefox
       .iceConnectionState) {
         case 'disconnected':
-          remoteVideosContainer.removeChild(peer.remoteVideoEl);
+          // remove child element
+          try{
+            if( remoteVideosContainer.hasChildNodes() &&
+                remoteVideosContainer.contains(peer.remoteVideoEl)){
+                remoteVideosContainer.removeChild(peer.remoteVideoEl);
+            }
+          }catch(err){
+            console.log(err);
+          }
           break;
       }
     };
@@ -97,8 +114,9 @@ var PeerManager = (function () {
         // incomplete; this mechanism will be triggered twice to remove video & audio tracks
         try{
           peer.pc.removeTrack(sender);
-          if(remoteVideosContainer.hasChildNodes() && remoteVideosContainer.contains(peer.remoteVideoEl)){
-            remoteVideosContainer.removeChild(peer.remoteVideoEl);
+          if( remoteVideosContainer.hasChildNodes() &&
+              remoteVideosContainer.contains(peer.remoteVideoEl)){
+              remoteVideosContainer.removeChild(peer.remoteVideoEl);
           }
         }catch(err){
           console.log(err);
@@ -210,7 +228,6 @@ var PeerManager = (function () {
           }
         }
       }
-
       localStream = stream;
     }, 
     toggleLocalStream: function(remoteId) {

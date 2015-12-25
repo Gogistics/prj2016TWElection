@@ -42,7 +42,7 @@
           }
           // save new streams
           rtc.remoteStreams = streams;
-          console.log('update stream list...');
+          console.log('RemoteStreamsController: update stream list...');
       });
     };
     client.add_external_mechanism('load_data', rtc.loadData);
