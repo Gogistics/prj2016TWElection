@@ -26,5 +26,5 @@ RUN cd /web && npm update -g npm && npm install && npm install -g bower --save-d
 # working dir
 WORKDIR /web
 
-EXPOSE  3000
+EXPOSE  8080
 CMD sh start.sh
