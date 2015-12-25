@@ -9,11 +9,11 @@ module.exports = function(app, streams) {
 
   /* MongoDB connection */
   var monk = require('monk'),
-      url = process.env.MONGODB_USER + ':' process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
+      url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
       db = monk(url),
       streams_collection = db.get('streams_collection');
 
-  // GET login
+  // GET login (maybe unnecessary)
   var login = function(req, res) {
     var is_user_info_existing = "".hasOwnProperty.call(req.cookies, "user_info"); // temp. solution
     if(is_user_info_existing){
@@ -30,27 +30,30 @@ module.exports = function(app, streams) {
     }
   };
 
-  // GET home 
+  // GET index 
   var index = function(req, res) {
     var user_type = req.params.id,
-        template_index = 'user_index.jade';
+        template_index = 'index.jade';
     var vars = { title: 'WebRTC',
-                header: 'Viewer',
                 username: 'Username/Room Tag',
                 share: 'Share this link',
                 footer: 'gogistics@gogistics-tw.com',
                 id: req.params.id};
-    if(user_type === undefined || user_type === 'voting_station'){
+    if(user_type === 'voting_station'){
       //
       vars['header'] = 'Voting Station';
       template_index = 'service_index.jade';
-    }else if(user_type === 'viewer'){
+    }else if(user_type === 'monitor'){
       //
-      vars['header'] = 'Viewer';
+      vars['header'] = 'Monitor';
       template_index = 'user_index.jade';
+    }else{
+      vars['header'] = 'Monitor Balloting Service';
     }
     res.render(template_index, vars);
   };
+
+  // testing
   var recording = function(req, res){
     //
     res.render('recording_1.jade', {});

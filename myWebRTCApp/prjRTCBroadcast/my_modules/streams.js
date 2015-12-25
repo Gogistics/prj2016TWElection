@@ -3,7 +3,7 @@ module.exports = function() {
   * MongoDB Config. (testing)
   */
   var monk = require('monk'),
-      url = process.env.MONGODB_USER + ':' process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
+      url = process.env.MONGODB_USER + ':' + process.env.MONGODB_USER_PWD + '@' + process.env.MONGODB_INSTANCE_DNS + ':27017/test',
       db = monk(url),
       streams_collection = db.get('streams_collection'),
       stream_logs_collection = db.get('stream_logs_collection');

@@ -14,4 +14,4 @@ webrtc_app_1:
     env_file:
         - ./.keys.env
     ports: 
-        - "3000"
+        - "8080"

@@ -222,7 +222,6 @@ function requestUserMedia(constraints) {
     var onError = function(error) {
       reject(error);
     };
-
     try {
       getUserMedia(constraints, onSuccess, onError);
     } catch (e) {
@@ -230,16 +229,3 @@ function requestUserMedia(constraints) {
     }
   });
 }
-
-// if (typeof module !== 'undefined') {
-//   module.exports = {
-//     RTCPeerConnection: RTCPeerConnection,
-//     getUserMedia: getUserMedia,
-//     attachMediaStream: attachMediaStream,
-//     reattachMediaStream: reattachMediaStream,
-//     webrtcDetectedBrowser: webrtcDetectedBrowser,
-//     webrtcDetectedVersion: webrtcDetectedVersion,
-//     // requestUserMedia: requestUserMedia, // not exposed on purpose; currently functionality iw replaced by getUserMedia and attachMediaStream
-//     // trace: trace // not exposed on purpose.
-//   };
-// }

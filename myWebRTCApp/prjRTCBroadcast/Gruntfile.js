@@ -33,6 +33,8 @@ module.exports = function(grunt){
             combine: {
                 files: {
                     'public/javascripts/app.min.js': ['public/javascripts/app.js'],
+                    'public/javascripts/app_monitor.min.js': ['public/javascripts/app_monitor.js'],
+                    'public/javascripts/app_voting_station.min.js': ['public/javascripts/app_voting_station.js'],
                     'public/javascripts/rtc_client.min.js': ['public/javascripts/rtc_client.js'],
                     'public/javascripts/adapter.min.js': ['public/javascripts/adapter.js']
                 },

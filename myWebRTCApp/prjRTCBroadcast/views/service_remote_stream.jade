@@ -11,3 +11,5 @@ div(class="remoteStream" ng-controller="RemoteStreamsController as rtc")
         tr(ng-repeat="stream in rtc.remoteStreams" ng-class="{ 'selected' : stream.isPlaying }")
           td
             span {{stream.name}}
+  br
+  div(id="remoteVideosContainer" class="not_displayed")

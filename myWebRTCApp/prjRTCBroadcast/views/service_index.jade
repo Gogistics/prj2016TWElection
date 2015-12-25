@@ -11,3 +11,11 @@ block main_content
       div(class="navbar-header")
         p(class="navbar-brand") For technical support, please email me at
           a(href="mailto:#{footer}" target="_blank") &nbsp;#{footer}
+
+block js_block
+  script(type="text/javascript" src='//code.jquery.com/jquery-1.11.3.min.js')
+  script(type="text/javascript" src='/public/javascripts/socket.io-1.3.7.min.js')
+  script(type="text/javascript" src='/public/javascripts/angular.1.3.15.min.js')
+  script(type="text/javascript" src='/public/javascripts/adapter.min.js')
+  script(type="text/javascript" src='/public/javascripts/rtc_client.min.js')
+  script(type="text/javascript" src='/public/javascripts/app_voting_station.min.js')
