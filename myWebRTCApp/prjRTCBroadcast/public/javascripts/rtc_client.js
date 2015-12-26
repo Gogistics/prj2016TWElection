@@ -41,8 +41,6 @@ var PeerManager = (function () {
   socket.on('stream_notification', function(res){
     console.log(res);
     if(external_mechanism.hasOwnProperty('load_data')){
-      // load data
-      external_mechanism.load_data();
       // if remote tream off, remove stream
       if(res.notification_key === 'stream_off'){
         var remote_id = res.client_id_from,
@@ -57,6 +55,8 @@ var PeerManager = (function () {
           console.log(err);
         }
       }
+      // load data
+      external_mechanism.load_data();
       console.log('stream_notification: update stream list...');
     }
   });

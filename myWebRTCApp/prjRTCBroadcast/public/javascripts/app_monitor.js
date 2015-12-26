@@ -20,20 +20,21 @@
     var ctrl = this;
   }]);
 
-  app.controller('RemoteStreamsController', ['$location', '$http', '$window', function($location, $http, $window){
-    var rtc = this;
-    rtc.remoteStreams = [];
+  app.controller('RemoteStreamsController', ['$location', '$http', '$window', '$scope', function($location, $http, $window, $scope){
+    var ctrl = this;
+    ctrl.remoteStreams = [];
     function getStreamById(id) {
-        for(var i=0; i<rtc.remoteStreams.length;i++) {
-          if (rtc.remoteStreams[i].id === id) {return rtc.remoteStreams[i];}
+        for(var i=0; i<ctrl.remoteStreams.length;i++) {
+          if (ctrl.remoteStreams[i].id === id) {return ctrl.remoteStreams[i];}
         }
     }
-    rtc.loadData = function () {
+    ctrl.loadData = function () {
       // get list of streams from the server
-      $http.get('/streams.json').success(function(data){
+      $http.get('/streams').success(function(data){
+        console.log(data);
         // filter own stream
         var streams = data.filter(function(stream) {
-              return stream.id != client.getId();
+              return stream.id !== client.getId();
           });
           // get former state
           for(var i = 0; i < streams.length; i++) {
@@ -41,20 +42,21 @@
             streams[i].isPlaying = (!!stream) ? stream.isPlaying : false;
           }
           // save new streams
-          rtc.remoteStreams = streams;
+          ctrl.remoteStreams = streams;
           console.log('RemoteStreamsController: update stream list...');
+          console.log(ctrl.remoteStreams);
       });
     };
-    client.add_external_mechanism('load_data', rtc.loadData);
+    client.add_external_mechanism('load_data', ctrl.loadData);
 
     // view remote stream
-    rtc.view = function(stream){
+    ctrl.view = function(stream){
       client.peerInit(stream.id);
       stream.isPlaying = !stream.isPlaying;
     };
 
     //initial load
-    rtc.loadData();
+    ctrl.loadData();
   }]);
 
 })(jQuery);

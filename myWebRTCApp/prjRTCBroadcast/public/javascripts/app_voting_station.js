@@ -67,7 +67,7 @@
 
     rtc.loadData = function () {
       // get list of streams from the server
-      $http.get('/streams.json').success(function(data){
+      $http.get('/streams').success(function(data){
         // filter own stream
         var streams = data.filter(function(stream) {
               return stream.id != client.getId();

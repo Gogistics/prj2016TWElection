@@ -64,7 +64,8 @@ module.exports = function(app, streams) {
   var display_streams = function(req, res) {
       streams_collection
       .find({}, function(err, docs){
-        res.status(200).json(docs);
+        // res.status(200).json(docs);
+        res.send(docs);
       });
   };
 
@@ -101,7 +102,7 @@ module.exports = function(app, streams) {
   })
 
   // get stream info. in JSON
-  app.get('/streams.json', display_streams);
+  app.get('/streams', display_streams);
 
   // login route
   app.get('/login', login);
