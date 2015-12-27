@@ -67,29 +67,39 @@ html(lang="en")
 
 
       stopRecording.onclick = function() {
-          startRecording.disabled = false;
-          stopRecording.disabled = true;
+        startRecording.disabled = false;
+        stopRecording.disabled = true;
 
-          recordAudio.stopRecording(function() {
-              if (isFirefox) onStopRecording();
+        recordRTC.stopRecording(function() {
+          recordRTC.save('file-name');
+        });
+
+        /*
+        recordAudio.stopRecording(function() {
+            if (isFirefox) onStopRecording();
+        });
+
+        if (!isFirefox) {
+            recordVideo.stopRecording();
+            onStopRecording();
+        } else{
+          recordAudio.stopRecording(function(){
+            onStopRecording();
           });
+        }
+        */
 
-          if (!isFirefox) {
-              recordVideo.stopRecording();
-              onStopRecording();
-          }
-
-          function onStopRecording() {
-              recordAudio.getDataURL(function(audioDataURL) {
-                  if(!isFirefox){
-                      recordVideo.getDataURL(function(videoDataURL) {
-                          postFiles(audioDataURL, videoDataURL);
-                      });
-                  }else{
-                    postFiles(audioDataURL);
-                  }
-              });
-          }
+        function onStopRecording() {
+          recordAudio.getDataURL(function(audioDataURL) {
+            if(!isFirefox){
+                recordVideo.getDataURL(function(videoDataURL) {
+                    postFiles(audioDataURL, videoDataURL);
+                });
+            }else{
+              postFiles(audioDataURL);
+            }
+          });
+        }
       };
 
       var fileName;

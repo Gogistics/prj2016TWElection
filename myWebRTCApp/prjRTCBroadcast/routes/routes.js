@@ -111,6 +111,6 @@ module.exports = function(app, streams) {
   app.get('/', index);
   app.get('/:id', index);
 
-  //
+  // login verification
   app.post('/verify_login_info', verify_login_info);
 }

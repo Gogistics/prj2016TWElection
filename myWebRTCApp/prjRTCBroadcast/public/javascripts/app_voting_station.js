@@ -2,12 +2,10 @@
   var app = angular.module('myWebRTC', [], function($locationProvider){$locationProvider.html5Mode(true);});
   var client = new PeerManager();
   var mediaConfig = {
-        audio:true,
-        video: {
-          mandatory: {},
-          optional: []
-        }
+        audio: true,
+        video: true
     };
+  var local_stream;
 
     app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
       var camera = {};
@@ -20,14 +18,15 @@
       camera.start = function(){
         return requestUserMedia(mediaConfig)
         .then(function(stream){
-          // onSuccess    
+          // onSuccess; this function will be assigned to resolve() in adapter.js
+          local_stream = stream; // tmp setting
           attachMediaStream(camera.preview, stream);
           client.setLocalStream(stream);
           camera.stream = stream;
           camera.isOn = true;
           $rootScope.$broadcast('cameraIsOn',true);
           console.log('OnSuccess...');
-        }, function(arg_error){
+        }, function(arg_error){ // this function will be assigned to reject() in adapter.js
           // onError
           console.log('OnError...');
         })
@@ -134,6 +133,7 @@
     localStream.name = 'Guest';
     localStream.link = '';
     localStream.cameraIsOn = false;
+    localStream.isFirefox = !!navigator.mozGetUserMedia;
 
     $scope.$on('cameraIsOn', function(event,data) {
         $scope.$apply(function() {
@@ -144,7 +144,7 @@
     // init; set user_type
     localStream.init = function(arg_user_type){
       localStream.user_type = arg_user_type;
-    }
+    };
 
     // toggle camera
     localStream.toggleCam = function(){
@@ -155,7 +155,8 @@
       }
 
       if(localStream.cameraIsOn){
-        camera.stop()
+        camera
+        .stop()
         .then(function(result){
           client.send('leave');
             client.setLocalStream(null);
@@ -166,7 +167,8 @@
       } else {
         // for regular user, no need to start camera
         console.log('start camera...');
-        camera.start()
+        camera
+        .start()
         .then(function(result) {
           localStream.link = $window.location.host + '/' + client.getId();
           client.send('readyToStream', { name: localStream.name, user_type: localStream.user_type });
@@ -175,10 +177,35 @@
           console.log(err);
         });
       }
-    }
+    };
+
     // incomplete
+    localStream.is_start_recording_btn_disabled = false;
+    localStream.is_stop_recording_btn_disabled = true;
     localStream.start_recording = function(){
       //
-    }
+      if(local_stream){
+        //
+        localStream.record_rtc = RecordRTC(local_stream, {
+                        bufferSize: 16384,
+                        type: 'video'
+                      });
+        localStream.record_rtc.startRecording();
+        localStream.is_start_recording_btn_disabled = true;
+        localStream.is_stop_recording_btn_disabled = false;
+      }
+    };
+
+    // incomplete
+    localStream.stop_recording = function(){
+      //
+      localStream.record_rtc.stopRecording(function() {
+        var timestamp = new Date().getTime(),
+            file_name = localStream.name + '-' + timestamp;
+        localStream.record_rtc.save(file_name);
+        localStream.is_start_recording_btn_disabled = false;
+        localStream.is_stop_recording_btn_disabled = true;
+      });
+    };
   }]);
 })(jQuery);
