@@ -27,8 +27,9 @@ var PeerManager = (function () {
       },
       peerDatabase = {}, // can be replaced with real DB
       localStream,
+      remoteStreams = {}, // for storing remote streams and do recording if necessary
       remoteVideoContainer = document.getElementById('remoteVideosContainer'),
-      socket = io(), // better to be set to listen to specific IP & port
+      socket = io(),
       external_mechanism = {};
       
   // set socket
@@ -75,6 +76,7 @@ var PeerManager = (function () {
       }
     };
     peer.pc.onaddstream = function(event) {
+      // recording mechanism could be assigned here
       attachMediaStream(peer.remoteVideoEl, event.stream);
       remoteVideosContainer.appendChild(peer.remoteVideoEl);
     };
@@ -82,8 +84,8 @@ var PeerManager = (function () {
       // remove child element
       try{
         if( remoteVideosContainer.hasChildNodes() &&
-            remoteVideosContainer.contains(peer.remoteVideoEl)){
-            remoteVideosContainer.removeChild(peer.remoteVideoEl);
+          remoteVideosContainer.contains(peer.remoteVideoEl)){
+          remoteVideosContainer.removeChild(peer.remoteVideoEl);
         }
       }catch(err){
         console.log(err);
@@ -248,6 +250,13 @@ var PeerManager = (function () {
     add_external_mechanism: function(arg_mechanism_name, arg_mechanism){
       // set external mechanism
       external_mechanism[arg_mechanism_name] = arg_mechanism;
+    },
+    // to start and stop recording for remote streams
+    start_recording: function(arg_stream_id){
+      //
+    },
+    stop_recording: function(arg_stream_id){
+      //
     }
   };
 });

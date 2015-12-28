@@ -1,59 +1,77 @@
+/* voting station
+* angular.js app
+*/
 (function($){
+  'use strict';
   var app = angular.module('myWebRTC', [], function($locationProvider){$locationProvider.html5Mode(true);});
   var client = new PeerManager();
+  /* camera setting */
+  // basic
+  // var mediaConfig = {
+  //       audio: true,
+  //       video: true
+  //   };
+  // HD
   var mediaConfig = {
         audio: true,
-        video: true
-    };
-  var local_stream;
-
-    app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
-      var camera = {};
-      /*
-      * var cameraPreview = document.getElementById('camera-preview');
-      * navigator.getUserMedia({audio: true, video: true}, function(stream){ ... });
-      */
-      camera.preview = $window.document.getElementById('localVideo');
-      camera.isOn = false;
-      camera.start = function(){
-        return requestUserMedia(mediaConfig)
-        .then(function(stream){
-          // onSuccess; this function will be assigned to resolve() in adapter.js
-          local_stream = stream; // tmp setting
-          attachMediaStream(camera.preview, stream);
-          client.setLocalStream(stream);
-          camera.stream = stream;
-          camera.isOn = true;
-          $rootScope.$broadcast('cameraIsOn',true);
-          console.log('OnSuccess...');
-        }, function(arg_error){ // this function will be assigned to reject() in adapter.js
-          // onError
-          console.log('OnError...');
-        })
-        .catch(Error('Failed to get access to local media.'));
-      };
-      camera.stop = function(){
-        return new Promise(function(resolve, reject){     
-        try {
-          camera.stream.stop();
-          camera.preview.src = '';
-          resolve();
-        } catch(error) {
-          reject(error);
+        video: { mandatory: {
+            minWidth: 1280,
+            minHeight: 720,
+            maxWidth: 1280,
+            maxHeight: 720,
+            frameRate: { min: 35, ideal: 50, max: 60 }
+          }
         }
-        })
-        .then(function(result){
-          camera.isOn = false;
-          $rootScope.$broadcast('cameraIsOn',false);
-        }); 
       };
-      return camera;
-    }]);
+  var local_stream; // for recording
 
-    app.controller('IndexController', ['$window', '$location', function($window, $location){
-      //
-      var ctrl = this;
-    }]);
+  app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
+    var camera = {};
+    /*
+    * var cameraPreview = document.getElementById('camera-preview');
+    * navigator.getUserMedia({audio: true, video: true}, function(stream){ ... });
+    */
+    camera.preview = $window.document.getElementById('localVideo');
+    camera.isOn = false;
+    camera.start = function(){
+      return requestUserMedia(mediaConfig)
+      .then(function(stream){
+        // onSuccess; this function will be assigned to resolve() in adapter.js
+        local_stream = stream;
+        attachMediaStream(camera.preview, stream);
+        client.setLocalStream(stream);
+        camera.stream = stream;
+        camera.isOn = true;
+        $rootScope.$broadcast('cameraIsOn',true);
+        console.log('OnSuccess...');
+      }, function(arg_error){
+        // onError; this function will be assigned to reject() in adapter.js
+        console.log('OnError...');
+      })
+      .catch(Error('Failed to get access to local media.'));
+    };
+    camera.stop = function(){
+      return new Promise(function(resolve, reject){     
+      try {
+        camera.stream.stop();
+        camera.preview.src = '';
+        resolve();
+      } catch(error) {
+        reject(error);
+      }
+      })
+      .then(function(result){
+        camera.isOn = false;
+        $rootScope.$broadcast('cameraIsOn',false);
+      }); 
+    };
+    return camera;
+  }]);
+
+  app.controller('IndexController', ['$window', '$location', function($window, $location){
+    //
+    var ctrl = this;
+  }]);
 
   app.controller('RemoteStreamsController', ['camera', '$location', '$http', '$window', function(camera, $location, $http, $window){
     var rtc = this;
@@ -130,7 +148,7 @@
 
   app.controller('LocalStreamController',['camera', '$scope', '$window', function(camera, $scope, $window){
     var localStream = this;
-    localStream.name = 'Guest';
+    localStream.name = 'Station';
     localStream.link = '';
     localStream.cameraIsOn = false;
     localStream.isFirefox = !!navigator.mozGetUserMedia;
@@ -146,11 +164,15 @@
       localStream.user_type = arg_user_type;
     };
 
+    // recording setting
+    localStream.is_start_recording_btn_disabled = false;
+    localStream.is_stop_recording_btn_disabled = true;
+
     // toggle camera
     localStream.toggleCam = function(){
       // check if username empty
       if(localStream.name.trim() === ''){
-        alert('username is empty');
+        alert('Station name is empty; please provide a station name');
         return false;
       }
 
@@ -158,8 +180,14 @@
         camera
         .stop()
         .then(function(result){
+          // stop recording
+          if(localStream.is_start_recording_btn_disabled){
+            //
+            localStream.stop_recording();
+          }
+          // send message to server
           client.send('leave');
-            client.setLocalStream(null);
+          client.setLocalStream(null);
         })
         .catch(function(err) {
           console.log(err);
@@ -179,32 +207,29 @@
       }
     };
 
-    // incomplete
-    localStream.is_start_recording_btn_disabled = false;
-    localStream.is_stop_recording_btn_disabled = true;
+    // start recording
     localStream.start_recording = function(){
-      //
       if(local_stream){
         //
+        localStream.start_timestamp = new Date().getTime();
         localStream.record_rtc = RecordRTC(local_stream, {
-                        bufferSize: 16384,
-                        type: 'video'
-                      });
+                                  bufferSize: 16384,
+                                  type: 'video'
+                                });
         localStream.record_rtc.startRecording();
         localStream.is_start_recording_btn_disabled = true;
         localStream.is_stop_recording_btn_disabled = false;
       }
     };
 
-    // incomplete
+    // stop recording
     localStream.stop_recording = function(){
-      //
       localStream.record_rtc.stopRecording(function() {
-        var timestamp = new Date().getTime(),
-            file_name = localStream.name + '-' + timestamp;
-        localStream.record_rtc.save(file_name);
+        localStream.stop_timestamp = new Date().getTime();
+        var file_name = localStream.name + '-' + localStream.start_timestamp + '_' + localStream.stop_timestamp;
         localStream.is_start_recording_btn_disabled = false;
         localStream.is_stop_recording_btn_disabled = true;
+        localStream.record_rtc.save(file_name);
       });
     };
   }]);

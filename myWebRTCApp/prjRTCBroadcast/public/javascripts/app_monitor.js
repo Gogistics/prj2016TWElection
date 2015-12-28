@@ -2,13 +2,15 @@
   'use strict';
   var app = angular.module('myWebRTC', [], function($locationProvider){$locationProvider.html5Mode(true);});
   var client = new PeerManager();
+  /* camera configuration */
+  // basic setting
   var mediaConfig = {
         audio:true,
         video: {
           mandatory: {},
           optional: []
         }
-    };
+      };
 
   /* ng-value */
   app.value('DICT',{
@@ -31,7 +33,6 @@
     ctrl.loadData = function () {
       // get list of streams from the server
       $http.get('/streams').success(function(data){
-        console.log(data);
         // filter own stream
         var streams = data.filter(function(stream) {
               return stream.id !== client.getId();
@@ -43,8 +44,7 @@
           }
           // save new streams
           ctrl.remoteStreams = streams;
-          console.log('RemoteStreamsController: update stream list...');
-          console.log(ctrl.remoteStreams);
+          // console.log('RemoteStreamsController: update stream list...');
       });
     };
     client.add_external_mechanism('load_data', ctrl.loadData);
@@ -55,7 +55,16 @@
       stream.isPlaying = !stream.isPlaying;
     };
 
-    //initial load
+    //
+    ctrl.start_recording = function(stream){
+      //
+    }
+
+    ctrl.stop_recording = function(stream){
+      //
+    }
+
+    // initially load streams
     ctrl.loadData();
   }]);
 
