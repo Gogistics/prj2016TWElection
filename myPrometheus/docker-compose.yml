@@ -1,0 +1,13 @@
+my_alertmanager_1:
+    restart: always
+    container_name: my_alertmanager_1
+    build: ./prjAlertManager
+    ports:
+        - "9093:9093"
+
+my_prometheus_1:
+    restart: always
+    container_name: my_prometheus_1
+    build: ./prjPrometheus
+    ports:
+        - "9090:9090"
