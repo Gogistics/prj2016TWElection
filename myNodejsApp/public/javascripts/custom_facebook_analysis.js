@@ -68,7 +68,7 @@
       for(var ith_key in arg_data){
         //
         if(arg_elem_id === 'latest_post_tsaiingwen'){
-          console.log(arg_data[ith_key]['created_time']);
+          // console.log(arg_data[ith_key]['created_time']);
         }
         if((new Date(arg_data[ith_key]['created_time']).getTime()) < (new Date('2015-10-30').getTime())){
           //

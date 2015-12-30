@@ -15,7 +15,7 @@ var DEFAULT_PORT = 8080,
 
 /* App setting */
 var app = express(),
-    cache_time = 2 * 86400000;
+    cache_time = 1 * 86400000;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

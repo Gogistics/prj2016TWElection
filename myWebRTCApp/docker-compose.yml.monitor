@@ -1,0 +1,17 @@
+nginx:
+    restart: always
+    container_name: my_nginx
+    build: ./prjNginx
+    links:
+        - webrtc_app_1:webrtc_app_1
+    ports:
+        - "80:80"
+
+webrtc_app_1:
+    restart: always
+    container_name: my_webrtc_app_1
+    build: ./prjRTCBroadcast
+    env_file:
+        - ./.keys.env
+    ports: 
+        - "8080"
