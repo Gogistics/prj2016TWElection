@@ -16,6 +16,17 @@ node_1:
     ports: 
         - "8080"
 
+my_container_exporter_1:
+    restart: always
+    container_name: my_container_exporter_1
+    build: ./myExporter/prjContainer
+    ports:
+        - "9101:9101"
+    volumes:
+        - /sys/fs/cgroup:/cgroup
+        - /var/run/docker.sock:/var/run/docker.sock
+    net: "host"
+
 my_cadvisor_1:
     restart: always
     container_name: my_cadvisor_1

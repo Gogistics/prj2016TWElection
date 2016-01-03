@@ -33,7 +33,7 @@ cfg = { "_id" : "rs0", "version" : 1, "members" : [{ "_id" : 0, "host" : "52.24.
 # rs0:PRIMARY> rs.status()
 # rs0:PRIMARY> rs.conf()
 # rs0:PRIMARY> rs.add('IP_PORT')
-# rs0:PRIMARY> rs.add('IP_PORT')
+# rs0:PRIMARY> rs.addArb('IP_PORT')
 
 # ==============================
 # reconfig host of primary set

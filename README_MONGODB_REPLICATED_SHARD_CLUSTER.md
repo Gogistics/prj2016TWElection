@@ -43,7 +43,7 @@ access the container of the primary set
 
 configure the replica set
 
-> mongo
+> mongo --port 27017
 
 > rs.initiate() # hit enter
 
@@ -77,7 +77,7 @@ configure the replica set
 
 > rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONADRY_2_IP:PORT')
 
-> rs0:PRIMARY> rs.add('REPLICA_SET_0_ARBITER_IP:PORT')
+> rs0:PRIMARY> rs.addArb('REPLICA_SET_0_ARBITER_IP:PORT')
 
 > rs0:PRIMARY> rs.status()
 
@@ -162,21 +162,22 @@ configure the replica set
 
 > rs1:PRIMARY> rs.conf()
 
-> rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONDARY_1_IP:PORT')
-
-> rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONADRY_2_IP:PORT')
-
-> rs1:PRIMARY> rs.add('REPLICA_SET_1_ARBITER_IP:PORT')
-
-> rs1:PRIMARY> rs.status()
-
-> rs1:PRIMARY> rs.conf()
-
 > rs1:PRIMARY> cfg = rs.conf()
 
 > rs1:PRIMARY> cfg.members[0].host = "REPLICA_SET_1_PRIMARY_IP:27017"
 
 > rs1:PRIMARY> rs.reconfig(cfg)
+
+> rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONDARY_1_IP:PORT')
+
+> rs1:PRIMARY> rs.add('REPLICA_SET_1_SECONADRY_2_IP:PORT')
+
+> rs1:PRIMARY> rs.addArb('REPLICA_SET_1_ARBITER_IP:PORT')
+
+> rs1:PRIMARY> rs.status()
+
+> rs1:PRIMARY> rs.conf()
+
 
 ### Configure Config-Servers and Mongos (Router)
 ##### Create Instance
