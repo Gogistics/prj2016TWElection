@@ -94,22 +94,22 @@ module.exports = function(app, streams) {
     res.send(vars);
   }
 
-  app.get('/logout', function(req, res){
-    // clear cookie
-    console.log(req.cookies);
-    res.clearCookie('user_info');
-    res.redirect('/login');
-  })
+  // app.get('/logout', function(req, res){
+  //   // clear cookie
+  //   console.log(req.cookies);
+  //   res.clearCookie('user_info');
+  //   res.redirect('/login');
+  // });
+
+  // login route
+  // app.get('/login', login);
 
   // get stream info. in JSON
   app.get('/streams', display_streams);
 
-  // login route
-  app.get('/login', login);
-
   // index
   app.get('/', index);
-  // app.get('/:id', index);
+  app.get('/:id', index);
 
   // login verification
   app.post('/verify_login_info', verify_login_info);

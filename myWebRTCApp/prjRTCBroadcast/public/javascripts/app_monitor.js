@@ -5,10 +5,14 @@
   /* camera configuration */
   // basic setting
   var mediaConfig = {
-        audio:true,
-        video: {
-          mandatory: {},
-          optional: []
+        audio: true,
+        video: { mandatory: {
+            minWidth: 1280,
+            minHeight: 720,
+            maxWidth: 1280,
+            maxHeight: 720,
+            frameRate: { min: 35, ideal: 50, max: 60 }
+          }
         }
       };
 
@@ -51,16 +55,39 @@
 
     // view remote stream
     ctrl.view = function(stream){
-      client.peerInit(stream.id);
+      var remote_peer = client.peerInit(stream.id);
+      remote_peer.start_recording_btn.addEventListener('click', function(){
+        //
+        alert('start recording');
+      });
+      remote_peer.stop_recording_btn.addEventListener('click', function(){
+        //
+        alert('stop recording');
+      });
       stream.isPlaying = !stream.isPlaying;
     };
+
+    // check if recording status
+    ctrl.is_remote_stream_on = function(stream){
+      //
+    }
 
     //
     ctrl.start_recording = function(stream){
       //
+      alert('start recording');
+      ctrl.is_recording_start_recording_btn_disable = true;
+      ctrl.is_recording_stop_recording_btn_disable = false;
     }
 
     ctrl.stop_recording = function(stream){
+      //
+      alert('stop recording');
+      ctrl.is_recording_start_recording_btn_disable = true;
+      ctrl.is_recording_stop_recording_btn_disable = false;
+    }
+
+    ctrl.is_recording = function(stream){
       //
     }
 

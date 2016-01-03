@@ -23,7 +23,7 @@
           }
         }
       };
-  var local_stream; // for recording
+  var my_local_stream; // for recording
 
   app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
     var camera = {};
@@ -37,7 +37,7 @@
       return requestUserMedia(mediaConfig)
       .then(function(stream){
         // onSuccess; this function will be assigned to resolve() in adapter.js
-        local_stream = stream;
+        my_local_stream = stream;
         attachMediaStream(camera.preview, stream);
         client.setLocalStream(stream);
         camera.stream = stream;
@@ -209,11 +209,11 @@
 
     // start recording
     localStream.start_recording = function(){
-      if(local_stream){
+      if(my_local_stream){
         //
         localStream.start_timestamp = new Date().getTime();
-        localStream.record_rtc = RecordRTC(local_stream, {
-                                  bufferSize: 16384,
+        localStream.record_rtc = RecordRTC(my_local_stream, {
+                                  bufferSize: 32768,
                                   type: 'video'
                                 });
         localStream.record_rtc.startRecording();

@@ -71,6 +71,10 @@ li:hover {
   -moz-border-radius: 5px;
   margin: 5px auto;
 }
+.remoteVideosDiv{
+  text-align: center;
+  margin: 2px auto;
+}
 .remoteStreams{
   display: inline-block;
   text-align: right;

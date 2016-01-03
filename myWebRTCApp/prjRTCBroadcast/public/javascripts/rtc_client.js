@@ -27,7 +27,7 @@ var PeerManager = (function () {
       },
       peerDatabase = {}, // can be replaced with real DB
       localStream,
-      remoteStreams = {}, // for storing remote streams and do recording if necessary
+      remote_streams_db = {}, // for storing remote streams and do recording if necessary
       remoteVideoContainer = document.getElementById('remoteVideosContainer'),
       socket = io(),
       external_mechanism = {};
@@ -49,8 +49,8 @@ var PeerManager = (function () {
         // remove child element
         try{
           if( remoteVideosContainer.hasChildNodes() &&
-              remoteVideosContainer.contains(peer.remoteVideoEl)){
-              remoteVideosContainer.removeChild(peer.remoteVideoEl);
+              remoteVideosContainer.contains(peer.remoteVideoDiv)){
+              remoteVideosContainer.removeChild(peer.remoteVideoDiv);
           }
         }catch(err){
           console.log(err);
@@ -78,14 +78,14 @@ var PeerManager = (function () {
     peer.pc.onaddstream = function(event) {
       // recording mechanism could be assigned here
       attachMediaStream(peer.remoteVideoEl, event.stream);
-      remoteVideosContainer.appendChild(peer.remoteVideoEl);
+      remoteVideosContainer.appendChild(peer.remoteVideoDiv);
     };
     peer.pc.onremovestream = function(event) {
       // remove child element
       try{
         if( remoteVideosContainer.hasChildNodes() &&
-          remoteVideosContainer.contains(peer.remoteVideoEl)){
-          remoteVideosContainer.removeChild(peer.remoteVideoEl);
+          remoteVideosContainer.contains(peer.remoteVideoDiv)){
+          remoteVideosContainer.removeChild(peer.remoteVideoDiv);
         }
       }catch(err){
         console.log(err);
@@ -100,8 +100,8 @@ var PeerManager = (function () {
           // remove child element
           try{
             if( remoteVideosContainer.hasChildNodes() &&
-                remoteVideosContainer.contains(peer.remoteVideoEl)){
-                remoteVideosContainer.removeChild(peer.remoteVideoEl);
+                remoteVideosContainer.contains(peer.remoteVideoDiv)){
+                remoteVideosContainer.removeChild(peer.remoteVideoDiv);
             }
           }catch(err){
             console.log(err);
@@ -117,8 +117,8 @@ var PeerManager = (function () {
         try{
           peer.pc.removeTrack(sender);
           if( remoteVideosContainer.hasChildNodes() &&
-              remoteVideosContainer.contains(peer.remoteVideoEl)){
-              remoteVideosContainer.removeChild(peer.remoteVideoEl);
+              remoteVideosContainer.contains(peer.remoteVideoDiv)){
+              remoteVideosContainer.removeChild(peer.remoteVideoDiv);
           }
         }catch(err){
           console.log(err);
@@ -239,6 +239,7 @@ var PeerManager = (function () {
     peerInit: function(remoteId) {
       peer = peerDatabase[remoteId] || addPeer(remoteId);
       send('init', remoteId, null);
+      return peer;
     },
     peerRenegociate: function(remoteId) {
       offer(remoteId);
@@ -273,5 +274,27 @@ var Peer = function (pcConfig, pcConstraints, arg_remote_id){
   this.remoteVideoEl.autoplay = true;
   this.remoteVideoEl.muted = true; // tmp init
   this.remoteVideoEl.id = arg_remote_id; // to set the remote id for future use
-  console.log('muted video...');
+
+  //
+  this.start_recording_btn = document.createElement('input'),
+  this.stop_recording_btn = document.createElement('input');
+
+  this.start_recording_btn.setAttribute('type', 'button');
+  this.stop_recording_btn.setAttribute('type', 'button');
+
+  this.start_recording_btn.className = 'col-sm-6 col-xs-12 btn btn-default';
+  this.stop_recording_btn.className = 'col-sm-6 col-xs-12 btn btn-default';
+
+  this.start_recording_btn.setAttribute('value','Start Recording');
+  this.stop_recording_btn.setAttribute('value', 'Stop Recording');
+
+  // create remote video div
+  this.remoteVideoDiv = document.createElement('div');
+  this.remoteVideoDiv.className = 'remoteVideosDiv';
+  this.remoteVideoDiv.id = arg_remote_id; // to set the remote id for future use
+  this.remoteVideoDiv.appendChild(document.createElement('hr'));
+  this.remoteVideoDiv.appendChild(this.remoteVideoEl);
+  this.remoteVideoDiv.appendChild(document.createElement('br'));
+  this.remoteVideoDiv.appendChild(this.start_recording_btn);
+  this.remoteVideoDiv.appendChild(this.stop_recording_btn);
 }
