@@ -2,6 +2,8 @@ import jieba
 from pymongo import MongoClient
 import datetime
 import json
+import re
+
 client = MongoClient('mongodb://swarm_user:2016twelection@ec2-52-33-51-105.us-west-2.compute.amazonaws.com:27017')
 db = client['2016_tw_election']
 collection = db['facebook_politicians_posts']
@@ -13,42 +15,51 @@ collection = db['facebook_politicians_posts']
 ### messages directly plz let me know!!!
 
 def readdb(politician_key):
-    for post in collection.find({'politician_key': 'tsaiingwen'}):
-
+    all_phrase = []
+    for post in collection.find({'politician_key': politician_key}):
         if post['data']:
-            print (post['data'])
-            break
+            total = []
+            for i in range(0,len(post['data'])):
+                try:
+                    doc = post['data'][i]['message']
+                    phrase = cut_doc(doc)
+                    total = total + phrase
+                except:
+                    pass
+            all_phrase.extend(total)
         else:
             pass
+        
+    print(all_phrase)
 
-
-def allocateMessage(message,key):
+def cut_doc(doc):
     
     text = []
-    
-    for m in messages:
+    words = jieba.cut_for_search(doc)
 
-                doc = m
-                words = jieba.cut_for_search(m)
-            
-                chcontent = []
-                encontent = []
-                # Used regular expression to split Chinese and English
-                ch = re.compile('[\u4e00-\u9fa5]')
-                en = re.compile('[^\u4e00-\u9fa5]')
-                for word in words:
-                    print (word)
-                    if ch.match(word):
-                        chcontent.append(str(word.encode("utf-8")))
-                    else:
-                        encontent.append(word.lower())
-                Tokens = chcontent + encontent
-                removewords = [" ","","~","～"]
-                Tokens = filter(lambda x: x not in removewords and len(x)>2, Tokens)
+    chcontent = []
+    encontent = []
+    # Used regular expression to split Chinese and English
+    ch = re.compile('[\u4e00-\u9fa5]')
+    en = re.compile('[^\u4e00-\u9fa5]')
+    for word in words:
+        print (word)
+        if ch.match(word):
+            #chcontent.append(str(word.encode("utf-8")))
+            chcontent.append(word)
+        else:
+            encontent.append(word.lower())
+    Tokens = chcontent + encontent
+    removewords = [" ","","~","～"]
+    filted = [x for x in Tokens if x not in removewords]
+    phrase = [x for x in filted if len(x)>1]
+    return phrase
 
-    return Tokens
+#def creat_dict(Tokens):
 
+#    with open('./dict.txt') as f:
+#
 
 
 if __name__ == '__main__':
-    readdb()
+    readdb('tsaiingwen')
