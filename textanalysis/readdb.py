@@ -16,7 +16,7 @@ collection = db['facebook_politicians_posts']
 
 def readdb(politician_key):
     all_phrase = []
-    for post in collection.find({'politician_key': politician_key}):
+    for count, post in enumerate(collection.find({'politician_key': politician_key}),0):
         if post['data']:
             total = []
             for i in range(0,len(post['data'])):
@@ -29,12 +29,18 @@ def readdb(politician_key):
             all_phrase.extend(total)
         else:
             pass
-        
     print(all_phrase)
+    filename = 'phrase_'+politician_key+'.txt'
+    with open (filename,'w') as f:
+        for phrase in all_phrase:
+            f.write('{}\n'.format(phrase))    
 
 def cut_doc(doc):
     
     text = []
+    url =re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', doc)
+    for link in url:
+        doc.remove(link)     
     words = jieba.cut_for_search(doc)
 
     chcontent = []
@@ -42,17 +48,19 @@ def cut_doc(doc):
     # Used regular expression to split Chinese and English
     ch = re.compile('[\u4e00-\u9fa5]')
     en = re.compile('[^\u4e00-\u9fa5]')
+
     for word in words:
-        print (word)
+
         if ch.match(word):
             #chcontent.append(str(word.encode("utf-8")))
             chcontent.append(word)
         else:
             encontent.append(word.lower())
-    Tokens = chcontent + encontent
+    Tokens = chcontent + encontent + url
     removewords = [" ","","~","～"]
     filted = [x for x in Tokens if x not in removewords]
     phrase = [x for x in filted if len(x)>1]
+    print ([x for x in phrase])
     return phrase
 
 #def creat_dict(Tokens):
