@@ -56,7 +56,7 @@ module.exports = function(app, streams) {
   // testing
   var recording = function(req, res){
     //
-    res.render('recording_1.jade', {});
+    res.render('recording_2.jade', {});
   }
   app.get('/recording', recording);
 
@@ -65,6 +65,7 @@ module.exports = function(app, streams) {
       streams_collection
       .find({}, function(err, docs){
         // res.status(200).json(docs);
+        docs = docs ? docs : [];
         res.send(docs);
       });
   };
@@ -94,6 +95,7 @@ module.exports = function(app, streams) {
     res.send(vars);
   }
 
+  // logout route
   // app.get('/logout', function(req, res){
   //   // clear cookie
   //   console.log(req.cookies);

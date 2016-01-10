@@ -38,6 +38,7 @@
       .then(function(stream){
         // onSuccess; this function will be assigned to resolve() in adapter.js
         my_local_stream = stream;
+        console.log(my_local_stream);
         attachMediaStream(camera.preview, stream);
         client.setLocalStream(stream);
         camera.stream = stream;
@@ -81,7 +82,6 @@
           if (rtc.remoteStreams[i].id === id) {return rtc.remoteStreams[i];}
         }
     };
-
     rtc.loadData = function () {
       // get list of streams from the server
       $http.get('/streams').success(function(data){
@@ -210,13 +210,15 @@
     // start recording
     localStream.start_recording = function(){
       if(my_local_stream){
-        //
+        // start recording
         localStream.start_timestamp = new Date().getTime();
         localStream.record_rtc = RecordRTC(my_local_stream, {
-                                  bufferSize: 32768,
-                                  type: 'video'
+                                  bufferSize: 16384,
+                                  type: 'video',
+                                  frameInterval: 20
                                 });
         localStream.record_rtc.startRecording();
+
         localStream.is_start_recording_btn_disabled = true;
         localStream.is_stop_recording_btn_disabled = false;
       }
@@ -225,10 +227,15 @@
     // stop recording
     localStream.stop_recording = function(){
       localStream.record_rtc.stopRecording(function() {
-        localStream.stop_timestamp = new Date().getTime();
-        var file_name = localStream.name + '-' + localStream.start_timestamp + '_' + localStream.stop_timestamp;
         localStream.is_start_recording_btn_disabled = false;
         localStream.is_stop_recording_btn_disabled = true;
+
+        // stop recording
+        localStream.stop_timestamp = new Date().getTime();
+        var file_name = localStream.name + '-' + localStream.start_timestamp + '_' + localStream.stop_timestamp;
+        localStream.record_rtc.stopRecording(function(){
+          console.log('stop recording...');
+        });
         localStream.record_rtc.save(file_name);
       });
     };

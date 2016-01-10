@@ -79,6 +79,7 @@ var PeerManager = (function () {
       // recording mechanism could be assigned here
       attachMediaStream(peer.remoteVideoEl, event.stream);
       remoteVideosContainer.appendChild(peer.remoteVideoDiv);
+      remote_streams_db[peer.remoteVideoEl.id] = event.stream;
     };
     peer.pc.onremovestream = function(event) {
       // remove child element
@@ -87,6 +88,7 @@ var PeerManager = (function () {
           remoteVideosContainer.contains(peer.remoteVideoDiv)){
           remoteVideosContainer.removeChild(peer.remoteVideoDiv);
         }
+        // remove remote stream (incomplete)
       }catch(err){
         console.log(err);
       }
@@ -103,6 +105,8 @@ var PeerManager = (function () {
                 remoteVideosContainer.contains(peer.remoteVideoDiv)){
                 remoteVideosContainer.removeChild(peer.remoteVideoDiv);
             }
+
+            // remove remote stream (incomplete)
           }catch(err){
             console.log(err);
           }
@@ -253,11 +257,8 @@ var PeerManager = (function () {
       external_mechanism[arg_mechanism_name] = arg_mechanism;
     },
     // to start and stop recording for remote streams
-    start_recording: function(arg_stream_id){
-      //
-    },
-    stop_recording: function(arg_stream_id){
-      //
+    get_remote_streams_db: function(){
+      return remote_streams_db;
     }
   };
 });
@@ -285,8 +286,10 @@ var Peer = function (pcConfig, pcConstraints, arg_remote_id){
   this.start_recording_btn.className = 'col-sm-6 col-xs-12 btn btn-default';
   this.stop_recording_btn.className = 'col-sm-6 col-xs-12 btn btn-default';
 
-  this.start_recording_btn.setAttribute('value','Start Recording');
+  this.start_recording_btn.setAttribute('value', 'Start Recording');
   this.stop_recording_btn.setAttribute('value', 'Stop Recording');
+
+  this.stop_recording_btn.setAttribute('disabled', true);
 
   // create remote video div
   this.remoteVideoDiv = document.createElement('div');

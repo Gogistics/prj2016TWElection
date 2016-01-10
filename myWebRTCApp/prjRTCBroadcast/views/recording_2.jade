@@ -85,10 +85,14 @@ html(lang="en")
           videosContainer.appendChild(document.createElement('hr'));
           mediaRecorder = new MediaStreamRecorder(stream);
           mediaRecorder.stream = stream;
+          /* test */
+          console.log(stream);
+
           mediaRecorder.mimeType = 'video/webm'; // this line is mandatory
           mediaRecorder.videoWidth = videoWidth;
           mediaRecorder.videoHeight = videoHeight;
           mediaRecorder.ondataavailable = function(blob) {
+              console.log(blob);
               var a = document.createElement('a');
               a.target = '_blank';
               a.innerHTML = 'Open Recorded Video No. ' + (index++) + ' (Size: ' + bytesToSize(blob.size) + ') Time Length: ' + getTimeLength(timeInterval);

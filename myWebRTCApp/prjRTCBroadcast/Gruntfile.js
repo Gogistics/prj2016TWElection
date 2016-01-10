@@ -37,7 +37,8 @@ module.exports = function(grunt){
                     'public/javascripts/app_voting_station.min.js': ['public/javascripts/app_voting_station.js'],
                     'public/javascripts/rtc_client.min.js': ['public/javascripts/rtc_client.js'],
                     'public/javascripts/adapter.min.js': ['public/javascripts/adapter.js'],
-                    'public/javascripts/record_rtc.min.js': ['public/javascripts/RecordRTC.js']
+                    'public/javascripts/record_rtc.min.js': ['public/javascripts/record_rtc.js'],
+                    'public/javascripts/binaryjs_client.min.js': ['public/javascripts/binaryjs_client.js'],
                 },
             },
         },

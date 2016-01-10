@@ -91,6 +91,9 @@
  */
 
 function RecordRTC(mediaStream, config) {
+    /**/
+
+    /* check media stream */
     if (!mediaStream) {
         throw 'MediaStream is mandatory.';
     }
@@ -739,7 +742,7 @@ function RecordRTCConfiguration(mediaStream, config) {
         }
 
         if (!config.bitsPerSecond) {
-            config.bitsPerSecond = 128000;
+            config.bitsPerSecond = 256000;
         }
     }
 
@@ -1376,7 +1379,7 @@ if (typeof AudioContext !== 'undefined') {
 
 function MediaStreamRecorder(mediaStream, config) {
     config = config || {
-        bitsPerSecond: 128000,
+        bitsPerSecond: 256000,
         mimeType: 'video/webm'
     };
 
@@ -1447,19 +1450,45 @@ function MediaStreamRecorder(mediaStream, config) {
         // when video is resumed. E.g. yourStream.getVideoTracks()[0].muted = true; // it will auto-stop recording.
         mediaRecorder.ignoreMutedMedia = config.ignoreMutedMedia || false;
 
-        // Dispatching OnDataAvailable Handler
+        // Dispatching OnDataAvailable Handler;
+        // var binary_client = new BinaryClient('ws://45.79.106.150:8888');
+        // binary_client.on('open', function(stream) {
+        // console.log(stream);
+        //   // for the sake of this example let's put the stream in the window
+        //   window.my_binary_stream = binary_client.createStream();
+
+        //   // receive data
+        //   window.my_binary_stream.on('data', function(data){
+        //     console.log(data);
+        //   });
+        // });
+
         mediaRecorder.ondataavailable = function(e) {
-            if(e.data.size > 0) console.log('ondataavailable', e.data.type, e.data.size, e.data);
+            // disable dataavailable event
             if (this.dontFireOnDataAvailableEvent) {
                 return;
             }
-
             if (isChrome && e.data && !('size' in e.data)) {
                 e.data.size = e.data.length || e.data.byteLength || 0;
             }
-
             if (e.data && e.data.size) {
                 recordedBuffers.push(e.data);
+                
+                /* upload data here */
+                console.log('ondataavailable', e.data.type, e.data.size, e.data);
+                var arrayBuffer, uint16Array, uint8Array;
+                var fileReader = new FileReader();
+                fileReader.onload = function() {
+                    arrayBuffer = this.result;
+                    uint16Array = new Uint16Array(arrayBuffer, 0, (arrayBuffer.length - 1));
+                    if(uint16Array){
+                        window.my_binary_stream.write(uint16Array);
+                        console.log(uint16Array);
+                    }else{
+                        console.log(arrayBuffer);
+                    }
+                };
+                fileReader.readAsArrayBuffer(e.data);
             }
         };
 
@@ -2368,7 +2397,7 @@ function CanvasRecorder(htmlElement, config) {
     function drawCanvasFrame() {
         if (isPausedRecording) {
             lastTime = new Date().getTime();
-            return setTimeout(drawCanvasFrame, 100);
+            return setTimeout(drawCanvasFrame, 80);
         }
 
         html2canvas(htmlElement, {
@@ -2451,11 +2480,11 @@ function WhammyRecorder(mediaStream, config) {
      */
     this.record = function() {
         if (!config.width) {
-            config.width = 320;
+            config.width = 1280;
         }
 
         if (!config.height) {
-            config.height = 240;
+            config.height = 740;
         }
 
         if (!config.video) {
@@ -2531,7 +2560,7 @@ function WhammyRecorder(mediaStream, config) {
 
         if (isPausedRecording) {
             lastTime = new Date().getTime();
-            return setTimeout(drawFrames, 100);
+            return setTimeout(drawFrames, 60);
         }
 
         // via #206, by Jack i.e. @Seymourr

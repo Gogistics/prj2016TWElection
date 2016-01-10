@@ -29,11 +29,15 @@
   app.controller('RemoteStreamsController', ['$location', '$http', '$window', '$scope', function($location, $http, $window, $scope){
     var ctrl = this;
     ctrl.remoteStreams = [];
+    ctrl.remote_streams_db = client.get_remote_streams_db();
+    ctrl.name = 'Station';
     function getStreamById(id) {
         for(var i=0; i<ctrl.remoteStreams.length;i++) {
           if (ctrl.remoteStreams[i].id === id) {return ctrl.remoteStreams[i];}
         }
     }
+
+    // load data
     ctrl.loadData = function () {
       // get list of streams from the server
       $http.get('/streams').success(function(data){
@@ -57,42 +61,32 @@
     ctrl.view = function(stream){
       var remote_peer = client.peerInit(stream.id);
       remote_peer.start_recording_btn.addEventListener('click', function(){
-        //
-        alert('start recording');
+        // start to record
+        ctrl.start_timestamp = new Date().getTime();
+        ctrl.record_rtc = RecordRTC(ctrl.remote_streams_db[remote_peer.remoteVideoEl.id], {
+                                  bufferSize: 16384,
+                                  type: 'video',
+                                  frameInterval: 20
+                                });
+        ctrl.record_rtc.startRecording();
+
+        remote_peer.stop_recording_btn.disabled = false;
+        remote_peer.start_recording_btn.disabled = true;
       });
       remote_peer.stop_recording_btn.addEventListener('click', function(){
-        //
-        alert('stop recording');
+        remote_peer.start_recording_btn.disabled = false;
+        remote_peer.stop_recording_btn.disabled = true;
+
+        // stop recording
+        ctrl.stop_timestamp = new Date().getTime();
+        var file_name = ctrl.name + '-' + ctrl.start_timestamp + '_' + ctrl.stop_timestamp;
+        ctrl.record_rtc.stopRecording();
+        ctrl.record_rtc.save(file_name);
       });
       stream.isPlaying = !stream.isPlaying;
     };
 
-    // check if recording status
-    ctrl.is_remote_stream_on = function(stream){
-      //
-    }
-
-    //
-    ctrl.start_recording = function(stream){
-      //
-      alert('start recording');
-      ctrl.is_recording_start_recording_btn_disable = true;
-      ctrl.is_recording_stop_recording_btn_disable = false;
-    }
-
-    ctrl.stop_recording = function(stream){
-      //
-      alert('stop recording');
-      ctrl.is_recording_start_recording_btn_disable = true;
-      ctrl.is_recording_stop_recording_btn_disable = false;
-    }
-
-    ctrl.is_recording = function(stream){
-      //
-    }
-
     // initially load streams
     ctrl.loadData();
   }]);
-
 })(jQuery);

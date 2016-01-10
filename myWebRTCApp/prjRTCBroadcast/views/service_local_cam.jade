@@ -8,7 +8,7 @@ div(class="localStream" ng-controller="LocalStreamController as localStream" ng-
       span(class="input-group-btn")
         input(class="btn btn-secondary" type="button" ng-click="localStream.toggleCam()" value="{{ localStream.cameraIsOn ? 'Stop' : 'Start' }}")
 
-  video(id="localVideo" class="col-xs-12" muted="muted" autoplay="true")
+  video(id="localVideo" class="col-xs-12" ng-class="localStream.is_start_recording_btn_disabled ? 'is_recording' : 'is_not_recording' " muted="muted" autoplay="true")
   br
   div(class="col-xs-12")
     input(class="btn btn-default" value="Start Recording" ng-show="localStream.cameraIsOn" ng-click="localStream.start_recording()" ng-disabled="localStream.is_start_recording_btn_disabled")
