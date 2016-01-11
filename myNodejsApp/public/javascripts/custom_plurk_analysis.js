@@ -235,18 +235,18 @@
         //
         return ( elem_2['post']['replurkers_count'] - elem_1['post']['replurkers_count'] ) || ( (new Date(elem_2['posted']).getTime()) - (new Date(elem_1['posted']).getTime()) );
       });
-      var top_five_posts = arg_posts.slice(0,5);
+      var top_five_posts = arg_posts.slice(0,6);
       // console.log(top_five_posts);
       //
-      var top_five_posts_elem = $('ul#top_five_posts_with_highest_replurkers_count');
+      var top_five_posts_elem = $('div#top_five_posts_with_highest_replurkers_count');
       top_five_posts_elem.empty();
       for( var jth in top_five_posts){
         //
-        top_five_posts_elem.append('<li class="list-group-item">' +
+        top_five_posts_elem.append('<div class="col-sm-6 col-xs-12">' +
                                     '<span>Replurk&nbsp;Counts:&nbsp;' + top_five_posts[jth]['post']['replurkers_count'] + '</span><br/>' +
                                     '<span>' + (new Date(top_five_posts[jth]['posted'])) + '</span><br/>' +
                                     '<p>' + top_five_posts[jth]['post']['content'] + '</p>' +
-                                    '</li>');
+                                    '</div>');
       }
 
       _this.analyze_text_hant('我們都是陌生人');

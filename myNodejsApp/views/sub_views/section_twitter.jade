@@ -2,49 +2,47 @@ section(id="twitter" class="home-section text-center")
   div(class="heading-about")
     div(class="container")
       div(class="row")
-          div(class="col-lg-8 col-lg-offset-2")
-            div(class="wow bounceInDown" data-wow-delay="0.2s")
-              div(class="section-heading")
-                h2 #{twitter_section.title}
-                i(class="fa fa-2x fa-angle-down")
+        div(class="col-lg-8 col-lg-offset-2")
+          div(class="wow bounceInDown" data-wow-delay="0.2s")
+            div(class="section-heading")
+              h2 #{twitter_section.title}
+              i(class="fa fa-2x fa-angle-down")
 
-                h3 #{twitter_section.tweets_tracking_title}
-                p #{twitter_section.twitter_tweets_tracking_keywords_title}: Taiwan Election, Tsai Ing-wen, Eric Chu, James Soong, Ma Ying-jeou, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
-                br
-                div(class="row")
-                  div(class="col-lg-12" style="text-align: center;")
-                    p(id="categorized_collection_period")
-                    if (!is_mobile)
-                      ul(id="categorized_collection" class="list-group col-lg-3 col-md-3" style="text-align: center;")
-                      div(id="categorized_collection_chart" class="col-lg-9 col-md-9" )
-                        div(id="tweets_chart" style="overflow: auto;")
-                    else
-                      ul(id="categorized_collection" class="list-group col-lg-12" )
+              h3 #{twitter_section.tweets_tracking_title}
+              p #{twitter_section.twitter_tweets_tracking_keywords_title}: Taiwan Election, Tsai Ing-wen, Eric Chu, James Soong, Ma Ying-jeou, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
+              br
+              div(class="row")
+                div(class="col-lg-12" style="text-align: center;")
+                  p(id="categorized_collection_period")
+                  if (!is_mobile)
+                    ul(id="categorized_collection" class="list-group col-lg-3 col-md-3" style="text-align: center;")
+                    div(id="categorized_collection_chart" class="col-lg-9 col-md-9" )
+                      div(id="tweets_chart" style="overflow: auto;")
+                  else
+                    ul(id="categorized_collection" class="list-group col-lg-12" )
+      br
+      h3 Top Tweets with Highest Retweet Count by Different Criteria
+      div(id="top_tweets_with_highest_retweet_count" class="row")
+        div
+          div(class="loader")
+      br
+      h3 REAL-TIME TWEET
+      ul(id="tweet_list" class="list-group")
 
-                br
-                h3 Top Five Tweet with Highest Retweet Count
-                ul(id="top_five_tweets_with_highest_retweet_count" class="list-group")
-                  li(class="list-group-item")
-                    div(class="loader")
+      // condition for switching blocks & pass variables to javascript via jade
+      script.
+        window.is_mobile = #{is_mobile};
+      if (!is_mobile)
+        span(id="tweets_peak")
+        div
+          div(class="onoffswitch")
+            input(id="tracking_alert_onoffswitch" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" checked="")
+            label(class="onoffswitch-label" for="tracking_alert_onoffswitch")
+              span(class="onoffswitch-inner")
+              span(class="onoffswitch-switch")
 
-                br
-                h3 REAL-TIME TWEET
-                ul(id="tweet_list" class="list-group")
-
-              // condition for switching blocks & pass variables to javascript via jade
-              script.
-                window.is_mobile = #{is_mobile};
-              if (!is_mobile)
-                span(id="tweets_peak")
-                div
-                  div(class="onoffswitch")
-                    input(id="tracking_alert_onoffswitch" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" checked="")
-                    label(class="onoffswitch-label" for="tracking_alert_onoffswitch")
-                      span(class="onoffswitch-inner")
-                      span(class="onoffswitch-switch")
-
-                div(id="twitter_stream_chart" class="col-lg-12")
-                div(id="high_peak_alert")
+        div(id="twitter_stream_chart" class="col-lg-12")
+        div(id="high_peak_alert")
 
   div(class="container")
     div(class="row")

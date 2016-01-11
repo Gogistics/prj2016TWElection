@@ -170,16 +170,17 @@ a:focus {
     top: 0;
     width: 100%;
     z-index: 999;
+    display: none;
 }
 
 #loaderInner {
-    background:#ffffff url(../img/spinner.gif) center center no-repeat;
-    height: 60px;
-    left: 50%;
-    margin: -50px 0 0 -50px;
-    position: absolute;
-    top: 50%;
-    width: 60px;
+  background:#ffffff url(../img/spinner.gif) center center no-repeat;
+  height: 60px;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+  position: absolute;
+  top: 50%;
+  width: 60px;
 }
 
 @keyframes boxSpin{

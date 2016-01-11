@@ -3,6 +3,12 @@
   fill: none;
   pointer-events: all;
 }
+.legend {
+  padding: 5px;
+  font: 10px sans-serif;
+  background: yellow;
+  box-shadow: 2px 2px 1px #888;
+}
 /* tip */
 div.tooltip {   
   position: absolute;           
@@ -31,6 +37,24 @@ div.tooltip p {
   stroke: #c79825;
   stroke-width: 1px;
 }
+.line_tsai{
+  fill: none;
+  stroke: #21a607;
+  stroke-width: 1px;
+  stroke-dasharray: "20,10,5,5,5,10";
+}
+.line_ericchu{
+  fill: none;
+  stroke: #0c0cfb;
+  stroke-width: 1px;
+  stroke-dasharray: "10,10";
+}
+.line_jamessoong{
+  fill: none;
+  stroke: #fb990c;
+  stroke-width: 1px;
+  stroke-dasharray: "10,10";
+}
 #categorized_collection, #categorized_plurk_posts_collection{
   max-height: 250px; overflow: auto; padding-right: 0;
 }
@@ -58,16 +82,24 @@ div.tooltip p {
   margin: 5px auto;
 }
 /* twitter */
-#top_five_tweets_with_highest_retweet_count{
+#top_tweets_with_highest_retweet_count{
     font-size: 12px;
-    height: 200px;
     overflow: auto;
-    border-bottom: 1px solid #aaa;
 }
-#top_five_tweets_with_highest_retweet_count>li>img{
+#top_tweets_with_highest_retweet_count>div{
+    margin: 10px auto;
+    height: 300px;
+    overflow: auto;
+    border-bottom: solid 1px #ebebeb;
+}
+#top_tweets_with_highest_retweet_count>div>img{
     border-radius: 50%;
 }
-#top_five_tweets_with_highest_retweet_count>li>p{
+#top_tweets_with_highest_retweet_count>div>span{
+    margin: 10px auto;
+    font-size: 10px;
+}
+#top_tweets_with_highest_retweet_count>div>p{
     margin: 10px auto;
     font-size: 13px;
 }
@@ -211,12 +243,20 @@ svg {
 /* plurk */
 #top_five_posts_with_highest_replurkers_count{
     font-size: 12px;
-    height:200px;
     overflow: auto;
-    border-bottom: 1px solid #aaa;
 }
-#top_five_posts_with_highest_replurkers_count>p{
+#top_five_posts_with_highest_replurkers_count>div{
+    margin: 10px auto;
+    height: 300px;
+    overflow: auto;
+    border-bottom: solid 1px #ebebeb;
+}
+#top_five_posts_with_highest_replurkers_count>div>p{
   font-size: 12px;
+  margin: 10px auto;
+}
+#top_five_posts_with_highest_replurkers_count>div>span{
+  font-size: 10px;
 }
 #top_five_posts_with_highest_replurkers_count>li>p>img, #top_five_posts_with_highest_replurkers_count>li>p>a>img{
   border-radius: 2px;

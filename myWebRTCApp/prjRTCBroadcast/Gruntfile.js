@@ -34,7 +34,9 @@ module.exports = function(grunt){
                 files: {
                     'public/javascripts/app.min.js': ['public/javascripts/app.js'],
                     'public/javascripts/app_monitor.min.js': ['public/javascripts/app_monitor.js'],
+                    'public/javascripts/app_monitor_record_rtc.min.js': ['public/javascripts/app_monitor_record_rtc.js'],
                     'public/javascripts/app_voting_station.min.js': ['public/javascripts/app_voting_station.js'],
+                    'public/javascripts/app_voting_station_record_rtc.min.js': ['public/javascripts/app_voting_station_record_rtc.js'],
                     'public/javascripts/rtc_client.min.js': ['public/javascripts/rtc_client.js'],
                     'public/javascripts/adapter.min.js': ['public/javascripts/adapter.js'],
                     'public/javascripts/record_rtc.min.js': ['public/javascripts/record_rtc.js'],

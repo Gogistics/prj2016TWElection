@@ -1,6 +1,6 @@
 /* twitter */
-'use strict';
 (function($) {
+  'use strict';
   window.twitter_analysis_handler = window.twitter_analysis_handler || {
     get_analysis_collection : function(){
       //
@@ -76,7 +76,7 @@
         }
       }
 
-      //
+      /* D3 config. */
       var margin = {top: 10, right: 30, bottom: 30, left: 60},
                     width = 480 - margin.left - margin.right,
                     height = 250 - margin.top - margin.bottom;
@@ -218,7 +218,8 @@
           url: '/services/get_twitter_tweets', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  _this.append_twitter_tweets(res.tweets);
+                // console.log(res.top_tweets_categories);
+                _this.append_twitter_tweets(res.top_tweets_categories);
               }else{
                   console.log('fail...');
               };
@@ -226,26 +227,32 @@
       });
     },
     append_twitter_tweets : function(arg_tweets){
-      //
-      arg_tweets.sort(function(elem_1, elem_2){
-        //
-        return ( elem_2['tweet']['retweet_count'] - elem_1['tweet']['retweet_count'] ) || ( (new Date(elem_2['tweet']['created_at']).getTime()) - (new Date(elem_1['tweet']['created_at']).getTime()) );
-      });
-      var top_five_tweets = arg_tweets.slice(0,5);
+      // arg_tweets.sort(function(elem_1, elem_2){
+      //   return ( elem_2['tweet']['retweet_count'] - elem_1['tweet']['retweet_count'] ) || ( (new Date(elem_2['tweet']['created_at']).getTime()) - (new Date(elem_1['tweet']['created_at']).getTime()) );
+      // });
+      // var top_five_tweets = arg_tweets.slice(0,5);
       // console.log(top_five_tweets);
+      var tweets_list = [];
+      for(var ith_key in arg_tweets){
+        tweets_list = tweets_list.concat(arg_tweets[ith_key]['tweets']);
+      }
+      // console.log(tweets_list);
 
-      //
-      var top_five_tweets_list = $('ul#top_five_tweets_with_highest_retweet_count');
+      // build list
+      var top_five_tweets_list = $('div#top_tweets_with_highest_retweet_count');
       top_five_tweets_list.empty();
-      for( var jth in top_five_tweets){
-        //
-        top_five_tweets_list.append('<li class="list-group-item">' +
-                                    '<img src="' + top_five_tweets[jth]['tweet']['user']['profile_image_url'] + '"><br/>' +
-                                    '<a href="https://twitter.com/' + top_five_tweets[jth]['tweet']['user']['screen_name'] + '" target="_blank" >@' + top_five_tweets[jth]['tweet']['user']['screen_name'] + '</a><br>' +
-                                    '<span>Retweet&nbsp;Counts:&nbsp;' + top_five_tweets[jth]['tweet']['retweet_count'] + '</span><br/>' +
-                                    '<span>Created at:&nbsp;' + (new Date(top_five_tweets[jth]['tweet']['created_at'])) + '</span><br/>' +
-                                    '<p>' + top_five_tweets[jth]['tweet']['text'] + '</p>' +
-                                    '</li>');
+      for( var jth in tweets_list){
+        // replace http
+        tweets_list[jth]['tweet']['text'] = tweets_list[jth]['tweet']['text'].replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
+                                            return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
+                                          });
+        top_five_tweets_list.append('<div class="col-sm-4 col-xs-12">' +
+                                    '<img src="' + tweets_list[jth]['tweet']['user']['profile_image_url'] + '"><br/>' +
+                                    '<a href="https://twitter.com/' + tweets_list[jth]['tweet']['user']['screen_name'] + '" target="_blank" >@' + tweets_list[jth]['tweet']['user']['screen_name'] + '</a><br>' +
+                                    '<span>Retweet&nbsp;Counts:&nbsp;' + tweets_list[jth]['tweet']['retweet_count'] + '</span><br/>' +
+                                    '<span>Created at:&nbsp;' + (new Date(tweets_list[jth]['tweet']['created_at'])) + '</span><br/>' +
+                                    '<p>' + tweets_list[jth]['tweet']['text'] + '</p>' +
+                                    '</div>');
       }
     },
     prepend_elem_to_ary : function(arg_val, arg_ary){

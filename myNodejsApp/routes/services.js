@@ -11,7 +11,11 @@ var monk = require('monk'),
     twitter_tweets = db.get('twitter_tweets'),
     plurk_posts_analysis_by_lang_type_collection = db.get('plurk_posts_analysis_by_lang_type'),
     plurk_posts = db.get('plurk_posts');
-    facebook_posts_collection = db.get('facebook_politicians_posts');
+    facebook_posts_collection = db.get('facebook_politicians_posts'),
+    manipulated_data_collection = db.get('manipulated_data'),
+    url_sharding = 'test_user:shardingexample@52.34.42.178:27017/test',
+    db_sharding = monk(url_sharding),
+    fb_posts_collection = db_sharding.get('fb_posts_collection');
 
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
@@ -79,7 +83,7 @@ router.post('/get_latest_20_tweets', function(req, res, next) {
  });
 });
 
-// facebook 
+// facebook posts
 router.post('/get_facebook_latest_posts_analysis_collection', function(req, res, next){
   //
   var user_ip = req.ip,
@@ -113,6 +117,31 @@ router.post('/get_facebook_latest_posts_analysis_collection', function(req, res,
     fetch_latest_data_set(current_key);
   }
 });
+
+router.post('/get_fb_latest_posts', function(req, res, next){
+  //
+  var user_ip = req.ip,
+      token = req.token,
+      collection = [];
+
+  fb_posts_collection.find({}, {stream: true})
+                    .each(function(doc){
+                      //
+                      collection.push(doc);
+                    })
+                    .error(function(err){
+                      //
+                      if(err) console.log(err);
+                    }).success(function(){
+                      //
+                      res.send({
+                        request_status : 'successful',
+                        collection : collection
+                      });
+                    });
+
+});
+
 
 // get twitter analysis collection
 router.post('/get_twitter_tweets_analysis_collection_by_lang_type', function(req, res, next){
@@ -162,20 +191,20 @@ router.post('/get_plurk_posts_analysis_collection_by_lang_type', function(req, r
 router.post('/get_twitter_tweets', function(req, res, next) {
   // get req info
   var user_ip = req.ip;
-  var tweets = [];
+  var top_tweets_categories = {};
 
   //
-  twitter_tweets.find({}, { stream: true })
+  manipulated_data_collection.find({}, { stream: true })
             .each(function(doc){
               //
-              tweets.push(doc);
+              top_tweets_categories[doc.tag] = doc;
             })
             .error(function(err){ if(err) throw err; })
             .success(function(){
               //
               res.send({
                 request_status : 'successful',
-                tweets : tweets
+                top_tweets_categories : top_tweets_categories
               });
             });
 });

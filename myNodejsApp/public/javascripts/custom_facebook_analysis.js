@@ -67,9 +67,6 @@
       var shares_info_ary = [], post_info_with_heighest_shares = { count : 0, date : '', message : '', link : '' };
       for(var ith_key in arg_data){
         //
-        if(arg_elem_id === 'latest_post_tsaiingwen'){
-          // console.log(arg_data[ith_key]['created_time']);
-        }
         if((new Date(arg_data[ith_key]['created_time']).getTime()) < (new Date('2015-10-30').getTime())){
           //
           continue;
@@ -87,6 +84,7 @@
         }
       }
       shares_info_ary.reverse();
+      // console.log(shares_info_ary);
 
       /* d3 */
       var margin = {top: 30, right: 30, bottom: 30, left: 30},
@@ -135,25 +133,25 @@
           .call(make_y_axis().tickSize(-width, 0, 0).tickFormat(""));
 
       x.domain(d3.extent(shares_info_ary, function(d) { return d.date; }));
-        y0.domain([0, d3.max(shares_info_ary, function(d) {
-            return Math.max(d.value); })]);
+      y0.domain([0, d3.max(shares_info_ary, function(d) {
+          return Math.max(d.value); })]);
 
-        svg.append("path")        // Add the valueline path.
-           .attr("class", "line_1")
-           .attr("d", valueline(shares_info_ary));
+      svg.append("path")        // Add the valueline path.
+         .attr("class", "line_1")
+         .attr("d", valueline(shares_info_ary));
 
-        svg.append("g")            // Add the X Axis
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .style("font-size", 9)
-            .call(xAxis);
-        
-        svg.append("g")
-            .attr("class", "y axis")
-            .style("fill", "#c79825")
-            .call(yAxisLeft);
+      svg.append("g")            // Add the X Axis
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .style("font-size", 9)
+          .call(xAxis);
+      
+      svg.append("g")
+          .attr("class", "y axis")
+          .style("fill", "#c79825")
+          .call(yAxisLeft);
 
-        // // mouseover event
+        // mouseover event
         var bisectDate = d3.bisector(function(d) { return d.date; }).left,
             formatValue = d3.format("s"),
             formatShares = function(d) { return formatValue(d); };
@@ -214,10 +212,209 @@
                     '<p style="font-size: 12px; margin-top: 10px;">' + replaced_string + '</p>' +
                     '</div>' +
                     '<a href="' + post_info_with_heighest_shares.link + '" target="_blank">Post Link</a><hr/>');
+    },
+    get_fb_latest_posts: function(){
+      // create an AJAX call to get data
+      var _this = this;
+      $.ajax({
+          data: {
+            token: 'OCweKSaVwPOgerGEhRAEBvsRNdqWEdjA',
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_fb_latest_posts', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                  // console.log(res.collection);
+                  _this.build_summary_chart(res.collection);
+              }else{
+                  console.log('fail and no data come in...');
+              };
+          }
+      });
+    },
+    build_summary_chart: function(arg_collection){
+      //
+      var tsai_ing_wen_posts,
+          eric_chu_posts,
+          james_soong_posts;
+
+      // retirieve collection
+      for(var ith in arg_collection){
+        //
+        var collection = arg_collection[ith];
+        if(collection.hasOwnProperty('tsaiingwen')){
+          tsai_ing_wen_posts = collection['tsaiingwen'];
+          // console.log(tsai_ing_wen_posts);
+        }else if(collection.hasOwnProperty('llchu')){
+          eric_chu_posts = collection['llchu'];
+          // console.log(eric_chu_posts);
+        }else if(collection.hasOwnProperty('love4tw')){
+          james_soong_posts = collection['love4tw'];
+          // console.log(james_soong_posts);
+        }
+      }
+
+      // convert obj to ary
+      var max_shares_count = 0;
+      var convert_obj_to_ary = function(arg_collection){
+        var ary = [];
+        for(var ith_key in arg_collection){
+          //
+          var date = new Date(arg_collection[ith_key]['created_time']);
+          if( date.getTime() > (new Date('2015-10-30').getTime()) ){
+            //
+            arg_collection[ith_key]['created_time'] = date;
+            ary.push(arg_collection[ith_key]);
+          }
+        }
+        return ary;
+      }
+      tsai_ing_wen_posts = convert_obj_to_ary(tsai_ing_wen_posts);
+      tsai_ing_wen_posts.sort(function(a,b){ return (a.created_time - b.created_time); });
+      // console.log(tsai_ing_wen_posts);
+      eric_chu_posts = convert_obj_to_ary(eric_chu_posts);
+      eric_chu_posts.sort(function(a,b){ return (a.created_time - b.created_time); });
+      // console.log(eric_chu_posts);
+      james_soong_posts = convert_obj_to_ary(james_soong_posts);
+      james_soong_posts.sort(function(a,b){ return (a.created_time - b.created_time); });
+      // console.log(james_soong_posts);
+
+      /* D3 */
+      var margin = {top: 60, right: 30, bottom: 30, left: 60},
+                    width = 900 - margin.left - margin.right,
+                    height = 450 - margin.top - margin.bottom;
+
+      var x = d3.time.scale().range([0, width]);
+      var y0 = d3.scale.linear().range([height, 0]);
+
+      var xAxis = d3.svg.axis().scale(x)
+          .orient("bottom").ticks(10);
+
+      var yAxisLeft = d3.svg.axis().scale(y0)
+          .orient("left").ticks(10,"s");
+
+      var valueline = d3.svg.line()
+                      .x(function(d) { return x(d.created_time); })
+                      .y(function(d) { if(d.shares && d.shares.count >=0){ return y0(d.shares.count); }else{ return y0(0);} });
+
+      var svg = d3.select("div#fb_summary_chart")
+                  .append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // make grid
+      var make_y_axis = function() {        
+          return d3.svg.axis()
+                  .scale(y0)
+                  .orient("left")
+                  .ticks(5);
+      }
+
+      svg.append("svg:g")         
+          .attr("class", "grid")
+          .call(make_y_axis().tickSize(-width, 0, 0).tickFormat( "" ));
+
+
+      // pre-defined date ary
+      var dateArray = d3.time
+                      .scale()
+                      .domain([new Date(2015, 9, 30), new Date(2016, 0, 16)])
+                      .ticks(d3.time.days, 1);
+
+      // set domain range
+      x.domain([new Date(2015, 9, 30), new Date(2016, 0, 16)]);
+      y0.domain([0, 8000]);
+
+      // add lines
+      svg.append("path")        // Add the valueline path.
+         .attr("class", "line_tsai")
+         .attr("d", valueline(tsai_ing_wen_posts));
+
+      svg.append("path")        // Add the valueline path.
+         .attr("class", "line_ericchu")
+         .attr("d", valueline(eric_chu_posts));
+         
+      svg.append("path")        // Add the valueline path.
+         .attr("class", "line_jamessoong")
+         .attr("d", valueline(james_soong_posts));   
+
+      svg.append("g")            // Add the X Axis
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .style("font-size", 9)
+          .call(xAxis);
+      
+      svg.append("g")
+          .attr("class", "y axis")
+          .style("fill", "#c79825")
+          .call(yAxisLeft);
+
+      // add title
+      svg.append("text")
+        .attr("class", "title")
+        .attr("x", width/2)
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .attr("font-size", "20px")
+        .style("font-size", 20)
+        .text("Trend of Shares Count of Each Candidate");
+
+      svg.append("g")
+        .attr("class", "y axis")
+        .style("fill", "#c79825")
+        .call(yAxisLeft)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -50)
+        .attr("dy", ".4em")
+        .style("text-anchor", "end")
+        .attr("font-size", "16px")
+        .style("font-size", 16)
+        .text("Posts");
+
+        // add legend
+        var data_set = ['tsaiingwen', 'llchu', 'love4tw'],
+            color_hash = { 'tsaiingwen': { name: '蔡英文', color: '#21a607' },
+                          'llchu': { name: '朱立倫', color: '#0c0cfb'},
+                          'love4tw': { name: '宋楚瑜', color: '#fb990c'} };
+        var legend = svg.append("g")
+                        .attr("class", "legend")
+                        .attr("x", width - 25)
+                        .attr("y", 20)
+                        .attr("height", 100)
+                        .attr("width", 100)
+                        .attr('transform', 'translate(-10,20)');
+        legend.selectAll('rect')
+              .data(data_set)
+              .enter()
+              .append("rect")
+              .attr("x", width - 65)
+              .attr("y", function(d, i){ return i *  20;})
+              .attr("width", 10)
+              .attr("height", 10)
+              .style("fill", function(d) {
+                console.log('legend-color: ' + d);
+                var color = color_hash[d]['color'];
+                return color;
+              });
+        legend.selectAll('text')
+              .data(data_set)
+              .enter()
+              .append("text")
+              .attr("x", width - 52)
+              .attr("y", function(d, i){ return i *  20 + 9;})
+              .text(function(d) {
+                console.log('legend-name: ' + d);
+                var text = color_hash[d]['name'];
+                return text;
+              });
     }
   }
+  //
+  window.facebook_analysis_handler.get_fb_latest_posts();
 
   //
   window.facebook_analysis_handler.get_analysis_collection();
-
 })(jQuery);
