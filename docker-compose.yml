@@ -15,14 +15,3 @@ node_1:
         - ./myNodejsApp/.keys.env
     ports: 
         - "8080"
-
-my_cadvisor_1:
-    restart: always
-    container_name: my_cadvisor_1
-    build: ./myExporter/prjCAdvisor
-    ports:
-        - "9000:8080"
-    volumes:
-        - /var/run:/var/run:rw
-        - /sys:/sys:ro
-        - /var/lib/docker/:/var/lib/docker:ro

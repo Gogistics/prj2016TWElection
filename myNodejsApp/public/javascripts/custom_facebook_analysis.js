@@ -280,9 +280,9 @@
       // console.log(james_soong_posts);
 
       /* D3 */
-      var margin = {top: 60, right: 30, bottom: 30, left: 60},
-                    width = 900 - margin.left - margin.right,
-                    height = 450 - margin.top - margin.bottom;
+      var margin = {top: 60, right: 0, bottom: 30, left: 60},
+                    width = 600 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom;
 
       var x = d3.time.scale().range([0, width]);
       var y0 = d3.scale.linear().range([height, 0]);
@@ -325,7 +325,7 @@
 
       // set domain range
       x.domain([new Date(2015, 9, 30), new Date(2016, 0, 16)]);
-      y0.domain([0, 8000]);
+      y0.domain([0, 8500]);
 
       // add lines
       svg.append("path")        // Add the valueline path.
@@ -355,7 +355,7 @@
       svg.append("text")
         .attr("class", "title")
         .attr("x", width/2)
-        .attr("y", 0 - (margin.top / 2))
+        .attr("y", -(margin.top / 2) - 10)
         .attr("text-anchor", "middle")
         .attr("font-size", "20px")
         .style("font-size", 20)
@@ -367,7 +367,7 @@
         .call(yAxisLeft)
         .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -50)
+        .attr("y", -40)
         .attr("dy", ".4em")
         .style("text-anchor", "end")
         .attr("font-size", "16px")
@@ -381,7 +381,7 @@
                           'love4tw': { name: '宋楚瑜', color: '#fb990c'} };
         var legend = svg.append("g")
                         .attr("class", "legend")
-                        .attr("x", width - 25)
+                        .attr("x", width - 15)
                         .attr("y", 20)
                         .attr("height", 100)
                         .attr("width", 100)
@@ -410,11 +410,143 @@
                 var text = color_hash[d]['name'];
                 return text;
               });
+    },
+    get_fb_posts_summarized_keywords_set: function(){
+      // create an AJAX call to get data
+      var _this = this;
+      $.ajax({
+          data: {
+            token: 'OCweKSaVwPOgerGEhRAEBvsRNdqWEdjA',
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_fb_posts_summarized_keywords_set', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                  // console.log(res.keywords_set);
+                  _this.build_chart_keywords_set(res.keywords_set);
+              }else{
+                  console.log('fail and no data come in...');
+              };
+          }
+      });
+    },
+    build_chart_keywords_set: function(arg_keywords_set){
+      // for loop
+      var links = [],
+          candidates = { tsaiingwen: '蔡英文-2',
+                        llchu: '朱立倫-1',
+                        love4tw: '宋楚瑜-3'};
+      for(var ith in arg_keywords_set){
+        // sorting
+        arg_keywords_set[ith]['filtered_keywords'].sort(function(a,b){ return (b.count - a.count); });
+        var top_5  = arg_keywords_set[ith]['filtered_keywords'].slice(0, 5);
+        var count = 0;
+        for(var jth in top_5){
+          var type = (count < 3) ? ('top_3_' + ith) : ('top_5_' + ith);
+          links.push({source: candidates[ith], target: top_5[jth]['word'], type: type, candidate_key: ith});
+          count++;
+        }
+      }
+
+      // nodes
+      var nodes = {};
+
+      // Compute the distinct nodes from the links.
+      links.forEach(function(link) {
+        // if(nodes[link.source]) nodes[link.source].candidate_key = 'shared_keyword';
+        if(nodes[link.target]) nodes[link.target].candidate_key = 'shared_keyword';
+        link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, candidate_key: link.candidate_key});
+        link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, candidate_key: link.candidate_key});
+      });
+
+      var width = 500,
+          height = 400;
+
+      var force = d3.layout.force()
+          .nodes(d3.values(nodes))
+          .links(links)
+          .size([width, height])
+          .linkDistance(100)
+          .charge(-300)
+          .on("tick", tick)
+          .start();
+      console.log(nodes);
+
+      var svg = d3.select("div#fb_top_keywords_relationship").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+      // Per-type markers, as they don't inherit styles.
+      svg.append("defs").selectAll("marker")
+          .data(["top_3_tsaiingwen", "top_3_llchu", "top_3_love4tw"])
+          .enter().append("marker")
+          .attr("id", function(d) { return d; })
+          .attr("viewBox", "0 -5 10 10")
+          .attr("refX", 15)
+          .attr("refY", -1.5)
+          .attr("markerWidth", 6)
+          .attr("markerHeight", 6)
+          .attr("orient", "auto")
+          .append("path")
+          .attr("d", "M0,-5L10,0L0,5");
+
+      var path = svg.append("g").selectAll("path")
+          .data(force.links())
+          .enter().append("path")
+          .attr("class", function(d) { return "link " + d.type; })
+          .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
+
+      var circle = svg.append("g").selectAll("circle")
+          .data(force.nodes())
+          .enter().append("circle")
+          .attr("r", 6)
+          .attr("class", function(d){ return d.candidate_key; })
+          .call(force.drag);
+
+      var text = svg.append("g")
+          .selectAll("text")
+          .data(force.nodes())
+          .enter().append("text")
+          .attr('class', 'links_text')
+          .attr("x", 10)
+          .attr("y", ".35em")
+          .text(function(d) { return d.name; });
+
+      // add title
+      svg.append("text")
+        .attr("class", "title")
+        .attr("x", width/2)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "20px")
+        .style("font-size", 20)
+        .text("Keywords Analysis");
+
+      // Use elliptical arc path segments to doubly-encode directionality.
+      function tick() {
+        path.attr("d", linkArc);
+        circle.attr("transform", transform);
+        text.attr("transform", transform);
+      }
+
+      function linkArc(d) {
+        var dx = d.target.x - d.source.x,
+            dy = d.target.y - d.source.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
+        return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+      }
+
+      function transform(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      }
     }
   }
-  //
+  // get fb latest posts
   window.facebook_analysis_handler.get_fb_latest_posts();
 
-  //
+  // get analysis collections
   window.facebook_analysis_handler.get_analysis_collection();
+
+  //
+  window.facebook_analysis_handler.get_fb_posts_summarized_keywords_set();
 })(jQuery);

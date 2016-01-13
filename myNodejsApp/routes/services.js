@@ -15,7 +15,9 @@ var monk = require('monk'),
     manipulated_data_collection = db.get('manipulated_data'),
     url_sharding = 'test_user:shardingexample@52.34.42.178:27017/test',
     db_sharding = monk(url_sharding),
-    fb_posts_collection = db_sharding.get('fb_posts_collection');
+    fb_posts_collection = db_sharding.get('fb_posts_collection'),
+    fb_posts_and_dict_collection = db_sharding.get('fb_posts_and_dict_collection'),
+    fb_posts_summarized_keywords_collection = db_sharding.get('fb_posts_summarized_keywords_collection');
 
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
@@ -142,6 +144,26 @@ router.post('/get_fb_latest_posts', function(req, res, next){
 
 });
 
+// get summarized keywords
+router.post('/get_fb_posts_summarized_keywords_set', function(req, res, next){
+  //
+  var keywords_set = {};
+  fb_posts_summarized_keywords_collection.find({}, {stream: true})
+                                        .each(function(doc){
+                                          //
+                                          keywords_set[doc.name] = doc;
+                                        })
+                                        .error(function(err){
+                                          //
+                                          if(err) console.log(err);
+                                        }).success(function(){
+                                          //
+                                          res.send({request_status: 'successful', keywords_set: keywords_set});
+                                        });
+
+});
+
+
 
 // get twitter analysis collection
 router.post('/get_twitter_tweets_analysis_collection_by_lang_type', function(req, res, next){
@@ -229,22 +251,6 @@ router.post('/get_plurk_posts', function(req, res, next) {
                 posts : posts
               });
             });
-});
-
-/* hant analyzer */
-// incomplete
-router.post('/get_segments_hant', function(req, res, next){
-  //
-  var text = req.body.text, request_status = 'failed';
-  var segments = text ? hanzi.segment('維持臺海和平的現狀') : null;
-
-  if(segments){
-    request_status = 'successful';
-  }
-  res.send({
-    request_status: request_status,
-    segments: segments
-  });
 });
 
 module.exports = router;

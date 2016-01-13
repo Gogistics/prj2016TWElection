@@ -248,34 +248,12 @@
                                     '<p>' + top_five_posts[jth]['post']['content'] + '</p>' +
                                     '</div>');
       }
-
-      _this.analyze_text_hant('我們都是陌生人');
     },
     prepend_elem_to_ary : function(arg_val, arg_ary){
       //
       var new_ary = arg_ary.slice(0);
       new_ary.unshift(arg_val);
       return new_ary;
-    },
-    analyze_text_hant : function(arg_text){
-      //
-      var _this = this;
-      // create an AJAX call to get data
-      $.ajax({
-          data: {
-            token: 'IDQWpckbiKLZUotOgerGEhRAEBwxYA',
-            text: arg_text
-          },
-          type: 'POST', // GET or POST
-          url: '/services/get_segments_hant', // the file to call
-          success: function(res) {
-              if(res.request_status === 'successful'){
-                  // console.log(res.segments);
-              }else{
-                  console.log('fail...');
-              };
-          }
-      });
     }
   }
 

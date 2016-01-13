@@ -190,6 +190,77 @@ svg {
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+#top_3_tsaiingwen {
+  fill: rgb(33, 166, 7);
+}
+
+.link.top_3_tsaiingwen {
+  stroke: rgb(33, 166, 7);
+}
+
+.link.top_5_tsaiingwen {
+  stroke: rgb(33, 166, 7);
+  stroke-dasharray: 0,2 1;
+}
+
+#top_3_llchu {
+  fill: rgb(12, 12, 251);
+}
+.link.top_3_llchu {
+  stroke: rgb(12, 12, 251);
+}
+.link.top_5_llchu {
+  stroke: rgb(12, 12, 251);
+  stroke-dasharray: 0,2 1;
+}
+
+#top_3_love4tw {
+  fill: rgb(251, 153, 12);
+}
+.link.top_3_love4tw {
+  stroke: rgb(251, 153, 12);
+}
+.link.top_5_love4tw {
+  stroke: rgb(251, 153, 12);
+  stroke-dasharray: 0,2 1;
+}
+
+circle.tsaiingwen {
+  fill: rgb(33, 166, 7);
+  stroke: rgb(33, 166, 7);
+  stroke-width: 1.5px;
+}
+circle.llchu {
+  fill: rgb(12, 12, 251);
+  stroke: rgb(12, 12, 251);
+  stroke-width: 1.5px;
+}
+circle.love4tw {
+  fill: rgb(251, 153, 12);
+  stroke: rgb(251, 153, 12);
+  stroke-width: 1.5px;
+}
+circle.shared_keyword {
+  fill: rgb(255, 255, 255);
+  stroke: rgb(0, 0, 0);
+  box-shadow: 0px 0px 3px #000;
+  stroke-width: 1.5px;
+}
+
+.links_text {
+  font: 15px sans-serif;
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+/* end of d3 */
+
 /* switcher */
 .onoffswitch {
     position: relative;
@@ -300,6 +371,8 @@ svg {
 .tweet_on_map span.tweet_text{
     font-size: 11px; color: #666;
 }
+
+/**/
 @media (min-width: 767px){
     .tweet_on_map {
         max-width: 400px;
