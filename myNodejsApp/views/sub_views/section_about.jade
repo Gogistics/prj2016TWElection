@@ -17,8 +17,8 @@ section(id="about" class="home-section text-center")
 
     div(class="container")
       div(class="row")
-        div(class="col-xs-12 col-sm-3 col-md-3")
-        div(class="col-xs-12 col-sm-6 col-md-6")
+        div(class="col-xs-12 col-sm-12 col-md-3")
+        div(class="col-xs-12 col-sm-6 col-md-3")
           div(class="wow bounceInUp" data-wow-delay="0.2s")
             div(class="team boxed-grey")
               div(class="inner")
@@ -27,4 +27,13 @@ section(id="about" class="home-section text-center")
                 div(class="avatar text-center")
                   img(src="/public/frontend_1/img/team/alan_tai.png" alt="alan_tai" class="img-responsive img-circle")
                 p #{teammate_alan.description}
-        div(class="col-xs-12 col-sm-3 col-md-3")
+        div(class="col-xs-12 col-sm-6 col-md-3")
+          div(class="wow bounceInUp" data-wow-delay="0.2s")
+            div(class="team boxed-grey")
+              div(class="inner")
+                h3 #{teammate_henry.name}
+                p(class="subtitle") #{teammate_henry.role}
+                div(class="avatar text-center")
+                  img(src="/public/frontend_1/img/team/henry_lin.jpg" alt="henry_lin" class="img-responsive img-circle")
+                p #{teammate_henry.description}
+        div(class="col-xs-12 col-sm-12 col-md-3")

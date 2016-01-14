@@ -25,8 +25,8 @@
         "plurk_section" : {"title" : "Plurk", "plurk_posts_tracking_title" : "PLURK POSTS TRACKING", "plurk_posts_tracking_keywords_title" : "TRACKING KEYWORDS" },
         "about": "About",
         "about_description": "Tech nerds who love open source and open data",
-        "about_team" : { "alan_tai": { "name": "Alan Tai", "title": "Co-founder & CEO", "role": "Chief Developer", "description": "Learn technology, connect the world" }
-                    },
+        "about_team" : { "alan_tai": { "name": "Alan Tai", "title": "Co-founder", "role": "Chief Developer", "description": "Learn technology, connect the world" },
+                         "henry_lin": { "name": "Henry Lin", "title": "Freelance Developer", "role": "Data Engineer", "description": "Civil Geek" } },
         "partners": "Partners",
         "partners_description": "Pioneers in cloud development and providing professional services",
         "contact": "Get in touch",
@@ -65,8 +65,8 @@
         "plurk_section" : {"title" : "噗浪", "plurk_posts_tracking_title" : "噗浪推文追蹤", "plurk_posts_tracking_keywords_title" : "追蹤關鍵字" },
         "about": "關於我們",
         "about_description": "熱愛開源技術與資料的程式漫遊者",
-        "about_team" : { "alan_tai": { "name": "戴桑", "title": "Co-founder & CEO", "role": "架構設計與資料視覺化", "description": "追求新知，串聯世界" }
-                    },
+        "about_team" : { "alan_tai": { "name": "戴桑", "title": "Co-founder & CEO", "role": "架構設計與資料視覺化", "description": "追求新知，串聯世界" },
+                         "henry_lin": { "name": "林桑", "title": "自由開發者", "role": "資料工程師", "description": "Civil Geek" } },
         "partners": "合作夥伴",
         "partners_description": "世界級雲端服務領導者",
         "contact": "聯繫我們",

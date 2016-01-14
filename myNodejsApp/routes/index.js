@@ -40,6 +40,7 @@ router.get('/', function(req, res, next) {
     about : index_info[lang]['about'],
     about_description : index_info[lang]['about_description'],
     teammate_alan : index_info[lang]['about_team']['alan_tai'],
+    teammate_henry : index_info[lang]['about_team']['henry_lin'],
     contact : index_info[lang]['contact'],
     contact_description : index_info[lang]['contact_description'],
     contact_info_name : index_info[lang]['contact_info_name'],

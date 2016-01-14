@@ -13,7 +13,7 @@ var monk = require('monk'),
     plurk_posts = db.get('plurk_posts');
     facebook_posts_collection = db.get('facebook_politicians_posts'),
     manipulated_data_collection = db.get('manipulated_data'),
-    url_sharding = 'test_user:shardingexample@52.34.42.178:27017/test',
+    url_sharding = process.env.MONGODB_SHARD_USER + ':' + process.env.MONGODB_SHARD_USER_PWD + '@' + process.env.MONGODB_SHARD_INSTANCE_DNS + ':27017/test',
     db_sharding = monk(url_sharding),
     fb_posts_collection = db_sharding.get('fb_posts_collection'),
     fb_posts_and_dict_collection = db_sharding.get('fb_posts_and_dict_collection'),
@@ -124,24 +124,23 @@ router.post('/get_fb_latest_posts', function(req, res, next){
   //
   var user_ip = req.ip,
       token = req.token,
-      collection = [];
-
-  fb_posts_collection.find({}, {stream: true})
-                    .each(function(doc){
-                      //
-                      collection.push(doc);
-                    })
-                    .error(function(err){
-                      //
-                      if(err) console.log(err);
-                    }).success(function(){
-                      //
-                      res.send({
-                        request_status : 'successful',
-                        collection : collection
-                      });
-                    });
-
+      collection = {};
+  //
+  fb_posts_and_dict_collection.find({}, {stream: true})
+                            .each(function(doc){
+                              //
+                              collection[doc.name] = doc.posts;
+                            })
+                            .error(function(err){
+                              //
+                              if(err) console.log(err);
+                            }).success(function(){
+                              //
+                              res.send({
+                                request_status : 'successful',
+                                collection : collection
+                              });
+                            });
 });
 
 // get summarized keywords

@@ -223,8 +223,8 @@
           type: 'POST', // GET or POST
           url: '/services/get_fb_latest_posts', // the file to call
           success: function(res) {
+              console.log(res.collection);
               if(res.request_status === 'successful'){
-                  // console.log(res.collection);
                   _this.build_summary_chart(res.collection);
               }else{
                   console.log('fail and no data come in...');
@@ -233,26 +233,10 @@
       });
     },
     build_summary_chart: function(arg_collection){
-      //
-      var tsai_ing_wen_posts,
-          eric_chu_posts,
-          james_soong_posts;
-
-      // retirieve collection
-      for(var ith in arg_collection){
-        //
-        var collection = arg_collection[ith];
-        if(collection.hasOwnProperty('tsaiingwen')){
-          tsai_ing_wen_posts = collection['tsaiingwen'];
-          // console.log(tsai_ing_wen_posts);
-        }else if(collection.hasOwnProperty('llchu')){
-          eric_chu_posts = collection['llchu'];
-          // console.log(eric_chu_posts);
-        }else if(collection.hasOwnProperty('love4tw')){
-          james_soong_posts = collection['love4tw'];
-          // console.log(james_soong_posts);
-        }
-      }
+      // set collection
+      var tsai_ing_wen_posts = arg_collection['tsaiingwen'],
+          eric_chu_posts = arg_collection['llchu'],
+          james_soong_posts =arg_collection['love4tw'];
 
       // convert obj to ary
       var max_shares_count = 0;
@@ -395,7 +379,7 @@
               .attr("width", 10)
               .attr("height", 10)
               .style("fill", function(d) {
-                console.log('legend-color: ' + d);
+                // console.log('legend-color: ' + d);
                 var color = color_hash[d]['color'];
                 return color;
               });
@@ -406,7 +390,7 @@
               .attr("x", width - 52)
               .attr("y", function(d, i){ return i *  20 + 9;})
               .text(function(d) {
-                console.log('legend-name: ' + d);
+                // console.log('legend-name: ' + d);
                 var text = color_hash[d]['name'];
                 return text;
               });
@@ -439,7 +423,7 @@
       for(var ith in arg_keywords_set){
         // sorting
         arg_keywords_set[ith]['filtered_keywords'].sort(function(a,b){ return (b.count - a.count); });
-        var top_5  = arg_keywords_set[ith]['filtered_keywords'].slice(0, 5);
+        var top_5  = arg_keywords_set[ith]['filtered_keywords'].slice(0, 7);
         var count = 0;
         for(var jth in top_5){
           var type = (count < 3) ? ('top_3_' + ith) : ('top_5_' + ith);
@@ -453,7 +437,6 @@
 
       // Compute the distinct nodes from the links.
       links.forEach(function(link) {
-        // if(nodes[link.source]) nodes[link.source].candidate_key = 'shared_keyword';
         if(nodes[link.target]) nodes[link.target].candidate_key = 'shared_keyword';
         link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, candidate_key: link.candidate_key});
         link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, candidate_key: link.candidate_key});
@@ -470,7 +453,7 @@
           .charge(-300)
           .on("tick", tick)
           .start();
-      console.log(nodes);
+      // console.log(nodes);
 
       var svg = d3.select("div#fb_top_keywords_relationship").append("svg")
           .attr("width", width)
