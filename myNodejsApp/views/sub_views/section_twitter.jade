@@ -11,15 +11,16 @@ section(id="twitter" class="home-section text-center")
               h3 #{twitter_section.tweets_tracking_title}
               p #{twitter_section.twitter_tweets_tracking_keywords_title}: Taiwan Election, Tsai Ing-wen, Eric Chu, James Soong, Ma Ying-jeou, 台灣選舉, 蔡英文, 朱立倫, 宋楚瑜, 馬英九, 國民黨, 民進黨, 親民黨
               br
-              div(class="row")
-                div(class="col-lg-12" style="text-align: center;")
-                  p(id="categorized_collection_period")
-                  if (!is_mobile)
-                    ul(id="categorized_collection" class="list-group col-lg-3 col-md-3" style="text-align: center;")
-                    div(id="categorized_collection_chart" class="col-lg-9 col-md-9" )
-                      div(id="tweets_chart" style="overflow: auto;")
-                  else
-                    ul(id="categorized_collection" class="list-group col-lg-12" )
+      div(class="row")
+        div(class="col-lg-12" style="text-align: center;")
+          p(id="categorized_collection_period")
+          if (!is_mobile)
+            ul(id="categorized_collection" class="list-group col-lg-3 col-md-3" style="text-align: center;")
+            div(id="categorized_collection_chart" class="col-lg-6 col-md-6" )
+              div(id="tweets_chart" style="overflow: auto;")
+            div(id="top_tweets_keywords" class="col-lg-3 col-md-3" )
+          else
+            ul(id="categorized_collection" class="list-group col-lg-12" )
       br
       h3 Top Tweets with Highest Retweet Count by Different Criteria
       div(id="top_tweets_with_highest_retweet_count" class="row")

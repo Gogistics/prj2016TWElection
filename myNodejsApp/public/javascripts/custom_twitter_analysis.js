@@ -77,8 +77,8 @@
       }
 
       /* D3 config. */
-      var margin = {top: 10, right: 30, bottom: 30, left: 60},
-                    width = 480 - margin.left - margin.right,
+      var margin = {top: 10, right: 10, bottom: 30, left: 60},
+                    width = 460 - margin.left - margin.right,
                     height = 250 - margin.top - margin.bottom;
 
       var x = d3.time.scale().range([0, width]);
@@ -260,6 +260,107 @@
       var new_ary = arg_ary.slice(0);
       new_ary.unshift(arg_val);
       return new_ary;
+    },
+    get_tweets_keywords: function(){
+      //
+      var _this = this;
+      // create an AJAX call to get data
+      $.ajax({
+          data: {
+            token: 'IDQWpckbiKLZUotOgerGEhRAEBwxYA',
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_tweets_keywords', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                console.log(res.tweet_keywords.filtered_keywords);
+                _this.build_keywords_circle_packing(res.tweet_keywords.filtered_keywords);
+              }else{
+                  console.log('fail...');
+              };
+          }
+      });
+    },
+    build_keywords_circle_packing: function(arg_keywords){
+      //
+      arg_keywords.sort(function(a,b){ return (b.count - a.count); });
+      var top_10 = arg_keywords.slice(0, 10);
+      console.log(top_10);
+
+      //
+      var margin = 5,
+          diameter = 250;
+
+      var color = d3.scale.linear()
+          .domain([-1, 6])
+          .range(["hsl(46, 96%, 64%, 95%)", "hsl(46, 96%, 32%, 95%)"])
+          .interpolate(d3.interpolateHcl);
+
+      var pack = d3.layout.pack()
+          .padding(2)
+          .size([diameter - margin, diameter - margin])
+          .value(function(d) { return d.count; })
+
+      var svg = d3.select("div#top_tweets_keywords").append("svg")
+          .attr("width", diameter)
+          .attr("height", diameter)
+          .append("g")
+          .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+      //
+      var root = {word: 'Top-Tweets', children: top_10};
+      var focus = root,
+          nodes = pack.nodes(root), view;
+      console.log(root);
+      console.log(nodes);
+
+      var circle = svg.selectAll("circle")
+          .data(nodes)
+          .enter().append("circle")
+          .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+          .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+          .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+
+      var text = svg.selectAll("text")
+          .data(nodes)
+          .enter().append("text")
+          .attr("class", "label")
+          .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+          .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+          .text(function(d) { return d.word; });
+
+      var node = svg.selectAll("circle,text");
+
+      d3.select("div#top_tweets_keywords")
+          .on("click", function() { zoom(root); });
+
+      zoomTo([root.x, root.y, root.r * 2 + margin]);
+
+      function zoom(d) {
+        var focus0 = focus; focus = d;
+
+        var transition = d3.transition()
+            .duration(d3.event.altKey ? 7500 : 750)
+            .tween("zoom", function(d) {
+              var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+              return function(t) { zoomTo(i(t)); };
+            });
+
+        transition.selectAll("text")
+            .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+            .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+            .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+            .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+      }
+
+      function zoomTo(v) {
+        var k = diameter / v[2]; view = v;
+        node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+        circle.attr("r", function(d) { return d.r * k; });
+      }
+
+      //
+      d3.select(self.frameElement).style("height", diameter + "px");
     }
   }
 
@@ -267,6 +368,8 @@
   window.twitter_analysis_handler.get_analysis_collection();
 
   window.twitter_analysis_handler.get_twitter_tweets();
+
+  window.twitter_analysis_handler.get_tweets_keywords();
   /* end */
 
 })(jQuery);

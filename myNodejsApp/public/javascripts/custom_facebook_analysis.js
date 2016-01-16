@@ -223,7 +223,7 @@
           type: 'POST', // GET or POST
           url: '/services/get_fb_latest_posts', // the file to call
           success: function(res) {
-              console.log(res.collection);
+              // console.log(res.collection);
               if(res.request_status === 'successful'){
                   _this.build_summary_chart(res.collection);
               }else{
@@ -356,7 +356,7 @@
         .style("text-anchor", "end")
         .attr("font-size", "16px")
         .style("font-size", 16)
-        .text("Posts");
+        .text("Shares");
 
         // add legend
         var data_set = ['tsaiingwen', 'llchu', 'love4tw'],

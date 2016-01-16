@@ -17,7 +17,8 @@ var monk = require('monk'),
     db_sharding = monk(url_sharding),
     fb_posts_collection = db_sharding.get('fb_posts_collection'),
     fb_posts_and_dict_collection = db_sharding.get('fb_posts_and_dict_collection'),
-    fb_posts_summarized_keywords_collection = db_sharding.get('fb_posts_summarized_keywords_collection');
+    fb_posts_summarized_keywords_collection = db_sharding.get('fb_posts_summarized_keywords_collection'),
+    twitter_tweets_summarized_keywords_collection = db_sharding.get('twitter_tweets_summarized_keywords_collection');
 
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
@@ -226,6 +227,27 @@ router.post('/get_twitter_tweets', function(req, res, next) {
               res.send({
                 request_status : 'successful',
                 top_tweets_categories : top_tweets_categories
+              });
+            });
+});
+
+router.post('/get_tweets_keywords', function(req, res, next){
+  //
+  var user_ip = req.ip;
+  var tweet_keywords = {};
+
+  //
+  twitter_tweets_summarized_keywords_collection.find({}, { stream: true })
+            .each(function(doc){
+              //
+              tweet_keywords = doc;
+            })
+            .error(function(err){ if(err) throw err; })
+            .success(function(){
+              //
+              res.send({
+                request_status : 'successful',
+                tweet_keywords : tweet_keywords
               });
             });
 });
