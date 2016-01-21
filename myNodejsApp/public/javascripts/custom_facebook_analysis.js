@@ -304,12 +304,12 @@
       // pre-defined date ary
       var dateArray = d3.time
                       .scale()
-                      .domain([new Date(2015, 9, 30), new Date(2016, 0, 16)])
+                      .domain([new Date(2015, 9, 30), new Date(2016, 1, 10)])
                       .ticks(d3.time.days, 1);
 
       // set domain range
-      x.domain([new Date(2015, 9, 30), new Date(2016, 0, 16)]);
-      y0.domain([0, 8500]);
+      x.domain([new Date(2015, 9, 30), new Date(2016, 1, 10)]);
+      y0.domain([0, 10000]);
 
       // add lines
       svg.append("path")        // Add the valueline path.
@@ -369,7 +369,7 @@
                         .attr("y", 20)
                         .attr("height", 100)
                         .attr("width", 100)
-                        .attr('transform', 'translate(-10,20)');
+                        .attr('transform', 'translate(15,20)');
         legend.selectAll('rect')
               .data(data_set)
               .enter()

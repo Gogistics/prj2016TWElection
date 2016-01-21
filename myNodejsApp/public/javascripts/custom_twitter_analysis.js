@@ -273,7 +273,7 @@
           url: '/services/get_tweets_keywords', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                console.log(res.tweet_keywords.filtered_keywords);
+                // console.log(res.tweet_keywords.filtered_keywords);
                 _this.build_keywords_circle_packing(res.tweet_keywords.filtered_keywords);
               }else{
                   console.log('fail...');
@@ -285,7 +285,7 @@
       //
       arg_keywords.sort(function(a,b){ return (b.count - a.count); });
       var top_10 = arg_keywords.slice(0, 10);
-      console.log(top_10);
+      // console.log(top_10);
 
       //
       var margin = 5,
@@ -311,8 +311,8 @@
       var root = {word: 'Top-Tweets', children: top_10};
       var focus = root,
           nodes = pack.nodes(root), view;
-      console.log(root);
-      console.log(nodes);
+      // console.log(root);
+      // console.log(nodes);
 
       var circle = svg.selectAll("circle")
           .data(nodes)
