@@ -18,7 +18,8 @@ var monk = require('monk'),
     fb_posts_collection = db_sharding.get('fb_posts_collection'),
     fb_posts_and_dict_collection = db_sharding.get('fb_posts_and_dict_collection'),
     fb_posts_summarized_keywords_collection = db_sharding.get('fb_posts_summarized_keywords_collection'),
-    twitter_tweets_summarized_keywords_collection = db_sharding.get('twitter_tweets_summarized_keywords_collection');
+    twitter_tweets_summarized_keywords_collection = db_sharding.get('twitter_tweets_summarized_keywords_collection'),
+    tweets_geo_info_collection = db_sharding.get('tweets_geo_info_collection');
 
 // mandrill email service
 var mandrill = require('mandrill-api/mandrill'), mandrill_client = undefined;
@@ -236,7 +237,7 @@ router.post('/get_tweets_keywords', function(req, res, next){
   var user_ip = req.ip;
   var tweet_keywords = {};
 
-  //
+  // get data from mongodb
   twitter_tweets_summarized_keywords_collection.find({}, { stream: true })
             .each(function(doc){
               //
@@ -252,7 +253,28 @@ router.post('/get_tweets_keywords', function(req, res, next){
             });
 });
 
-// 
+router.post('/get_tweet_geo_info', function(req, res, next){
+  //
+  var user_ip = req.ip;
+  var tweets_geo_info = {};
+
+  // get data from mongodb
+  tweets_geo_info_collection.find({}, { stream: true })
+            .each(function(doc){
+              //
+              tweets_geo_info = doc;
+            })
+            .error(function(err){ if(err) throw err; })
+            .success(function(){
+              //
+              res.send({
+                request_status : 'successful',
+                tweets_geo_info : tweets_geo_info
+              });
+            });
+});
+
+// Plurks
 router.post('/get_plurk_posts', function(req, res, next) {
   // get req info
   var user_ip = req.ip;

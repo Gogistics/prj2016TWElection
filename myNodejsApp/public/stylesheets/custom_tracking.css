@@ -21,7 +21,7 @@ div.tooltip {
   border: 0px;      
   border-radius: 8px;           
   pointer-events: none;  
-  z-index: 10000;
+  z-index: 1000000;
 }
 div.tooltip strong {   
   margin: 20px auto;
@@ -162,6 +162,11 @@ div.tooltip p {
 /* d3 */
 svg {
   font: 10px sans-serif;
+}
+.geo_path{
+  fill-opacity: .6;
+  stroke: #fff;
+  stroke-width: 1.5px;
 }
 .grid .tick {
   stroke: lightgrey;
@@ -353,6 +358,10 @@ circle.shared_keyword {
 #top_five_posts_with_highest_replurkers_count>li>p>img, #top_five_posts_with_highest_replurkers_count>li>p>a>img{
   border-radius: 2px;
   margin: 5px 5px;
+}
+.top_plurk_cell{
+  height: 500px;
+  margin: 5px auto;
 }
 /* media */
 #tweet_list li div{

@@ -219,7 +219,7 @@
           url: '/services/get_twitter_tweets', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                console.log(res.top_tweets_categories);
+                // console.log(res.top_tweets_categories);
                 _this.append_twitter_tweets(res.top_tweets_categories);
               }else{
                   console.log('fail...');
@@ -362,6 +362,240 @@
 
       //
       d3.select(self.frameElement).style("height", diameter + "px");
+    },
+    get_tweet_geo_info: function(){
+      //
+      var _this = this;
+      // create an AJAX call to get data
+      $.ajax({
+          data: {
+            token: 'IDQWpckbiKLZUotOgerGEhRAEBwxYA',
+          },
+          type: 'POST', // GET or POST
+          url: '/services/get_tweet_geo_info', // the file to call
+          success: function(res) {
+              if(res.request_status === 'successful'){
+                // console.log(res.tweets_geo_info);
+                _this.build_tweets_distribution_map(res.tweets_geo_info);
+              }else{
+                  console.log('fail...');
+              };
+          }
+      });
+    },
+    build_tweets_distribution_map: function(arg_tweets_geo_info){
+      //
+      var _this = this,
+          tweets_geo_location = {};
+      var _leaflet_map_handler = {
+        map: undefined,
+        tiles: undefined,
+        my_icon: undefined,
+        init_map: function(){
+          //
+          if(typeof this.map === 'undefined'){
+            //
+            this.map = new L.Map('tweets_distribution_map', {center: [52.971157, 7.784151], zoom: 2}).addLayer(new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'));
+          }
+        },
+        move_map: function(arg_percentage, arg_latlng){
+          //
+        }
+      }
+
+      // color map
+      var colors_map = {'0' :   '#ccfef8',
+                    '10':  '#b4fcf6',
+                    '20':  '#b4f6fc',
+                    '30': '#86e8f1',
+                    '40': '#5dd8e3',
+                    '50': '#4ac7f5',
+                    '60': '#4aa7f5',
+                    '70': '#248ce4',
+                    '80': '#1a70b8',
+                    '90': '#085393',
+                    '100': '#053964',
+                    defaultFill: '#EFEFEF'};
+
+      // init map
+      _leaflet_map_handler.init_map();
+      var width = 760, height = 550;
+      var tip_div = d3.select('div#summary_tip')
+                      .append('div')
+                      .attr('class', 'tooltip')
+                      .style('opacity', 0);
+      var path = d3.geo.path();
+      var svg = d3.select(_leaflet_map_handler.map.getPanes().overlayPane)
+                  .append('svg')
+                  .attr('width', width)
+                  .attr('height', height),
+          g = svg.append('g').attr('class', 'leaflet-zoom-hide');
+
+      // colors map
+      // var svg_colors_map = d3.select('div#tweets_distribution_map')
+      //                       .append('svg')
+      //                       .attr('class', 'div#colors_map')
+      //                       .attr('width', 200)
+      //                       .attr('height', 270)
+      //                       .style('z-index', 10000000)
+      //                       .style('right', '-500px')
+      //                       .style('top', '0px')
+      //                       .style('padding', '10px')
+      //                       .style('background-color', 'rgba(255,255,255,.8)');
+
+      // var color_ary = ['#ccfef8', '#b4fcf6', '#b4f6fc', '#86e8f1', '#5dd8e3', '#4ac7f5', '#4aa7f5', '#248ce4', '#1a70b8', '#085393'];
+      // var colors = d3.scale.ordinal().range(color_ary.reverse());
+      // var tweet_legend = ['0~10%','10%~20%','20%~30%', '30%~40%', '40%~50%', '50%~60%', '60%~70%', '70%~80%', '80%~90%', '90%~100%'];
+
+      // // append legend title
+      // svg_colors_map.append("g")
+      //     .append("text")
+      //     .style("font-size", "14")
+      //     .style("font-weight", "bold")
+      //     .style("line-height", "30")
+      //     .attr("width", 200)
+      //     .text("Tweets Distribution")
+      //     .attr("transform", function() {
+      //             return "translate(10, 10)";
+      //         });
+
+      // // append legend
+      // var legend = svg_colors_map.selectAll(".legend")
+      //                 .data(tweet_legend.slice().reverse())
+      //                 .enter()
+      //                 .append("g")
+      //                 .attr("class", "legend")
+      //                 .attr("transform", function(d, i) {
+      //                         return "translate(-600," + (i + 1) * 20 + ")";
+      //                     });
+
+      // legend.append("rect")
+      //       .attr("x", width - 18)
+      //       .attr("width", 18)
+      //       .attr("height", 18)
+      //       .style("fill", colors);
+        
+      // legend.append("text")
+      //     .attr("x", width - 24)
+      //     .attr("y", 9)
+      //     .attr("dy", ".35em")
+      //     .style("font-size","12px")
+      //     .style("text-anchor", "end")
+      //     .text(function(d) {
+      //             return d;
+      //         });
+
+      // console.log(arg_tweets_geo_info.tweets);
+      d3.csv('/public/files/id_country.csv', function(err, csv_to_json_data){
+        // csv to json
+        csv_to_json_data.forEach(function(elem, index){
+          //
+          tweets_geo_location[elem.id] = {name: elem.name};
+        });
+
+        d3.json('/public/files/countries_geo.json', function(err, arg_country_code_data){
+          // console.log(arg_country_code_data.features);
+          var collection = arg_country_code_data,
+              temp_collection = { type: "FeatureCollection", features: [] };
+
+          // loop through and update data set
+          var total_count = 0, max_count = 0;
+          collection.features.forEach(function(elem, index){
+            //
+            // console.log(elem.id);
+            // console.log(arg_tweets_geo_info.tweets);
+            // console.log('=================================');
+            if(tweets_geo_location.hasOwnProperty(elem.id) &&
+              arg_tweets_geo_info.tweets[elem.id]){
+              //
+              var avg_lat = 0, avg_lng = 0;
+              elem.geometry.coordinates[0].forEach(function(geo_info, index){
+                //
+                avg_lat += Number(geo_info[1]);
+                avg_lng += Number(geo_info[0]);
+              });
+              avg_lat = (avg_lat / elem.geometry.coordinates[0].length).toFixed(5);
+              avg_lng = (avg_lng / elem.geometry.coordinates[0].length).toFixed(5);
+
+              //
+              if(tweets_geo_location[elem.id].hasOwnProperty('lat_lng_ary')){
+                //
+                tweets_geo_location[elem.id]['lat_lng_ary'].push({'lat': avg_lat, 'lng': avg_lng});
+              }else{
+                //
+                tweets_geo_location[elem.id]['lat_lng_ary'] = [];
+                tweets_geo_location[elem.id]['lat_lng_ary'].push({'lat': avg_lat, 'lng': avg_lng});
+              }
+
+              //
+              var data_set = tweets_geo_location[elem.id];
+              data_set['country_id'] = elem.id;
+              data_set['count'] = arg_tweets_geo_info.tweets[elem.id]['count'];
+              total_count += arg_tweets_geo_info.tweets[elem.id]['count'];
+              if( arg_tweets_geo_info.tweets[elem.id]['count'] > max_count) max_count = arg_tweets_geo_info.tweets[elem.id]['count'];
+              elem['tweets_geo_location'] = data_set;
+              temp_collection.features.push(elem);
+            }
+          });
+
+          // console.log(max_count);
+          // console.log(temp_collection);
+          collection = temp_collection;
+          var transform = d3.geo.transform({point: projectPoint}),
+              path = d3.geo.path().projection(transform);
+
+          var feature = g.selectAll('path')
+                        .data(collection.features)
+                        .enter()
+                        .append('path')
+                        .attr('class', 'geo_path')
+                        .style('fill', function(d){
+                          //
+                          var color_key = Math.floor(d.tweets_geo_location.count / max_count * 10) * 10;
+                          return colors_map[color_key.toString()];
+                        })
+                        .on("mouseover", function(d) {
+                                tip_div.transition()        
+                                    .duration(200)
+                                    .style("opacity", .95);      
+                                tip_div.html('<div>' +
+                                        '<strong>&nbsp;Country:&nbsp;' + d.tweets_geo_location.name + '</strong><br>' +
+                                        '</div>')  
+                                      .style("left", (d3.event.pageX - 10) + "px")     
+                                      .style("top", (d3.event.pageY - 10) + "px");    
+                        })                  
+                        .on("mouseout", function(d) {       
+                            tip_div.transition()        
+                                  .duration(300)      
+                                  .style("opacity", 0);   
+                        });
+
+          // Reposition the SVG to cover the features.
+          function reset() {
+              var bounds = path.bounds(collection),
+                          topLeft = bounds[0],
+                          bottomRight = bounds[1];
+
+                  svg.attr("width", bottomRight[0] - topLeft[0])
+                      .attr("height", bottomRight[1] - topLeft[1])
+                      .style("left", topLeft[0] + "px")
+                      .style("top", topLeft[1] + "px");
+
+                  g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+              feature.attr("d", path);
+          }
+
+          // Use Leaflet to implement a D3 geometric transformation.
+          function projectPoint(x, y) {
+              var point = _leaflet_map_handler.map.latLngToLayerPoint(new L.LatLng(y, x));
+              this.stream.point(point.x, point.y);
+          }
+
+          _leaflet_map_handler.map.on("viewreset", reset);
+          reset();
+        });
+      });
     }
   }
 
@@ -371,6 +605,8 @@
   window.twitter_analysis_handler.get_twitter_tweets();
 
   window.twitter_analysis_handler.get_tweets_keywords();
+
+  window.twitter_analysis_handler.get_tweet_geo_info();
   /* end */
 
 })(jQuery);

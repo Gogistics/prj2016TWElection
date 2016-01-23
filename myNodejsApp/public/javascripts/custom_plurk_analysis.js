@@ -242,7 +242,7 @@
       top_five_posts_elem.empty();
       for( var jth in top_five_posts){
         //
-        top_five_posts_elem.append('<div class="col-sm-6 col-xs-12">' +
+        top_five_posts_elem.append('<div class="col-sm-6 col-xs-12 top_plurk_cell">' +
                                     '<span>Replurk&nbsp;Counts:&nbsp;' + top_five_posts[jth]['post']['replurkers_count'] + '</span><br/>' +
                                     '<span>' + (new Date(top_five_posts[jth]['posted'])) + '</span><br/>' +
                                     '<p>' + top_five_posts[jth]['post']['content'] + '</p>' +
