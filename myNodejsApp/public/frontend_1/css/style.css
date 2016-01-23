@@ -263,7 +263,6 @@ hr {
     z-index:120;
 }
 
-
 .section-heading h2 {
   font-size: 40px;
 }
@@ -282,18 +281,14 @@ hr {
   background: #f8f8f8;
 }
 
-
 .bg-dark {
   background: #575757;
 }
 
 /* --- section color var --- */
-
 .text-light {
   color: #fff;
 }
-
-
 
 /* ===========================
 --- Intro
@@ -302,7 +297,6 @@ hr {
 .intro {
   width:100%;
   position:relative;
-  
   background: url(../img/election-bg-2.png) no-repeat top center;
 }
 
@@ -357,6 +351,31 @@ hr {
   background: #f9f9f9;
   padding: 20px;
 }
+.boxed-green {
+  padding: 20px;
+  -webkit-animation: box_background 3s infinite; /* Chrome, Safari, Opera */
+  -moz-animation: box_background 3s infinite;
+  animation: box_background 3s infinite;
+}
+
+@-webkit-keyframes box_background {
+    from {background: #ffc200;}
+    50% {background: #fff;}
+    to {background: #ffc200;}
+}
+
+@keyframes box_background {
+    from {background: #ffc200;}
+    50% {background: #fff;}
+    to {background: #ffc200;}
+}
+
+@-moz-keyframes box_background {    
+    from {background: #ffc200;}
+    50% {background: #fff;}
+    to {background: #ffc200;}
+}
+
 .team h5 {
   margin-bottom: 10px;
 }
@@ -389,7 +408,6 @@ hr {
   margin:0 !important;
   padding:0;
 }
-
 
 .team-social a{
   margin:0;
@@ -431,8 +449,6 @@ hr {
   margin-bottom: 20px;
 } 
 
-
-
 /* ===========================
 --- Contact
 ============================ */
@@ -465,7 +481,6 @@ form#contact-form input:focus,form#contact-form select:focus,form#contact-form t
   text-align: left;
 }
 
-
 .company-social {
   margin-left: 0;
   padding-left: 0;
@@ -481,7 +496,6 @@ form#contact-form input:focus,form#contact-form select:focus,form#contact-form t
   margin:0 !important;
   padding:0;
 }
-
 
 .company-social a{
   margin:0;
@@ -754,6 +768,12 @@ Parallax
         font-size: 25px;
     }
 
+    .intro_new_president_img{
+      margin: 0px auto;
+      max-width: 160px;
+      margin-top: -100px;
+      box-shadow: 0px 0px 3px #fff;
+    }
 }
 @media (max-width:768px) {
   
@@ -764,25 +784,39 @@ Parallax
   .boxed-grey {
     margin-bottom: 30px;
   }
+
+  .intro_new_president_img{
+    margin: 0px auto;
+    max-width: 160px;
+    margin-top: -40px;
+    box-shadow: 0px 0px 3px #fff;
+  }
 }
 
 @media (max-width:480px) {
-    .intro {
-        height: 100%;
-    }
-    .slogan{
-        margin-top: 50px;
-    }
-    .intro.slogan h4{
-        margin-top: 50px;
-        line-height: 50px;
-    }
+  .intro_new_president_img{
+    margin: 0px auto;
+    max-width: 160px;
+    margin-top: -40px;
+    box-shadow: 0px 0px 3px #fff;
+  }
 
-    .navbar-brand h1{
-        color: #fff;
-      font-size: 15px;
-      line-height: 35px;
-    }
+  .intro {
+      height: 100%;
+  }
+  .slogan{
+      margin-top: 50px;
+  }
+  .intro.slogan h4{
+      margin-top: 50px;
+      line-height: 50px;
+  }
+
+  .navbar-brand h1{
+      color: #fff;
+    font-size: 15px;
+    line-height: 35px;
+  }
 
   .navbar-custom .nav.navbar-nav {
     background-color: rgba(255,255,255,.86);

@@ -84,7 +84,6 @@
         }
       }
       shares_info_ary.reverse();
-      // console.log(shares_info_ary);
 
       /* d3 */
       var margin = {top: 30, right: 30, bottom: 30, left: 30},
@@ -264,15 +263,15 @@
       // console.log(james_soong_posts);
 
       /* D3 */
-      var margin = {top: 60, right: 0, bottom: 30, left: 60},
-                    width = 600 - margin.left - margin.right,
+      var margin = {top: 80, right: 0, bottom: 30, left: 60},
+                    width = 500 - margin.left - margin.right,
                     height = 400 - margin.top - margin.bottom;
 
       var x = d3.time.scale().range([0, width]);
       var y0 = d3.scale.linear().range([height, 0]);
 
       var xAxis = d3.svg.axis().scale(x)
-          .orient("bottom").ticks(10);
+          .orient("bottom").ticks(7);
 
       var yAxisLeft = d3.svg.axis().scale(y0)
           .orient("left").ticks(10,"s");
@@ -339,7 +338,7 @@
       svg.append("text")
         .attr("class", "title")
         .attr("x", width/2)
-        .attr("y", -(margin.top / 2) - 10)
+        .attr("y", -(margin.top / 2) - 20)
         .attr("text-anchor", "middle")
         .attr("font-size", "20px")
         .style("font-size", 20)
@@ -443,7 +442,7 @@
       });
 
       var width = 500,
-          height = 400;
+          height = 500;
 
       var force = d3.layout.force()
           .nodes(d3.values(nodes))

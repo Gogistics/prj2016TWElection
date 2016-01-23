@@ -13,8 +13,9 @@
           url: '/services/get_twitter_tweets_analysis_collection_by_lang_type', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                  _this.append_categorized_data(res.collecion, res.count_of_total_tweets);
-                  _this.display_tweets_chart(res.collecion);
+                // console.log(res.collecion);
+                _this.append_categorized_data(res.collecion, res.count_of_total_tweets);
+                _this.display_tweets_chart(res.collecion);
               }else{
                   console.log('fail...');
               };
@@ -218,7 +219,7 @@
           url: '/services/get_twitter_tweets', // the file to call
           success: function(res) {
               if(res.request_status === 'successful'){
-                // console.log(res.top_tweets_categories);
+                console.log(res.top_tweets_categories);
                 _this.append_twitter_tweets(res.top_tweets_categories);
               }else{
                   console.log('fail...');
