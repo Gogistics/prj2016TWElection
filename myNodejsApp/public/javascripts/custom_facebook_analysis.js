@@ -199,10 +199,13 @@
           });
 
       //
-      
-      var replaced_string = post_info_with_heighest_shares.message.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
+      var replaced_string = '...';
+      if(post_info_with_heighest_shares.message){
+        replaced_string = post_info_with_heighest_shares.message.replace(/(http[s]*:[^\s]+)/gi, function(arg_link){
             return '<a href="' + arg_link + '" target="_blank">' + arg_link + '</a>';
-      });
+        });
+      }
+      
       var _elem = $('#' + arg_elem_id);
       _elem.append( '<div class="post_message">' +
                     '<strong style="font-size: 10px; font-weight: bold;">Post with highest shares</strong>' + '<br/>' +
