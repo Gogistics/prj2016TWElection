@@ -46,33 +46,31 @@ block content
   include ./sub_views/footer.jade
 
 block js_block
-  // set required js files
-  script(src='/public/frontend_1/js/jquery.min.js')
-  script(src='/public/frontend_1/js/jquery.easing.min.js')
-  script(src='/public/frontend_1/js/jquery.scrollTo.min.js')
-  script(src='/public/frontend_1/js/bootstrap.min.js')
-  script(src='/public/frontend_1/js/wow.min.js')
-
+  // for gt IE 9 or browser is not IE
+  <!--[if (gt IE 9)|(!IE)]><!-->
+  <script type="text/javascript" src="/public/frontend_1/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/public/frontend_1/js/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="/public/frontend_1/js/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="/public/frontend_1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/public/frontend_1/js/wow.min.js"></script>
   // leaflet
-  script(src='/public/javascripts/leaflet-0.7/leaflet.min.js')
-  script(src='/public/javascripts/leaflet-0.7/leaflet.markercluster-src.min.js')
-
+  <script type="text/javascript" src="/public/javascripts/leaflet-0.7/leaflet.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/leaflet-0.7/leaflet.markercluster-src.min.js"></script>
   // d3
-  script(src='/public/javascripts/d3/d3.min.js')
-  script(src='/public/javascripts/d3/d3_tips.min.js')
-  script(src='/public/javascripts/d3/box.min.js')
-  script(src='/public/javascripts/d3/queue.v1.min.js')
-  script(src='/public/javascripts/d3/topojson.v1.min.js')
-
+  <script type="text/javascript" src="/public/javascripts/d3/d3.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/d3/d3_tips.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/d3/box.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/d3/queue.v1.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/d3/topojson.v1.min.js"></script>
   // socket
-  script(src='/public/javascripts/socket.io-1.3.7.min.js')
-
+  <script type="text/javascript" src="/public/javascripts/socket.io-1.3.7.min.js"></script>
   // customized scripts
-  script(src='/public/frontend_1/js/custom.min.js')
-  script(src='/public/javascripts/custom_facebook_analysis.min.js')
-  script(src='/public/javascripts/custom_twitter_analysis.min.js')
-  script(src='/public/javascripts/custom_plurk_analysis.min.js')
-  script(src='/public/javascripts/custom_tracking.min.js')
+  <script type="text/javascript" src="/public/frontend_1/js/custom.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/custom_facebook_analysis.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/custom_twitter_analysis.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/custom_plurk_analysis.min.js"></script>
+  <script type="text/javascript" src="/public/javascripts/custom_tracking.min.js"></script>
+  <!--<![endif]-->
 
   // for lt IE 9
   <!--[if lt IE 9]>

@@ -1,6 +1,6 @@
 {
   "name": "node-express-bower",
-  "description": "Example project for tutorial on Bower for Tuts+",
+  "description": "2016 tw election",
   "version": "1.0.0",
   "dependencies": {
     "handsontable": "*",

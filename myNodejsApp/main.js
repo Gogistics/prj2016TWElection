@@ -19,6 +19,7 @@ var app = express(),
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('view options', {pretty: true});
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // set favicon
 app.use(logger('dev'));
 app.use(bodyParser.json());
