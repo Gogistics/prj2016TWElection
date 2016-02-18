@@ -73,12 +73,6 @@ configure the replica set
 
 > rs0:PRIMARY> rs.conf()
 
-> cfg = rs.conf()
-
-> cfg.members[0].host = "IP:27017"
-
-> rs.reconfig(cfg)
-
 > rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONDARY_1_IP:PORT')
 
 > rs0:PRIMARY> rs.add('REPLICA_SET_0_SECONADRY_2_IP:PORT')
