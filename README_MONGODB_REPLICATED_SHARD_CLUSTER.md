@@ -114,13 +114,13 @@ build the image
 
 create the containers
 
-> docker run --name replica_set_1_primary -p 27017:27017 -d mongo_replica_set_1
+> docker run --name replica_set_1_primary -d -p 27017:27017 -d mongo_replica_set_1
 
-> docker run --name replica_set_1_seconadry_1 -p 27018:27017 -d mongo_replica_set_1
+> docker run --name replica_set_1_seconadry_1 -d -p 27018:27017 -d mongo_replica_set_1
 
-> docker run --name replica_set_1_seconadry_2 -p 27019:27017 -d mongo_replica_set_1
+> docker run --name replica_set_1_seconadry_2 -d -p 27019:27017 -d mongo_replica_set_1
 
-> docker run --name replica_set_1_arb -p 27020:27017 -d mongo_replica_set_1
+> docker run --name replica_set_1_arb -d -p 27020:27017 -d mongo_replica_set_1
 
 check if the containers running properly
 
