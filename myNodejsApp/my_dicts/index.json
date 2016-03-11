@@ -25,7 +25,7 @@
         "plurk_section" : {"title" : "Plurk", "plurk_posts_tracking_title" : "PLURK POSTS TRACKING", "plurk_posts_tracking_keywords_title" : "TRACKING KEYWORDS" },
         "about": "About",
         "about_description": "Tech nerds who love open source and open data",
-        "about_team" : { "alan_tai": { "name": "Alan Tai", "title": "Co-founder", "role": "Chief Developer", "description": "Learn technology, connect the world" },
+        "about_team" : { "alan_tai": { "name": "Alan Tai", "title": "Co-founder", "role": "Chief Developer", "description": "Learn Tech., connect the world" },
                          "henry_lin": { "name": "Henry Lin", "title": "Freelance Developer", "role": "Data Engineer", "description": "Civil Geek" } },
         "partners": "Partners",
         "partners_description": "Pioneers in cloud development and providing professional services",

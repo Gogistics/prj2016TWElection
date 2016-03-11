@@ -302,16 +302,23 @@
           .attr("class", "grid")
           .call(make_y_axis().tickSize(-width, 0, 0).tickFormat( "" ));
 
+      // add days
+      var add_days = function(arg_date, arg_days){
+        // change date by sec.
+        var date = new Date(arg_date);
+        date.setTime( date.getTime() + arg_days * 86400000 );
+        return date;
+      }
 
       // pre-defined date ary
       var dateArray = d3.time
                       .scale()
-                      .domain([new Date(2015, 9, 30), new Date(2016, 1, 10)])
+                      .domain([new Date(2015, 9, 30), add_days(new Date(), 5)])
                       .ticks(d3.time.days, 1);
 
       // set domain range
-      x.domain([new Date(2015, 9, 30), new Date(2016, 1, 10)]);
-      y0.domain([0, 10000]);
+      x.domain([new Date(2015, 9, 30), add_days(new Date(), 5)]);
+      y0.domain([0, 15000]);
 
       // add lines
       svg.append("path")        // Add the valueline path.

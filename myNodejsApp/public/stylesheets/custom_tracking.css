@@ -56,7 +56,7 @@ div.tooltip p {
   stroke-dasharray: "10,10";
 }
 #categorized_collection, #categorized_plurk_posts_collection{
-  max-height: 250px; overflow: auto; padding-right: 0;
+  max-height: 250px; overflow: auto; padding-right: 0; text-align: center;
 }
 #categorized_collection_chart, #categorized_plurk_posts_collection_chart{
   max-height: 250px;
@@ -343,7 +343,7 @@ circle.shared_keyword {
     overflow: auto;
 }
 #top_five_posts_with_highest_replurkers_count>div{
-    margin: 10px auto;
+    /* margin: 10px auto; */
     height: 300px;
     overflow: auto;
     border-bottom: solid 1px #ebebeb;
@@ -401,7 +401,12 @@ circle.shared_keyword {
 .tweet_on_map span.tweet_text{
     font-size: 11px; color: #666;
 }
-
+.about_cell{
+  height: 500px;
+}
+#tweets_distribution_map{
+  width: 100%; height: 550px; box-shadow: 0px 0px 5px rgba(0,0,0,.2); margin: 10px auto;
+}
 /**/
 @media (min-width: 767px){
     .tweet_on_map {
