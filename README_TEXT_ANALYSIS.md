@@ -23,6 +23,7 @@
 4. visualize the data and the structure built previously with D3/Three.js
 
 ##### Advanced Analysis with TensorFlow
+
 EX:
 
 * http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
