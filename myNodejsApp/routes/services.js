@@ -74,7 +74,7 @@ router.post('/send_email', function(req, res, next) {
   res.send({
     email_status : 'successful',
     msg : 'Thank you for contacting us.'
- });
+  });
 });
 
 // POST get latest 20 tweets (incomplete)
